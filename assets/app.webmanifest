@@ -1,0 +1,25 @@
+{
+  "id": "../",
+  "name": "케론별 우주선 수리 작전",
+  "short_name": "케론별 훈련소",
+  "lang": "ko",
+  "start_url": "../",
+  "scope": "../",
+  "display": "standalone",
+  "background_color": "#17324d",
+  "theme_color": "#17324d",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
