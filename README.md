@@ -61,11 +61,11 @@ python -m http.server 8000
 ## GitHub Pages 배포
 
 1. 저장소 **Settings → Pages**를 엽니다.
-2. Source를 **Deploy from a branch**로 선택합니다.
-3. Branch는 **main**, 폴더는 **/(root)**로 선택하고 **Save**를 누릅니다.
+2. Source를 **GitHub Actions**로 선택합니다.
+3. 저장소의 **Actions → Deploy GitHub Pages**에서 배포 결과를 확인합니다.
 4. Pages 배포 완료 후 https://ming130613.github.io/keron-physics-training-camp/ 에서 접속합니다.
 
-별도 빌드 과정은 없습니다. 루트의 `.nojekyll`로 정적 파일을 그대로 배포합니다. 모든 리소스는 프로젝트 하위 경로에서 동작하는 상대 경로를 사용합니다. 이후 main 변경 사항은 Pages 설정에 따라 자동 반영됩니다.
+별도 빌드 과정은 없습니다. `.github/workflows/pages.yml`이 검사 후 정적 파일을 배포합니다. 모든 리소스는 프로젝트 하위 경로에서 동작하는 상대 경로를 사용합니다. 이후 main 변경 사항은 자동으로 재배포합니다. 수동 실행은 Actions의 Run workflow를 사용합니다.
 
 ### 코드 구성
 
