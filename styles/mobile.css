@@ -33,7 +33,7 @@
   #confirmCharacter { width: 100%; }
 
   /* Reserve separate vertical bands for navigation, crew, mission and status. */
-  .world-screen { height: max(780px, 100svh) !important; min-height: 780px; }
+  .world-screen { height: max(880px, 100svh) !important; min-height: 880px; }
   .world-top-ui { top: max(10px, env(safe-area-inset-top)) !important; left: 12px !important; right: 12px !important; width: auto !important; display: flex !important; flex-wrap: wrap; gap: 6px !important; justify-content: flex-start; padding: 10px !important; }
   #worldLocationName { display: none; }
   .world-top-ui .tiny-button { width: auto !important; flex: 1 1 80px; padding: 8px 10px; }

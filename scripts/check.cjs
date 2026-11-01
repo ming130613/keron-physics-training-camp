@@ -8,7 +8,7 @@ for (const file of ['runtime.js', 'script.js']) new vm.Script(read(file), {filen
 const html = read('index.html');
 for (const match of html.matchAll(/(?:src|href)="([^"#]+)"/g)) {
   if (/^(https?:|data:)/.test(match[1]) || match[1].startsWith('assets/')) continue;
-  assert.ok(fs.existsSync(path.join(root, match[1])), `Missing local resource: ${match[1]}`);
+  assert.ok(fs.existsSync(path.join(root, match[1].split('?')[0])), `Missing local resource: ${match[1]}`);
 }
 assert.ok(html.indexOf('runtime.js') < html.indexOf('script.js'));
 const listeners = {};
@@ -30,3 +30,4 @@ assert.equal(context.documentImage.src, 'again.webp', 'Fallback must not loop');
 const names = [...read('script.js').matchAll(/^function (\w+)\(/gm)].map(m=>m[1]);
 assert.equal(names.length, new Set(names).size, 'Duplicate top-level function');
 console.log('Passed: syntax, local entry links, script order, blocked storage, image fallback, duplicate functions.');
+
