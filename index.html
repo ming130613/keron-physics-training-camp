@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>케론별 우주선 수리 작전</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main id="app">
+
+    <!-- COVER -->
+    <section id="cover" class="screen active cover-screen">
+      <div class="cover-shade"></div>
+      <div class="cover-art-panel" aria-hidden="true"></div>
+      <div class="cover-copy">
+        <p class="kicker">KERON TRAINING CAMP</p>
+        <h1 class="cover-title"><span>케론별</span><span>우주선</span><span>수리 작전</span></h1>
+        <p class="cover-description">파동·전자기 유도·광학 장치를 직접 조절해 고장 난 우주선을 복구하세요.</p>
+        <div class="cover-actions">
+          <button class="primary-button cover-main-start" data-go="select">수리 작전 시작</button>
+          <button id="earthQuickStart" class="earth-entry-button" type="button" hidden>
+            <span>지구 물리 탐사</span>
+            <small>지구 도착 완료 · 다시 탐사하기</small>
+          </button>
+        </div>
+        <p id="coverModeNote" class="cover-mode-note"><b>MISSION</b> 파동 → 유도 → 광학 → 지구 출항</p>
+      </div>
+    </section>
+
+    <!-- CHARACTER SELECT -->
+    <section id="select" class="screen select-screen">
+      <div class="scene-dim"></div>
+
+      <header class="floating-header">
+        <button class="back-button" data-go="cover" aria-label="뒤로가기">←</button>
+        <div>
+          <span>CADET REGISTRATION</span>
+          <h2>함께 훈련할 대원을 선택하세요</h2>
+        </div>
+      </header>
+
+      <div class="character-stage" aria-label="훈련생 선택" role="group">
+        <button class="character-choice c1" data-character="keroro" aria-label="케로로 선택">
+          <img src="assets/keroro.webp" alt="케로로">
+          <b>케로로</b><small>작전 재정비</small>
+        </button>
+
+        <button class="character-choice c2" data-character="kururu" aria-label="쿠루루 선택">
+          <img src="assets/kururu.webp" alt="쿠루루">
+          <b>쿠루루</b><small>관계 분석</small>
+        </button>
+
+        <button class="character-choice c3" data-character="giroro" aria-label="기로로 선택">
+          <img src="assets/giroro.webp" alt="기로로">
+          <b>기로로</b><small>정밀 조준</small>
+        </button>
+
+        <button class="character-choice c4" data-character="tamama" aria-label="타마마 선택">
+          <img src="assets/tamama.webp" alt="타마마">
+          <b>타마마</b><small>발전 여유</small>
+        </button>
+
+        <button class="character-choice c5" data-character="dororo" aria-label="도로로 선택">
+          <img src="assets/dororo.webp" alt="도로로">
+          <b>도로로</b><small>관찰 지원</small>
+        </button>
+      </div>
+
+      <div class="character-info-bar">
+        <div class="info-left">
+          <span class="small-label">CURRENT CADET</span>
+          <h3 id="selectName">대원을 선택하세요</h3>
+          <p id="selectDescription">캐릭터를 클릭하면 성격과 특징을 확인할 수 있습니다.</p>
+          <div id="selectAbility" class="select-ability-card" hidden>
+            <span class="small-label">CADET ABILITY</span>
+            <strong id="selectAbilityName">능력 이름</strong>
+            <p id="selectAbilityEffect">능력 효과</p>
+          </div>
+        </div>
+        <button id="confirmCharacter" class="primary-button" disabled>이 대원으로 시작</button>
+      </div>
+    </section>
+
+
+    <!-- STORY INTRO -->
+    <section id="intro" class="screen intro-screen diary-intro-screen">
+      <div class="diary-bg-dim"></div>
+      <button id="introDiaryStart" class="diary-intro-card" data-go="world" aria-label="수리 작전 시작">
+        <img src="assets/diary_intro.webp" alt="긴급 일지: 케론별 우주선 고장 발생과 세 장치 수리 임무 안내">
+        <span class="diary-start-pill">터치하여 수리 작전 시작</span>
+      </button>
+    </section>
+
+    <!-- LOCATION CAROUSEL -->
+    <section id="world" class="screen world-screen">
+      <div id="locationTrack" class="location-track">
+
+        <!-- LAB 1 -->
+<article class="location-slide lab1-slide" data-location="0">
+          <div class="slide-overlay light"></div>
+          <div class="facility-complete-layer" aria-hidden="true"><img src="assets/mission_complete_stamp.webp" alt=""></div>
+
+          <div class="location-tag">
+            <span>01 / 04</span>
+            <strong>통신 안테나 수리실</strong>
+          </div>
+
+          <button class="scene-character character-right talk-character" aria-label="대화하기">
+            <img class="selected-character-image" src="" alt="선택한 훈련생">
+          </button>
+
+          <button class="scene-hotspot wave-hotspot repair-hotspot" data-training="wave">
+            <i aria-hidden="true"></i>
+            <span class="hotspot-copy"><small>FACILITY 01</small><strong>통신 안테나</strong><em>파동 신호 복구 임무</em></span>
+            <b id="stampWave" class="mini-stamp">고장 · 수리 필요</b>
+          </button>
+        </article>
+
+        <!-- LAB 2 -->
+<article class="location-slide lab2-slide" data-location="1">
+          <div class="slide-overlay light"></div>
+          <div class="facility-complete-layer" aria-hidden="true"><img src="assets/mission_complete_stamp.webp" alt=""></div>
+
+          <div class="location-tag">
+            <span>02 / 04</span>
+            <strong>유도 발전기 수리실</strong>
+          </div>
+
+          <button class="scene-character character-left talk-character" aria-label="대화하기">
+            <img class="selected-character-image" src="" alt="선택한 훈련생">
+          </button>
+
+          <button class="scene-hotspot electro-hotspot repair-hotspot" data-training="electro">
+            <i aria-hidden="true"></i>
+            <span class="hotspot-copy"><small>FACILITY 02</small><strong>유도 발전기</strong><em>비상 전력 복구 임무</em></span>
+            <b id="stampElectro" class="mini-stamp">고장 · 수리 필요</b>
+          </button>
+        </article>
+
+        <!-- LAB 3 -->
+<article class="location-slide lab3-slide" data-location="2">
+          <div class="slide-overlay light"></div>
+          <div class="facility-complete-layer" aria-hidden="true"><img src="assets/mission_complete_stamp.webp" alt=""></div>
+
+          <div class="location-tag">
+            <span>03 / 04</span>
+            <strong>레이저 항법 수리실</strong>
+          </div>
+
+          <button class="scene-character character-left-small talk-character" aria-label="대화하기">
+            <img class="selected-character-image" src="" alt="선택한 훈련생">
+          </button>
+
+          <button class="scene-hotspot optics-hotspot repair-hotspot" data-training="optics">
+            <i aria-hidden="true"></i>
+            <span class="hotspot-copy"><small>FACILITY 03</small><strong>레이저 항법 장치</strong><em>빛의 항로 복구 임무</em></span>
+            <b id="stampOptics" class="mini-stamp">고장 · 수리 필요</b>
+          </button>
+        </article>
+
+        <!-- LAB 4 / COMMAND -->
+<article class="location-slide lab4-slide" data-location="3">
+          <div class="slide-overlay"></div>
+
+          <div class="location-tag">
+            <span>04 / 04</span>
+            <strong>작전 관제실 · 지구 도착 확인</strong>
+          </div>
+
+          <button class="scene-character character-right-small talk-character" aria-label="대화하기">
+            <img class="selected-character-image" src="" alt="선택한 훈련생">
+          </button>
+
+          <section class="earth-route-preview" aria-labelledby="earthPreviewTitle">
+            <header>
+              <div>
+                <span>EARTH ROUTE STORYBOARD</span>
+                <h2 id="earthPreviewTitle">지구 귀환 시퀀스</h2>
+              </div>
+              <b id="earthPreviewStatus">수리 후 실제 엔딩으로 재생</b>
+            </header>
+            <figure>
+              <img id="earthPreviewImage" src="assets/arrival_scene_1.webp" alt="대원들이 수리한 우주선을 타고 지구로 출발하는 장면">
+              <figcaption id="earthPreviewCaption">01 · 케론별 과학 기지 출항</figcaption>
+            </figure>
+            <div class="earth-story-thumbs" aria-label="지구 귀환 장면 선택">
+              <button type="button" class="active" data-earth-scene="0" aria-label="1장면 출항 보기" aria-pressed="true"><img src="assets/arrival_scene_1.webp" alt=""></button>
+              <button type="button" data-earth-scene="1" aria-label="2장면 지구 접근 보기" aria-pressed="false"><img src="assets/arrival_scene_2.webp" alt=""></button>
+              <button type="button" data-earth-scene="2" aria-label="3장면 대기권 진입 보기" aria-pressed="false"><img src="assets/arrival_scene_3.webp" alt=""></button>
+              <button type="button" data-earth-scene="3" aria-label="4장면 지구 착륙 보기" aria-pressed="false"><img src="assets/arrival_scene_4.webp" alt=""></button>
+            </div>
+          </section>
+
+          <button class="scene-hotspot command-hotspot repair-hotspot" data-training="records">
+            <i aria-hidden="true"></i>
+            <span class="hotspot-copy"><small>MISSION CONTROL</small><strong>우주선 출항 관제</strong><em>시설 상태와 지구 항로 확인</em></span>
+            <b id="stampCommand" class="mini-stamp command-state">0 / 3 시설 복구</b>
+          </button>
+        </article>
+</div>
+
+      <button id="prevLocation" class="nav-arrow nav-left" aria-label="이전 장소">‹</button>
+      <button id="nextLocation" class="nav-arrow nav-right" aria-label="다음 장소">›</button>
+
+      <nav class="location-stepper" aria-label="수리 장소 바로 이동">
+        <button type="button" data-location-index="0" aria-label="통신 안테나 수리실" aria-current="true"><span>01</span><b>파동</b></button>
+        <button type="button" data-location-index="1" aria-label="유도 발전기 수리실"><span>02</span><b>유도</b></button>
+        <button type="button" data-location-index="2" aria-label="레이저 항법 수리실"><span>03</span><b>광학</b></button>
+        <button type="button" data-location-index="3" aria-label="작전 관제실"><span>04</span><b>관제</b></button>
+      </nav>
+
+      <div class="world-top-ui mission-top-ui">
+        <button class="tiny-button" data-go="intro">작전 브리핑</button>
+        <button class="tiny-button" data-go="select">대원 교체</button>
+        <button id="worldEarthShortcut" class="tiny-button earth-shortcut" data-go="earth" hidden>지구 탐사</button>
+        <span id="worldLocationName">통신 안테나 수리실</span>
+        <span class="mission-chip">수리율 <b id="repairValue">0%</b></span>
+        <span class="mission-chip danger">위험도 <b id="dangerValue">0%</b></span>
+      </div>
+
+      <div class="character-status-bar">
+        <div class="status-main">
+          <span class="small-label">CURRENT CADET</span>
+          <h3 id="worldCharacterName">훈련생</h3>
+          <p id="worldCharacterLine" role="status" aria-live="polite">오늘도 훈련할 준비가 되었습니다.</p>
+        </div>
+        <div class="mission-status-area">
+          <div class="ship-mini-progress">
+            <span>우주선 수리율</span>
+            <div class="bond-track"><i id="repairFill"></i></div>
+            <b id="repairValueBottom">0%</b>
+          </div>
+          <div class="ship-mini-progress danger">
+            <span>항로 위험도</span>
+            <div class="bond-track"><i id="dangerFill"></i></div>
+            <b id="dangerValueBottom">0%</b>
+          </div>
+        </div>
+      </div>
+
+      <div id="trainingPanel" class="training-panel" hidden>
+        <button id="closeTrainingPanel" class="panel-close" aria-label="훈련 안내 닫기">×</button>
+        <span id="trainingCode">TRAINING</span>
+        <h3 id="trainingTitle" tabindex="-1">훈련 제목</h3>
+        <strong class="mission-goal-label">이번 수리 임무</strong>
+        <p id="trainingText">훈련 설명</p>
+        <ol class="mission-steps">
+          <li><b>원리 발견</b> 장치를 직접 움직이기</li>
+          <li><b>조건 비교</b> 결과가 달라지는 이유 찾기</li>
+          <li><b>실제 수리</b> 알아낸 원리로 장치 복구</li>
+        </ol>
+        <button id="trainingStartButton" class="primary-button">훈련 시작</button>
+      </div>
+    </section>
+
+    <!-- REUSABLE EARTH PHYSICS EXPLORATION -->
+    <section id="earth" class="screen earth-screen" aria-labelledby="earthHubTitle">
+      <div class="earth-scene-shade" aria-hidden="true"></div>
+
+      <header class="earth-hub-header glass-surface">
+        <div class="earth-hub-brand">
+          <span>EARTH FIELD NOTE · REUSABLE MODE</span>
+          <h2 id="earthHubTitle">지구 물리 탐사대</h2>
+        </div>
+        <nav aria-label="지구 탐사 화면 이동">
+          <button class="earth-header-button" data-go="world" type="button">우주선으로</button>
+          <button class="earth-header-button" data-go="cover" type="button">처음 화면</button>
+        </nav>
+      </header>
+
+      <div class="earth-hub-layout">
+        <section class="earth-welcome-card glass-surface" aria-labelledby="earthWelcomeTitle">
+          <span class="earth-eyebrow">ARRIVAL COMPLETE · NEW CHAPTER</span>
+          <h1 id="earthWelcomeTitle">고치는 임무는 끝.<br><em>이제 지구를 관찰할 차례!</em></h1>
+          <p>정답을 외우지 않아도 괜찮아요. 먼저 예상하고, 직접 움직이고, 실제로 어떻게 변하는지 확인해 보세요.</p>
+          <div class="exploration-loop" aria-label="탐사 진행 순서">
+            <span><b>1</b> 관찰</span><i aria-hidden="true"></i>
+            <span><b>2</b> 예상</span><i aria-hidden="true"></i>
+            <span><b>3</b> 실험</span><i aria-hidden="true"></i>
+            <span><b>4</b> 발견</span>
+          </div>
+          <p class="earth-replay-note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.34 5.66M20 4v7h-7"/></svg> 탐사를 다시 열 때마다 조건이 달라집니다.</p>
+        </section>
+
+        <aside class="earth-cadet-card glass-surface">
+          <img id="earthCadetImage" src="assets/keroro.webp" alt="함께 탐사하는 대원">
+          <div>
+            <span>FIELD PARTNER</span>
+            <strong id="earthCadetName">케로로와 탐사 중</strong>
+            <p id="earthCadetLine" role="status" aria-live="polite">지구에는 어떤 물리 현상이 숨어 있는지 찾아보는 겁니다!</p>
+          </div>
+        </aside>
+      </div>
+
+      <section class="earth-mission-dock glass-surface" aria-labelledby="earthMissionTitle">
+        <div class="earth-dock-heading">
+          <div>
+            <span>CHOOSE A PHENOMENON</span>
+            <h2 id="earthMissionTitle">어디부터 관찰할까요?</h2>
+          </div>
+          <div class="earth-total-record">
+            <small>누적 탐사 기록</small>
+            <strong id="earthTotalCount">0회</strong>
+          </div>
+        </div>
+
+        <div class="earth-mission-grid">
+          <button class="earth-mission-card wave" type="button" data-exploration="wave">
+            <span class="earth-card-icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48"><path d="M4 25c6-13 11 13 18 0s12 13 22 0"/><path d="M8 35c5-8 9 8 15 0s10 8 17 0"/></svg>
+            </span>
+            <span class="earth-card-copy">
+              <small>01 · WAVE</small>
+              <strong>연못과 소리의 파동</strong>
+              <em>크기와 높낮이를 바꾸는 것은 무엇일까?</em>
+            </span>
+            <span class="earth-card-status"><b id="earthWaveCount">첫 탐사</b><i>관찰하기 →</i></span>
+          </button>
+
+          <button class="earth-mission-card electro" type="button" data-exploration="electro">
+            <span class="earth-card-icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48"><circle cx="18" cy="24" r="11"/><path d="M18 13v22M7 24h22M33 8v12h9l-12 20V28h-8z"/></svg>
+            </span>
+            <span class="earth-card-copy">
+              <small>02 · INDUCTION</small>
+              <strong>자전거 발전기의 빛</strong>
+              <em>움직임이 어떻게 전기로 바뀔까?</em>
+            </span>
+            <span class="earth-card-status"><b id="earthElectroCount">첫 탐사</b><i>관찰하기 →</i></span>
+          </button>
+
+          <button class="earth-mission-card optics" type="button" data-exploration="optics">
+            <span class="earth-card-icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48"><path d="M4 25h14l10-14v28L18 25M31 13l13-7M31 24h13M31 35l13 7"/></svg>
+            </span>
+            <span class="earth-card-copy">
+              <small>03 · OPTICS</small>
+              <strong>햇빛이 만드는 빛의 길</strong>
+              <em>반사·굴절·렌즈를 눈으로 확인해요.</em>
+            </span>
+            <span class="earth-card-status"><b id="earthOpticsCount">첫 탐사</b><i>관찰하기 →</i></span>
+          </button>
+        </div>
+      </section>
+
+      <p id="earthHubAnnouncer" class="sr-only" aria-live="polite"></p>
+    </section>
+
+  </main>
+
+
+  <div id="experimentOverlay" class="experiment-overlay" role="dialog" aria-modal="true" aria-labelledby="experimentTitle" hidden>
+    <section class="experiment-window">
+      <button id="closeExperiment" class="panel-close experiment-close" aria-label="실험 닫기">×</button>
+      <span id="experimentCode" class="small-label">EXPERIMENT</span>
+      <h2 id="experimentTitle">실험</h2>
+      <p id="experimentGuide">실험 설명</p>
+      <div id="experimentContent" class="experiment-content"></div>
+    </section>
+  </div>
+
+    <dialog id="diaryDialog" class="diary-dialog" aria-labelledby="diaryCaption">
+    <div class="diary-dialog-box">
+      <button id="diaryCloseX" class="diary-close-x" aria-label="일지 닫기">×</button>
+      <img id="diaryImage" src="assets/diary_intro.webp" alt="수리 일지">
+      <div class="diary-dialog-actions">
+        <p id="diaryCaption">수리 일지</p>
+        <button id="diaryClose" class="primary-button">계속하기</button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="arrivalSequenceDialog" class="arrival-sequence-dialog" aria-labelledby="arrivalTitle" aria-describedby="arrivalCaption">
+    <div class="arrival-sequence-card">
+      <div class="arrival-visual">
+        <video id="arrivalFlightVideo" muted playsinline preload="metadata" poster="assets/arrival_scene_1.webp" aria-label="케론별 과학 기지에서 출발해 지구에 도착하는 짧은 영상">
+          <source src="assets/earth_arrival_movie.mp4" type="video/mp4">
+        </video>
+        <img id="arrivalSceneImage" src="assets/arrival_scene_1.webp" alt="수리를 마친 대원들이 우주선을 타고 지구로 출발하는 장면" hidden>
+        <img id="arrivalEncouragementArtwork" src="assets/encouragement_keroro_v2.webp" alt="선택한 대원이 지구 도착 후 응원하는 장면" hidden>
+        <button id="arrivalVideoPlay" class="arrival-video-play" type="button" hidden>도착 영상 재생</button>
+        <span id="arrivalSceneNumber">EARTH VOYAGE FILM</span>
+      </div>
+      <section class="arrival-story-panel">
+        <div id="arrivalDots" class="arrival-dots" aria-label="지구 도착 영상 진행도">
+          <i></i><i></i><i></i><i></i>
+        </div>
+        <span class="arrival-kicker">EARTH ARRIVAL</span>
+        <h2 id="arrivalTitle">우주선 출항!</h2>
+        <p id="arrivalCaption">세 장치가 연결되자 우주선이 지구를 향해 움직이기 시작했어요.</p>
+        <div id="arrivalEncouragement" class="arrival-encouragement" hidden>
+          <img id="arrivalSpeakerImage" src="assets/keroro.webp" alt="선택한 대원">
+          <div>
+            <strong id="arrivalSpeakerName">케로로의 공부 응원</strong>
+            <p id="arrivalMessage"></p>
+          </div>
+        </div>
+        <div class="arrival-actions">
+          <button id="arrivalSkip" class="secondary-button">영상 건너뛰기</button>
+          <button id="arrivalNext" class="primary-button" hidden>지구 물리 탐사 시작</button>
+        </div>
+      </section>
+    </div>
+  </dialog>
+
+  <dialog id="routeFailureDialog" class="route-failure-dialog" aria-labelledby="routeFailureTitle" aria-describedby="routeFailureMessage">
+    <div class="route-failure-card">
+      <figure>
+        <img src="assets/route_failure_scene.webp" alt="동력이 꺼진 우주선이 멀어진 지구를 바라보며 우주에 표류하는 장면">
+        <span>DANGER 100% · ROUTE LOST</span>
+      </figure>
+      <section>
+        <span class="failure-kicker">MISSION FAILED</span>
+        <h2 id="routeFailureTitle">지구 항로를 완전히 잃었어요</h2>
+        <p id="routeFailureMessage">잘못된 수리 시도가 누적되어 우주선의 항법과 동력이 멈췄습니다. 대원들은 안전하지만, 이 상태로는 지구에 도착할 수 없어요.</p>
+        <div class="failure-risk-meter" aria-label="항로 위험도 100퍼센트"><i></i><b>항로 위험도 100%</b></div>
+        <p class="failure-retry-guide">수리 작전을 처음부터 다시 시작해 세 장치를 안정적으로 복구하세요.</p>
+        <button id="routeFailureRestart" class="primary-button">수리 작전 다시 시작</button>
+      </section>
+    </div>
+  </dialog>
+
+  <dialog id="clearEventDialog" class="clear-event-dialog" aria-labelledby="clearEventTitle" aria-describedby="clearEventDiscovery">
+    <div id="clearEventBox" class="clear-event-box">
+      <div class="clear-event-burst" aria-hidden="true">
+        <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+      </div>
+      <span id="clearEventCode" class="clear-event-code">MISSION COMPLETE</span>
+      <section id="clearEventArt" class="clear-event-art wave" aria-label="케론별 대원들이 함께 장치를 복구한 장면">
+        <div class="clear-art-device" aria-hidden="true">
+          <svg class="clear-device-wave" viewBox="0 0 260 140"><rect x="18" y="22" width="224" height="96" rx="18"/><path d="M36 70c18-46 34 46 54 0s38 46 58 0 38 46 74 0"/><circle cx="48" cy="102" r="6"/><circle cx="70" cy="102" r="6"/></svg>
+          <svg class="clear-device-electro" viewBox="0 0 260 140"><path d="M38 35v70M222 35v70"/><path d="M60 47c30-27 30 73 60 46s30-73 60-46 30 73 42 46"/><rect x="22" y="46" width="34" height="48" rx="8"/><rect x="204" y="46" width="34" height="48" rx="8"/><path d="m142 18-20 39h22l-19 52 43-62h-24l18-29z"/></svg>
+          <svg class="clear-device-optics" viewBox="0 0 260 140"><path d="M20 92h82l42-48"/><path d="M144 44 230 22M144 44l86 50"/><path d="M144 22v44"/><ellipse cx="144" cy="44" rx="12" ry="30"/><circle cx="231" cy="22" r="10"/><circle cx="231" cy="94" r="10"/></svg>
+        </div>
+        <div class="clear-art-squad" aria-hidden="true">
+          <span data-clear-member="keroro"><b>케로로</b></span>
+          <span data-clear-member="kururu"><b>쿠루루</b></span>
+          <span data-clear-member="giroro"><b>기로로</b></span>
+          <span data-clear-member="tamama"><b>타마마</b></span>
+          <span data-clear-member="dororo"><b>도로로</b></span>
+        </div>
+        <div class="clear-art-motion" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+      </section>
+      <h2 id="clearEventTitle">장치 수리 완료!</h2>
+      <p id="clearEventResult" class="clear-event-result"></p>
+      <div class="clear-event-discovery">
+        <small>이번 작전에서 알아낸 원리</small>
+        <strong id="clearEventDiscovery"></strong>
+      </div>
+      <div class="clear-event-progress">
+        <span>우주선 수리 진행도</span>
+        <div><i id="clearEventProgressFill"></i></div>
+        <b id="clearEventProgressText">1 / 3</b>
+      </div>
+      <div class="clear-event-character">
+        <img id="clearEventCharacterImage" src="assets/keroro.webp" alt="선택한 대원">
+        <p id="clearEventCharacterLine">좋아, 다음 장치로 이동하자!</p>
+      </div>
+      <button id="clearEventContinue" class="primary-button">수리 일지 확인</button>
+    </div>
+  </dialog>
+
+  <dialog id="explorationCompleteDialog" class="exploration-complete-dialog" aria-labelledby="explorationCompleteTitle" aria-describedby="explorationDiscoveryText">
+    <div class="exploration-complete-card">
+      <div class="exploration-complete-orbit" aria-hidden="true"><i></i><i></i><i></i></div>
+      <span id="explorationCompleteKicker">FIELD NOTE COMPLETE</span>
+      <div id="explorationCompleteIcon" class="exploration-complete-icon" aria-hidden="true">≋</div>
+      <h2 id="explorationCompleteTitle">새로운 현상을 발견했어요!</h2>
+      <p id="explorationPredictionResult" class="exploration-prediction-result"></p>
+      <section class="exploration-discovery-paper">
+        <small>오늘의 발견</small>
+        <strong id="explorationDiscoveryText"></strong>
+      </section>
+      <div class="exploration-complete-cadet">
+        <img id="explorationCompleteCadetImage" src="assets/keroro.webp" alt="선택한 탐사 대원">
+        <p id="explorationCompleteCadetLine"></p>
+      </div>
+      <div class="exploration-complete-actions">
+        <button id="explorationSameAgain" class="secondary-button" type="button">같은 분야 새 현상</button>
+        <button id="explorationReturnHub" class="primary-button" type="button">탐사 지도로 돌아가기</button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="modal" aria-labelledby="modalTitle" aria-describedby="modalMessage">
+    <div class="modal-box">
+      <h3 id="modalTitle">알림</h3>
+      <p id="modalMessage"></p>
+      <button id="modalClose" class="primary-button">확인</button>
+    </div>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>

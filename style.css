@@ -1,0 +1,4322 @@
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Orbitron:wght@600;800&display=swap');
+
+:root{
+  --gold:#d7ad52;
+  --gold-bright:#f1ca71;
+  --red:#bd4a42;
+  --dark:#17191b;
+  --panel:rgba(25,28,31,.86);
+  --text:#f5f2e8;
+  --muted:#c7c5bc;
+  --line:rgba(255,255,255,.18);
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden}
+body{
+  background:#111;
+  color:var(--text);
+  font-family:"Gowun Dodum",sans-serif;
+}
+button{font:inherit}
+img{display:block;max-width:100%}
+
+#app,.screen{width:100%;height:100%}
+.screen{display:none;position:relative;overflow:hidden}
+.screen.active{display:block}
+
+.cover-screen{
+  background:
+    linear-gradient(90deg,rgba(8,10,11,.76) 0%,rgba(8,10,11,.30) 48%,rgba(8,10,11,.05) 100%),
+    url("assets/cover.webp") center/cover no-repeat;
+}
+.cover-shade{
+  position:absolute;inset:0;
+  background:linear-gradient(0deg,rgba(0,0,0,.35),transparent 42%);
+}
+.cover-copy{
+  position:absolute;
+  left:6vw;
+  top:50%;
+  transform:translateY(-50%);
+  max-width:620px;
+  z-index:2;
+  text-shadow:0 4px 20px rgba(0,0,0,.65);
+}
+.kicker,.small-label{
+  font:800 11px "Orbitron",sans-serif;
+  letter-spacing:2px;
+  color:var(--gold-bright);
+}
+.cover-copy h1{
+  margin:12px 0 14px;
+  font-size:clamp(50px,7vw,100px);
+  line-height:.97;
+  letter-spacing:-4px;
+}
+.cover-description{
+  margin:0 0 26px;
+  font-size:clamp(17px,2vw,24px);
+  color:#eee8dc;
+}
+
+.primary-button{
+  border:1px solid #e5c16c;
+  border-radius:5px;
+  padding:14px 24px;
+  background:linear-gradient(#e1bd65,#ae8132);
+  color:#191a1b;
+  font-weight:800;
+  cursor:pointer;
+  box-shadow:0 8px 24px rgba(0,0,0,.25);
+}
+.primary-button:disabled{opacity:.45;cursor:not-allowed}
+.primary-button:hover:not(:disabled){filter:brightness(1.08);transform:translateY(-1px)}
+
+/* SELECT */
+.select-screen{
+  background:
+    linear-gradient(rgba(10,13,15,.18),rgba(10,13,15,.32)),
+    url("assets/select_base.webp") center/cover no-repeat;
+}
+.scene-dim{
+  position:absolute;inset:0;
+  background:linear-gradient(0deg,rgba(8,10,11,.48),transparent 42%,rgba(8,10,11,.15));
+}
+.floating-header{
+  position:absolute;
+  left:3.5vw;
+  top:3.5vh;
+  z-index:10;
+  display:flex;
+  align-items:center;
+  gap:16px;
+  padding:14px 18px;
+  background:rgba(23,26,28,.70);
+  border-left:5px solid var(--red);
+  backdrop-filter:blur(4px);
+}
+.floating-header span{
+  font:800 10px "Orbitron",sans-serif;
+  color:var(--gold-bright);
+  letter-spacing:1.6px;
+}
+.floating-header h2{margin:2px 0 0;font-size:clamp(25px,3vw,44px)}
+.back-button,.tiny-button{
+  border:1px solid var(--line);
+  background:rgba(41,45,48,.84);
+  color:white;
+  cursor:pointer;
+}
+.back-button{width:44px;height:44px;font-size:22px}
+.tiny-button{padding:9px 13px;border-radius:4px}
+
+.character-stage{
+  position:absolute;
+  inset:9vh 2vw 18vh;
+}
+.character-choice{
+  position:absolute;
+  bottom:1vh;
+  width:18vw;
+  max-width:290px;
+  min-width:150px;
+  height:55vh;
+  border:0;
+  background:transparent;
+  color:white;
+  cursor:pointer;
+  transition:transform .22s ease,filter .22s ease;
+  padding:0;
+}
+.character-choice img{
+  width:100%;
+  height:calc(100% - 42px);
+  object-fit:contain;
+  object-position:center bottom;
+  filter:drop-shadow(0 16px 14px rgba(0,0,0,.5));
+}
+.character-choice b{
+  display:inline-block;
+  margin-top:4px;
+  padding:5px 12px;
+  border-radius:999px;
+  background:rgba(21,24,26,.70);
+  border:1px solid rgba(255,255,255,.15);
+  font-size:18px;
+  text-shadow:0 2px 5px #000;
+}
+.character-choice:hover{transform:translateY(-14px) scale(1.035)}
+.character-choice.selected{
+  transform:translateY(-20px) scale(1.055);
+  filter:drop-shadow(0 0 20px rgba(240,192,87,.65));
+}
+.character-choice.selected::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  bottom:26px;
+  transform:translateX(-50%);
+  width:72%;
+  height:18px;
+  border-radius:50%;
+  background:radial-gradient(ellipse,rgba(241,202,113,.52),transparent 68%);
+}
+.c1{left:2%}
+.c2{left:20%}
+.c3{left:40%}
+.c4{left:60%}
+.c5{left:79%}
+
+.character-info-bar{
+  position:absolute;
+  left:3.5vw;right:3.5vw;bottom:2.5vh;
+  min-height:115px;
+  z-index:12;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:28px;
+  padding:18px 24px;
+  background:linear-gradient(90deg,rgba(21,24,26,.90),rgba(35,38,41,.78));
+  border-top:1px solid rgba(255,255,255,.14);
+  border-left:4px solid var(--gold);
+  backdrop-filter:blur(5px);
+}
+.character-info-bar h3{margin:3px 0 2px;font-size:28px}
+.character-info-bar p{margin:0;color:var(--muted);font-size:16px}
+
+/* WORLD */
+.world-screen{background:#111}
+.location-track{
+  display:flex;
+  width:500%;
+  height:100%;
+  transform:translateX(0%);
+  transition:transform .62s cubic-bezier(.22,.72,.24,1);
+}
+.location-slide{
+  width:20%;
+  height:100%;
+  flex:none;
+  position:relative;
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+}
+.rest-slide{background-image:url("assets/rest_room.webp")}
+.lab1-slide{background-image:url("assets/lab_1.webp")}
+.lab2-slide{background-image:url("assets/lab_2.webp")}
+.lab3-slide{background-image:url("assets/lab_3.webp")}
+.lab4-slide{background-image:url("assets/lab_4.webp")}
+
+.slide-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(0deg,rgba(10,12,14,.50),transparent 38%,rgba(10,12,14,.10));
+}
+.slide-overlay.light{
+  background:linear-gradient(0deg,rgba(10,12,14,.38),transparent 42%,rgba(10,12,14,.07));
+}
+
+.location-tag{
+  position:absolute;
+  left:28px;
+  top:24px;
+  z-index:7;
+  padding:10px 14px;
+  background:rgba(22,25,27,.72);
+  border-left:4px solid var(--red);
+  backdrop-filter:blur(3px);
+}
+.location-tag span{
+  display:block;
+  color:var(--gold-bright);
+  font:800 9px "Orbitron",sans-serif;
+  letter-spacing:1.4px;
+}
+.location-tag strong{display:block;margin-top:3px;font-size:18px}
+
+.scene-character{
+  position:absolute;
+  z-index:6;
+  pointer-events:none;
+}
+.scene-character img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  filter:drop-shadow(0 18px 15px rgba(0,0,0,.55));
+}
+.character-center-right{right:8%;bottom:13%;width:min(26vw,390px);height:56vh}
+.character-right{right:5%;bottom:14%;width:min(24vw,360px);height:52vh}
+.character-left{left:5%;bottom:14%;width:min(24vw,360px);height:52vh}
+.character-left-small{left:7%;bottom:14%;width:min(22vw,330px);height:49vh}
+.character-right-small{right:8%;bottom:14%;width:min(22vw,330px);height:49vh}
+
+.nav-arrow{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  z-index:20;
+  width:42px;
+  height:76px;
+  border:1px solid rgba(255,255,255,.18);
+  background:rgba(22,25,27,.42);
+  color:rgba(255,255,255,.92);
+  font-size:44px;
+  line-height:1;
+  cursor:pointer;
+  backdrop-filter:blur(3px);
+  transition:.2s;
+}
+.nav-arrow:hover{background:rgba(48,52,55,.76);color:var(--gold-bright)}
+.nav-left{left:0;border-left:0;border-radius:0 5px 5px 0}
+.nav-right{right:0;border-right:0;border-radius:5px 0 0 5px}
+
+.world-top-ui{
+  position:absolute;
+  right:24px;
+  top:22px;
+  z-index:18;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.world-top-ui span{
+  padding:9px 13px;
+  background:rgba(22,25,27,.68);
+  border:1px solid rgba(255,255,255,.14);
+  font-size:14px;
+  backdrop-filter:blur(3px);
+}
+
+.character-status-bar{
+  position:absolute;
+  left:4vw;
+  right:4vw;
+  bottom:2.5vh;
+  z-index:17;
+  min-height:108px;
+  display:grid;
+  grid-template-columns:1fr minmax(280px,36%);
+  align-items:center;
+  gap:28px;
+  padding:15px 22px;
+  background:linear-gradient(90deg,rgba(20,23,25,.90),rgba(34,37,40,.78));
+  border-top:1px solid rgba(255,255,255,.14);
+  border-left:4px solid var(--gold);
+  backdrop-filter:blur(5px);
+}
+.status-main h3{margin:2px 0;font-size:26px}
+.status-main p{margin:0;color:var(--muted)}
+.bond-area{
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  gap:10px;
+  align-items:center;
+}
+.bond-track{
+  height:9px;
+  background:#111;
+  border:1px solid rgba(255,255,255,.15);
+  overflow:hidden;
+}
+.bond-track i{
+  display:block;
+  width:0%;
+  height:100%;
+  background:linear-gradient(90deg,#a97b2f,#f0c66b);
+  transition:width .3s;
+}
+
+.rest-actions{
+  position:absolute;
+  left:50%;
+  bottom:17vh;
+  transform:translateX(-50%);
+  z-index:12;
+  display:flex;
+  gap:10px;
+}
+.rest-actions button{
+  width:54px;height:54px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.18);
+  background:rgba(30,33,36,.70);
+  color:white;
+  font-size:24px;
+  cursor:pointer;
+  backdrop-filter:blur(3px);
+}
+.rest-actions button:hover{transform:translateY(-3px);background:rgba(66,70,73,.82)}
+
+.scene-hotspot{
+  position:absolute;
+  z-index:10;
+  border:0;
+  background:transparent;
+  color:white;
+  cursor:pointer;
+  display:grid;
+  place-items:center;
+  gap:8px;
+}
+.scene-hotspot i{
+  width:56px;height:56px;
+  border-radius:50%;
+  border:2px solid var(--gold-bright);
+  box-shadow:0 0 0 9px rgba(239,193,93,.10),0 0 22px rgba(239,193,93,.35);
+  position:relative;
+  animation:pulse 1.8s infinite ease-in-out;
+}
+.scene-hotspot i::before,
+.scene-hotspot i::after{
+  content:"";
+  position:absolute;
+  background:var(--gold-bright);
+  left:50%;top:50%;
+  transform:translate(-50%,-50%);
+}
+.scene-hotspot i::before{width:16px;height:2px}
+.scene-hotspot i::after{width:2px;height:16px}
+.scene-hotspot span{
+  padding:5px 9px;
+  background:rgba(20,23,25,.72);
+  border:1px solid rgba(255,255,255,.14);
+  font-size:13px;
+  text-shadow:0 2px 5px #000;
+}
+@keyframes pulse{
+  50%{box-shadow:0 0 0 16px rgba(239,193,93,.02),0 0 30px rgba(239,193,93,.48)}
+}
+.wave-hotspot{left:34%;top:38%}
+.electro-hotspot{left:49%;top:46%}
+.optics-hotspot{left:69%;top:48%}
+.command-hotspot{left:50%;top:48%;transform:translate(-50%,-50%)}
+
+.training-panel{
+  position:absolute;
+  z-index:30;
+  right:5vw;
+  top:15vh;
+  width:min(430px,90vw);
+  padding:24px;
+  background:rgba(23,26,28,.93);
+  border-left:5px solid var(--gold);
+  box-shadow:0 20px 55px rgba(0,0,0,.48);
+  backdrop-filter:blur(7px);
+}
+.training-panel span{
+  color:var(--gold-bright);
+  font:800 10px "Orbitron",sans-serif;
+  letter-spacing:1.5px;
+}
+.training-panel h3{margin:7px 0;font-size:26px}
+.training-panel p{color:var(--muted);line-height:1.6}
+.panel-close{
+  position:absolute;right:9px;top:7px;
+  border:0;background:transparent;color:white;font-size:27px;cursor:pointer
+}
+
+dialog{border:0;background:transparent;padding:0}
+dialog::backdrop{background:rgba(0,0,0,.62)}
+.modal-box{
+  width:min(420px,calc(100vw - 30px));
+  padding:26px;
+  color:white;
+  background:#24282b;
+  border-left:5px solid var(--gold);
+  box-shadow:0 20px 55px rgba(0,0,0,.45);
+}
+.modal-box h3{margin-top:0}
+.modal-box p{color:var(--muted);line-height:1.6}
+
+@media(max-width:900px){
+  .character-choice{width:20vw;height:48vh}
+  .c1{left:0}.c2{left:19%}.c3{left:39%}.c4{left:59%}.c5{left:79%}
+  .character-status-bar{grid-template-columns:1fr;gap:8px}
+  .scene-character{opacity:.92}
+}
+
+@media(max-width:650px){
+  .cover-copy{left:7vw;right:7vw}
+  .character-stage{inset:12vh 1vw 21vh}
+  .character-choice{width:22vw;min-width:0;height:42vh}
+  .character-choice b{font-size:12px;padding:3px 7px}
+  .character-info-bar{left:2vw;right:2vw;bottom:1vh;padding:12px 14px}
+  .character-info-bar h3{font-size:20px}
+  .character-info-bar p{font-size:13px}
+  .character-info-bar .primary-button{padding:10px 12px}
+  .floating-header{left:2vw;top:2vh}
+  .floating-header h2{font-size:21px}
+  .nav-arrow{width:34px;height:62px}
+  .character-status-bar{left:2vw;right:2vw;bottom:1vh;padding:11px 14px}
+  .status-main h3{font-size:20px}
+  .status-main p{font-size:13px}
+  .scene-character{width:34vw;height:43vh}
+  .rest-actions{bottom:19vh}
+}
+
+
+/* character talk interaction */
+.talk-character{
+  border:0;
+  background:transparent;
+  padding:0;
+  cursor:pointer;
+  pointer-events:auto;
+}
+.talk-character:hover img{
+  transform:translateY(-5px) scale(1.015);
+}
+.talk-character img{
+  transition:transform .2s ease;
+}
+.talk-character::after{
+  content:"대화";
+  position:absolute;
+  left:50%;
+  bottom:2px;
+  transform:translateX(-50%);
+  padding:4px 9px;
+  border-radius:999px;
+  background:rgba(22,25,27,.66);
+  border:1px solid rgba(255,255,255,.14);
+  color:#f1e7ce;
+  font-size:12px;
+  opacity:0;
+  transition:opacity .2s;
+}
+.talk-character:hover::after{opacity:1}
+
+
+/* ==========================================================
+   REST ROOM BUTTON LAYOUT FIX
+   생활관 버튼이 아래 대사창과 겹치지 않도록 위치 수정
+   ========================================================== */
+
+.rest-actions{
+  left:auto !important;
+  right:4.2vw !important;
+  bottom:calc(2.5vh + 138px) !important;
+  transform:none !important;
+  z-index:26 !important;
+
+  display:grid !important;
+  grid-template-columns:repeat(4, minmax(66px, 1fr)) !important;
+  gap:9px !important;
+
+  padding:10px !important;
+  background:rgba(18,21,24,.60) !important;
+  border:1px solid rgba(255,255,255,.16) !important;
+  border-radius:18px !important;
+  backdrop-filter:blur(6px) !important;
+  box-shadow:0 16px 34px rgba(0,0,0,.32) !important;
+}
+
+.rest-actions button{
+  width:70px !important;
+  height:66px !important;
+  border-radius:15px !important;
+  display:grid !important;
+  place-items:center !important;
+  gap:2px !important;
+  padding:7px 5px !important;
+  background:linear-gradient(180deg,rgba(54,58,62,.78),rgba(26,29,32,.82)) !important;
+  border:1px solid rgba(255,255,255,.16) !important;
+  color:#fff !important;
+}
+
+.rest-actions button span{
+  font-size:23px !important;
+  line-height:1 !important;
+}
+
+.rest-actions button b{
+  font-size:12px !important;
+  line-height:1.05 !important;
+  font-weight:800 !important;
+  color:#f2e5c6 !important;
+  white-space:nowrap !important;
+}
+
+.rest-actions button:hover{
+  transform:translateY(-4px) !important;
+  background:linear-gradient(180deg,rgba(73,77,82,.88),rgba(39,42,45,.92)) !important;
+  border-color:rgba(241,202,113,.40) !important;
+}
+
+.rest-slide .character-center-right{
+  right:8.5% !important;
+  bottom:17.5% !important;
+}
+
+.character-status-bar{
+  z-index:22 !important;
+}
+
+@media(max-width:900px){
+  .rest-actions{
+    right:50% !important;
+    transform:translateX(50%) !important;
+    bottom:calc(1vh + 145px) !important;
+    grid-template-columns:repeat(4, 62px) !important;
+  }
+
+  .rest-actions button{
+    width:62px !important;
+    height:60px !important;
+  }
+
+  .rest-actions button b{
+    font-size:11px !important;
+  }
+}
+
+@media(max-width:650px){
+  .rest-actions{
+    bottom:calc(1vh + 155px) !important;
+    grid-template-columns:repeat(4, 54px) !important;
+    gap:6px !important;
+    padding:7px !important;
+  }
+
+  .rest-actions button{
+    width:54px !important;
+    height:54px !important;
+    border-radius:13px !important;
+  }
+
+  .rest-actions button span{
+    font-size:19px !important;
+  }
+
+  .rest-actions button b{
+    font-size:10px !important;
+  }
+}
+
+
+/* ==========================================================
+   CARE BALANCE + EXPERIMENT UPDATE
+   ========================================================== */
+
+.care-status-area{
+  display:grid;
+  gap:7px;
+  min-width:360px;
+}
+
+.mini-stat{
+  display:grid;
+  grid-template-columns:54px 1fr 32px;
+  gap:10px;
+  align-items:center;
+  font-size:13px;
+}
+
+.mini-stat span{
+  color:#e8dfc5;
+  white-space:nowrap;
+}
+
+.mini-stat b{
+  text-align:right;
+  font-size:13px;
+}
+
+.mini-stat .bond-track{
+  height:8px;
+}
+
+#fullnessFill{
+  background:linear-gradient(90deg,#8b7a46,#f0c66b);
+}
+#cleanFill{
+  background:linear-gradient(90deg,#4d8296,#8ed8f0);
+}
+#energyFill{
+  background:linear-gradient(90deg,#6b5aa6,#b896ff);
+}
+
+.selected-character-image{
+  transition:opacity .16s ease, transform .22s ease;
+}
+
+.selected-character-image.reacting{
+  animation:petReactionBounce .46s ease;
+}
+
+@keyframes petReactionBounce{
+  0%,100%{transform:translateY(0) scale(1)}
+  50%{transform:translateY(-10px) scale(1.025)}
+}
+
+.training-panel .training-state{
+  margin-top:10px;
+  padding:8px 10px;
+  background:rgba(255,255,255,.07);
+  border-left:3px solid #d7ad52;
+  color:#efe3c3;
+  font-size:13px;
+}
+
+/* Experiment modal */
+.experiment-overlay{
+  position:fixed;
+  inset:0;
+  z-index:80;
+  display:grid;
+  place-items:center;
+  padding:24px;
+  background:rgba(0,0,0,.62);
+  backdrop-filter:blur(4px);
+}
+
+.experiment-overlay[hidden]{
+  display:none;
+}
+
+.experiment-window{
+  position:relative;
+  width:min(920px,calc(100vw - 34px));
+  max-height:calc(100vh - 34px);
+  overflow:auto;
+  padding:28px;
+  color:#f5f2e8;
+  background:
+    linear-gradient(145deg,rgba(38,42,45,.97),rgba(18,21,23,.98));
+  border-left:5px solid #d7ad52;
+  box-shadow:0 24px 70px rgba(0,0,0,.62);
+}
+
+.experiment-window h2{
+  margin:6px 0 8px;
+  font-size:32px;
+}
+
+.experiment-window p{
+  color:#c9c5ba;
+  line-height:1.6;
+}
+
+.experiment-close{
+  color:#fff;
+}
+
+.experiment-content{
+  display:grid;
+  gap:18px;
+  margin-top:18px;
+}
+
+.experiment-board{
+  display:grid;
+  gap:16px;
+}
+
+.lab-card{
+  padding:18px;
+  background:rgba(255,255,255,.055);
+  border:1px solid rgba(255,255,255,.12);
+}
+
+.lab-card h3{
+  margin:0 0 10px;
+}
+
+.lab-controls{
+  display:grid;
+  gap:12px;
+}
+
+.lab-controls label{
+  display:grid;
+  gap:6px;
+  color:#eee7d6;
+  font-weight:800;
+}
+
+.lab-controls input[type="range"]{
+  width:100%;
+}
+
+.lab-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  align-items:center;
+}
+
+.lab-value{
+  padding:7px 10px;
+  background:rgba(0,0,0,.25);
+  border:1px solid rgba(255,255,255,.12);
+  color:#f0cf7c;
+  font-family:"Orbitron",sans-serif;
+  font-size:12px;
+}
+
+.lab-message{
+  min-height:44px;
+  padding:12px 14px;
+  background:rgba(0,0,0,.24);
+  border-left:4px solid #d7ad52;
+  color:#eee1c2;
+}
+
+.progress-shell{
+  height:16px;
+  background:#111;
+  border:1px solid rgba(255,255,255,.16);
+  overflow:hidden;
+}
+
+.progress-shell i{
+  display:block;
+  width:0%;
+  height:100%;
+  background:linear-gradient(90deg,#9d7631,#f0c66b);
+  transition:width .25s ease;
+}
+
+.wave-svg{
+  width:100%;
+  height:220px;
+  background:#101415;
+  border:1px solid rgba(255,255,255,.15);
+}
+
+.wave-svg path{
+  fill:none;
+  stroke-width:5;
+  stroke-linecap:round;
+}
+
+.wave-target{
+  stroke:#6da1ff;
+  opacity:.75;
+}
+
+.wave-player{
+  stroke:#f0c66b;
+}
+
+.electro-stage{
+  position:relative;
+  height:230px;
+  background:#101415;
+  border:1px solid rgba(255,255,255,.15);
+  overflow:hidden;
+}
+
+.electro-coil{
+  position:absolute;
+  left:52%;
+  top:50%;
+  width:190px;
+  height:94px;
+  transform:translate(-50%,-50%);
+  border:12px double #b87845;
+  border-radius:50%;
+  box-shadow:0 0 25px rgba(184,120,69,.2);
+}
+
+.electro-magnet{
+  position:absolute;
+  left:20%;
+  top:50%;
+  width:120px;
+  height:52px;
+  transform:translateY(-50%);
+  display:grid;
+  place-items:center;
+  border-radius:5px;
+  background:linear-gradient(90deg,#bd4a42 50%,#536978 50%);
+  color:#fff;
+  font:800 15px "Orbitron",sans-serif;
+  transition:left .18s ease;
+  cursor:grab;
+  touch-action:none;
+  user-select:none;
+  z-index:6;
+}
+.electro-magnet.dragging{cursor:grabbing;transition:none;box-shadow:0 0 0 3px rgba(240,198,107,.4),0 0 28px rgba(240,198,107,.28)}
+.magnet-drag-guide{position:absolute;left:18px;bottom:14px;z-index:7;padding:7px 10px;color:#d9eef8;background:rgba(5,10,13,.78);border:1px solid rgba(185,233,255,.25);font-size:12px;font-weight:800;pointer-events:none}
+.generator-game{margin-top:14px;padding:16px;background:linear-gradient(145deg,rgba(15,26,31,.98),rgba(12,15,18,.98));border:1px solid rgba(185,233,255,.25)}
+.generator-game-title{display:flex;justify-content:space-between;gap:12px;color:#f0c66b;font-size:19px}.generator-game-title strong{color:#b9e9ff}.generator-game>p{color:#c9cdd0;line-height:1.5}.generator-bars{display:grid;grid-template-columns:1fr 1fr;gap:12px}.generator-bars label{font-size:12px;font-weight:900}.generator-bars label span{float:right}.generator-bars i{display:block;height:12px;margin-top:6px;overflow:hidden;background:#080b0d;border:1px solid rgba(255,255,255,.14)}.generator-bars i b{display:block;width:0;height:100%;background:linear-gradient(90deg,#4ab1dd,#b9e9ff)}.generator-bars label:last-child i b{width:100%;background:linear-gradient(90deg,#e8b94e,#8bf0b8)}.generator-bars i b.warning{background:#d65a48}.generator-buttons{display:flex;gap:10px;margin-top:14px}.generator-buttons button{flex:1}.generator-game .lab-message{margin-top:12px}.game-success{color:#bfffe6!important}.game-fail{color:#ffc2bc!important}
+@media(max-width:650px){.generator-bars{grid-template-columns:1fr}.generator-buttons{flex-direction:column}.electro-magnet{width:96px}.magnet-drag-guide{font-size:10px}}
+
+.electro-spark{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:80px;
+  height:80px;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(100,210,255,.7),transparent 60%);
+  opacity:0;
+}
+
+.electro-spark.on{
+  animation:spark .28s ease;
+}
+
+@keyframes spark{
+  50%{opacity:1;transform:translate(-50%,-50%) scale(1.25)}
+}
+
+.optics-stage{
+  position:relative;
+  height:260px;
+  background:
+    linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px),
+    #101415;
+  background-size:32px 32px;
+  border:1px solid rgba(255,255,255,.15);
+  overflow:hidden;
+}
+
+.laser-source{
+  position:absolute;
+  left:40px;
+  top:123px;
+  width:72px;
+  height:28px;
+  background:#383d42;
+  border:4px solid #656c72;
+}
+
+.laser-source::after{
+  content:"";
+  position:absolute;
+  right:-12px;
+  top:5px;
+  width:14px;
+  height:14px;
+  border-radius:50%;
+  background:#d8463e;
+  box-shadow:0 0 16px #d8463e;
+}
+
+.optic-beam{
+  position:absolute;
+  left:110px;
+  top:136px;
+  width:340px;
+  height:4px;
+  background:#e4473f;
+  transform-origin:left center;
+  box-shadow:0 0 12px #e4473f;
+}
+
+.mirror-demo{
+  position:absolute;
+  left:430px;
+  top:88px;
+  width:22px;
+  height:110px;
+  background:linear-gradient(#e5e5e5,#6f767b);
+  border:4px solid #464b50;
+  transform-origin:center;
+}
+
+.target-demo{
+  position:absolute;
+  right:58px;
+  top:94px;
+  width:78px;
+  height:78px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  border:8px solid #5a6166;
+  color:#f0c66b;
+  background:#1c2023;
+  font-size:34px;
+}
+
+.result-good{
+  color:#9ef0ad;
+}
+.result-bad{
+  color:#ffb5ad;
+}
+
+@media(max-width:700px){
+  .care-status-area{
+    min-width:auto;
+  }
+  .mini-stat{
+    grid-template-columns:48px 1fr 28px;
+  }
+  .experiment-window{
+    padding:20px;
+  }
+  .wave-svg{
+    height:170px;
+  }
+}
+
+
+/* ==========================================================
+   EDUCATIONAL HIGH-SCHOOL EXPERIMENT MODE
+   ========================================================== */
+
+.education-layout{
+  display:grid;
+  grid-template-columns:minmax(240px, .78fr) 1.35fr;
+  gap:18px;
+  align-items:start;
+}
+
+.concept-panel,
+.question-panel{
+  padding:18px;
+  background:rgba(255,255,255,.055);
+  border:1px solid rgba(255,255,255,.13);
+}
+
+.concept-panel{
+  position:sticky;
+  top:0;
+}
+
+.concept-kicker{
+  color:#f0c66b;
+  font:800 10px "Orbitron",sans-serif;
+  letter-spacing:1.8px;
+}
+
+.concept-panel h3{
+  margin:6px 0 8px;
+  font-size:24px;
+}
+
+.concept-panel p{
+  color:#d7d2c4;
+  line-height:1.65;
+}
+
+.formula-box{
+  display:grid;
+  gap:8px;
+  margin:14px 0;
+}
+
+.formula-box code{
+  display:block;
+  padding:10px 12px;
+  background:#101315;
+  border-left:4px solid #d7ad52;
+  color:#ffe0a1;
+  font-size:15px;
+  white-space:normal;
+}
+
+.mission-condition{
+  margin-top:14px;
+  padding:12px;
+  background:rgba(215,173,82,.10);
+  border:1px solid rgba(215,173,82,.22);
+}
+
+.mission-condition b{
+  color:#f0c66b;
+}
+
+.mission-condition p{
+  margin:6px 0 0;
+}
+
+.edu-question{
+  margin-bottom:14px;
+  padding:15px;
+  background:rgba(0,0,0,.23);
+  border:1px solid rgba(255,255,255,.12);
+}
+
+.question-top{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:8px;
+}
+
+.question-top b{
+  color:#f0c66b;
+}
+
+.question-top span{
+  color:#b7b7b7;
+  font-size:12px;
+}
+
+.edu-question p{
+  line-height:1.6;
+}
+
+.answer-line{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  margin:10px 0;
+  font-weight:800;
+}
+
+.answer-line input{
+  flex:1;
+  min-width:0;
+  padding:10px;
+  color:white;
+  background:#111416;
+  border:1px solid rgba(255,255,255,.18);
+}
+
+.answer-line em{
+  min-width:42px;
+  color:#f0c66b;
+  font-style:normal;
+}
+
+.choice-list{
+  display:grid;
+  gap:8px;
+  margin:10px 0;
+}
+
+.choice-list label{
+  display:flex;
+  gap:9px;
+  align-items:flex-start;
+  padding:9px 10px;
+  background:rgba(255,255,255,.045);
+  border:1px solid rgba(255,255,255,.10);
+  cursor:pointer;
+}
+
+.choice-list label:hover{
+  border-color:rgba(240,198,107,.35);
+}
+
+.edu-question details{
+  margin-top:8px;
+  color:#d7d2c4;
+}
+
+.edu-question summary{
+  cursor:pointer;
+  color:#f0c66b;
+}
+
+.question-feedback{
+  margin-top:10px;
+  padding:10px;
+  border-left:4px solid rgba(255,255,255,.18);
+  background:rgba(255,255,255,.04);
+  color:#d7d2c4;
+  line-height:1.55;
+}
+
+.question-feedback:empty{
+  display:none;
+}
+
+.question-feedback.correct{
+  border-left-color:#8ee39d;
+}
+
+.question-feedback.wrong{
+  border-left-color:#e77b65;
+}
+
+.grade-row{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:10px;
+  margin-top:18px;
+  padding-top:14px;
+  border-top:1px solid rgba(255,255,255,.12);
+}
+
+.grade-summary{
+  color:#e8dec8;
+}
+
+@media(max-width:850px){
+  .education-layout{
+    grid-template-columns:1fr;
+  }
+  .concept-panel{
+    position:static;
+  }
+}
+
+
+/* ==========================================================
+   HYBRID LAB MODE
+   실험 조작 + 관찰값 문제 풀이
+   ========================================================== */
+
+.hybrid-lab-layout{
+  display:grid;
+  grid-template-columns:minmax(230px,.64fr) minmax(360px,1fr);
+  gap:18px;
+  align-items:start;
+}
+
+.interactive-lab-panel{
+  padding:18px;
+  background:rgba(255,255,255,.055);
+  border:1px solid rgba(255,255,255,.13);
+}
+
+.interactive-lab-panel h3{
+  margin:6px 0 12px;
+  font-size:24px;
+}
+
+.interactive-lab-panel select{
+  width:100%;
+  padding:10px;
+  color:#fff;
+  background:#111416;
+  border:1px solid rgba(255,255,255,.18);
+}
+
+.hybrid-quiz-panel{
+  grid-column:1 / -1;
+}
+
+.quiz-title-row{
+  display:flex;
+  justify-content:space-between;
+  gap:16px;
+  align-items:flex-start;
+  margin-bottom:12px;
+}
+
+.quiz-title-row h3{
+  margin:5px 0 0;
+}
+
+.quiz-title-row p{
+  margin:0;
+  color:#c9c5ba;
+  max-width:520px;
+  line-height:1.5;
+}
+
+@media(max-width:900px){
+  .hybrid-lab-layout{
+    grid-template-columns:1fr;
+  }
+  .hybrid-quiz-panel{
+    grid-column:auto;
+  }
+  .quiz-title-row{
+    display:block;
+  }
+}
+
+
+/* ==========================================================
+   EXPERIMENT LAYOUT OVERLAP FIX
+   실험 페이지에서 개념/실험/문제 영역이 겹치지 않도록 전체 구조 수정
+   ========================================================== */
+
+/* 실험창 자체를 더 넓고 안정적으로 */
+.experiment-window{
+  width:min(1120px, calc(100vw - 28px)) !important;
+  max-height:calc(100vh - 28px) !important;
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+  padding:26px !important;
+}
+
+/* 기존 2단 그리드가 겹침을 만들 수 있어서 세로형으로 고정 */
+.hybrid-lab-layout,
+.education-layout{
+  display:flex !important;
+  flex-direction:column !important;
+  gap:18px !important;
+  align-items:stretch !important;
+  width:100% !important;
+}
+
+/* 모든 패널은 한 줄 전체를 차지 */
+.concept-panel,
+.interactive-lab-panel,
+.question-panel,
+.hybrid-quiz-panel{
+  width:100% !important;
+  max-width:none !important;
+  grid-column:auto !important;
+  position:relative !important;
+  top:auto !important;
+}
+
+/* sticky 때문에 스크롤 시 겹치는 문제 방지 */
+.concept-panel{
+  position:relative !important;
+  top:auto !important;
+}
+
+/* 원리 설명 박스는 너무 길게 늘어지지 않게 */
+.concept-panel{
+  padding:18px !important;
+}
+
+.formula-box{
+  display:grid !important;
+  grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)) !important;
+  gap:8px !important;
+}
+
+/* 실험 조작 영역 내부도 겹치지 않게 */
+.interactive-lab-panel{
+  overflow:hidden !important;
+}
+
+.lab-controls{
+  display:grid !important;
+  grid-template-columns:1fr !important;
+  gap:12px !important;
+  width:100% !important;
+}
+
+.lab-controls label{
+  width:100% !important;
+  min-width:0 !important;
+}
+
+.lab-controls input[type="range"],
+.lab-controls select{
+  width:100% !important;
+  min-width:0 !important;
+}
+
+/* 수치 표시 줄은 자동 줄바꿈 */
+.lab-row{
+  display:flex !important;
+  flex-wrap:wrap !important;
+  gap:9px !important;
+  align-items:center !important;
+}
+
+.lab-value{
+  flex:0 1 auto !important;
+  max-width:100% !important;
+  white-space:normal !important;
+}
+
+/* 파형 / 전자기 / 광학 실험판 크기 안정화 */
+.wave-svg{
+  width:100% !important;
+  max-width:100% !important;
+  height:220px !important;
+  display:block !important;
+}
+
+.electro-stage,
+.optics-stage{
+  width:100% !important;
+  max-width:100% !important;
+  display:block !important;
+  overflow:hidden !important;
+}
+
+/* 문제 패널은 실험 아래로 확실히 떨어뜨림 */
+.hybrid-quiz-panel,
+.question-panel{
+  margin-top:0 !important;
+  clear:both !important;
+  overflow:visible !important;
+}
+
+.quiz-title-row{
+  display:block !important;
+  margin-bottom:14px !important;
+}
+
+.quiz-title-row p{
+  max-width:none !important;
+  margin-top:6px !important;
+}
+
+/* 문제 하나하나가 서로 겹치지 않도록 */
+.edu-question{
+  display:block !important;
+  width:100% !important;
+  clear:both !important;
+  overflow:visible !important;
+  margin:0 0 14px 0 !important;
+}
+
+.answer-line{
+  display:grid !important;
+  grid-template-columns:auto minmax(160px, 1fr) auto !important;
+  gap:9px !important;
+  align-items:center !important;
+}
+
+.answer-line input{
+  min-width:0 !important;
+  width:100% !important;
+}
+
+.choice-list{
+  display:grid !important;
+  grid-template-columns:1fr !important;
+  gap:8px !important;
+}
+
+.choice-list label{
+  width:100% !important;
+}
+
+/* 채점 줄도 줄바꿈 허용 */
+.grade-row{
+  display:flex !important;
+  flex-wrap:wrap !important;
+  align-items:center !important;
+  gap:10px !important;
+}
+
+.grade-summary{
+  display:block !important;
+  flex:1 1 220px !important;
+  min-width:0 !important;
+}
+
+/* 작은 화면 대응 */
+@media(max-width:760px){
+  .experiment-window{
+    width:calc(100vw - 18px) !important;
+    max-height:calc(100vh - 18px) !important;
+    padding:18px !important;
+  }
+
+  .experiment-window h2{
+    font-size:25px !important;
+  }
+
+  .formula-box{
+    grid-template-columns:1fr !important;
+  }
+
+  .wave-svg{
+    height:170px !important;
+  }
+
+  .electro-stage,
+  .optics-stage{
+    height:220px !important;
+  }
+
+  .answer-line{
+    grid-template-columns:1fr !important;
+  }
+
+  .answer-line em{
+    min-width:0 !important;
+  }
+}
+
+
+/* ==========================================================
+   INTRO STORY + ORIGINAL LAB LOCATIONS RESTORE
+   ========================================================== */
+
+/* 기존 실험 장소는 유지하되, 생활관 삭제 후 4장 캐러셀로 변경 */
+.location-track{
+  width:400% !important;
+}
+.location-slide{
+  width:25% !important;
+}
+
+/* 인트로 화면 */
+.intro-screen{
+  background-image:url("assets/lab_4.webp");
+  background-size:cover;
+  background-position:center;
+  overflow:auto;
+}
+
+.intro-shade{
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 28% 38%,rgba(240,198,107,.18),transparent 30%),
+    linear-gradient(110deg,rgba(8,10,13,.93),rgba(11,13,15,.72),rgba(8,10,13,.92));
+}
+
+.intro-frame{
+  position:relative;
+  z-index:2;
+  min-height:100%;
+  display:grid;
+  grid-template-columns:minmax(300px,.95fr) minmax(320px,.8fr);
+  gap:34px;
+  align-items:center;
+  padding:clamp(24px,5vw,70px);
+}
+
+.intro-visual{
+  min-height:480px;
+  border:1px solid rgba(255,255,255,.16);
+  background:
+    radial-gradient(circle at 35% 35%,rgba(78,118,160,.28),transparent 36%),
+    radial-gradient(circle at 75% 75%,rgba(240,198,107,.12),transparent 34%),
+    rgba(16,19,23,.52);
+  box-shadow:0 22px 70px rgba(0,0,0,.45);
+  overflow:hidden;
+  position:relative;
+}
+
+.intro-visual::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+  background-size:38px 38px;
+  opacity:.75;
+}
+
+.ship-illustration{
+  position:absolute;
+  inset:0;
+}
+
+.ship-body{
+  position:absolute;
+  left:17%;
+  top:38%;
+  width:58%;
+  height:26%;
+  border-radius:45% 55% 50% 50%;
+  background:
+    linear-gradient(145deg,#5b6269,#252a30 60%,#111417);
+  border:5px solid rgba(255,255,255,.18);
+  transform:rotate(-10deg);
+  box-shadow:
+    inset 0 0 26px rgba(255,255,255,.10),
+    0 22px 40px rgba(0,0,0,.5);
+}
+
+.ship-body::before{
+  content:"";
+  position:absolute;
+  left:-10%;
+  top:37%;
+  width:22%;
+  height:25%;
+  background:#d7ad52;
+  clip-path:polygon(0 50%,100% 0,100% 100%);
+}
+
+.ship-body::after{
+  content:"";
+  position:absolute;
+  right:-12%;
+  top:28%;
+  width:24%;
+  height:42%;
+  background:linear-gradient(90deg,#e66b4b,#f0c66b);
+  border-radius:0 999px 999px 0;
+  filter:blur(.2px);
+}
+
+.ship-window{
+  position:absolute;
+  left:41%;
+  top:43%;
+  width:96px;
+  height:96px;
+  border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#e7fbff,#77b7cc 45%,#15232e 70%);
+  border:8px solid #20262b;
+  transform:rotate(-10deg);
+  box-shadow:0 0 24px rgba(100,210,255,.32);
+}
+
+.ship-spark{
+  position:absolute;
+  color:#f0c66b;
+  font-size:44px;
+  text-shadow:0 0 18px rgba(240,198,107,.8);
+  animation:sparkBlink 1s infinite alternate;
+}
+
+.ship-spark.s1{left:62%;top:30%}
+.ship-spark.s2{left:31%;top:58%;animation-delay:.35s}
+
+.ship-smoke{
+  position:absolute;
+  width:120px;
+  height:120px;
+  border-radius:50%;
+  background:rgba(200,210,215,.25);
+  filter:blur(7px);
+  animation:smokeDrift 3s infinite ease-in-out;
+}
+
+.smoke1{left:72%;top:45%}
+.smoke2{left:78%;top:34%;animation-delay:.8s}
+
+.earth-dot{
+  position:absolute;
+  right:10%;
+  top:13%;
+  width:92px;
+  height:92px;
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 35% 30%,#aee7ff,#2a78b9 60%,#123d66);
+  box-shadow:0 0 24px rgba(100,190,255,.45);
+}
+
+@keyframes sparkBlink{
+  from{opacity:.35;transform:scale(.88)}
+  to{opacity:1;transform:scale(1.08)}
+}
+
+@keyframes smokeDrift{
+  50%{transform:translate(18px,-12px) scale(1.08);opacity:.6}
+}
+
+.intro-copy{
+  padding:28px;
+  background:linear-gradient(145deg,rgba(22,25,29,.90),rgba(10,12,15,.82));
+  border-left:5px solid var(--gold);
+  box-shadow:0 18px 45px rgba(0,0,0,.35);
+}
+
+.intro-copy h2{
+  margin:8px 0 14px;
+  color:#f5e6c2;
+  font-size:clamp(32px,4.6vw,58px);
+  line-height:1.05;
+}
+
+.intro-copy p,
+.intro-copy li{
+  color:#d8d1c1;
+  line-height:1.65;
+}
+
+.intro-copy ul{
+  margin:14px 0;
+  padding-left:20px;
+}
+
+.intro-warning{
+  margin:18px 0;
+  padding:12px 14px;
+  background:rgba(220,91,71,.12);
+  border:1px solid rgba(220,91,71,.25);
+  color:#ffd4ca !important;
+}
+
+/* 월드 상단 미션 상태 */
+.mission-top-ui{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  align-items:center;
+}
+
+.mission-chip{
+  padding:7px 10px;
+  background:rgba(18,21,24,.74);
+  border:1px solid rgba(255,255,255,.14);
+  color:#efe2c2;
+  font-size:12px;
+  font-weight:900;
+}
+
+.mission-chip b{
+  color:#f0c66b;
+}
+
+.mission-chip.danger b{
+  color:#ff9d8c;
+}
+
+/* 아래 상태바를 수리율/위험도로 변경 */
+.mission-status-area{
+  display:grid;
+  gap:9px;
+  min-width:330px;
+}
+
+.ship-mini-progress{
+  display:grid;
+  grid-template-columns:84px 1fr 42px;
+  gap:10px;
+  align-items:center;
+  color:#e8dfc5;
+  font-size:13px;
+  font-weight:800;
+}
+
+.ship-mini-progress b{
+  text-align:right;
+  color:#f0c66b;
+}
+
+.ship-mini-progress .bond-track i{
+  background:linear-gradient(90deg,#6c8f56,#dbcd70);
+}
+
+.ship-mini-progress.danger .bond-track i{
+  background:linear-gradient(90deg,#7b2420,#e36b55);
+}
+
+/* + 표시 제거, 수리 미션 버튼으로 변경 */
+.scene-hotspot{
+  min-width:170px !important;
+  padding:13px 15px !important;
+  border:1px solid rgba(240,198,107,.42) !important;
+  background:rgba(18,21,24,.78) !important;
+  backdrop-filter:blur(5px) !important;
+  box-shadow:0 16px 34px rgba(0,0,0,.34) !important;
+  display:grid !important;
+  grid-template-columns:1fr !important;
+  place-items:start !important;
+  gap:7px !important;
+  border-radius:0 !important;
+}
+
+.scene-hotspot i{
+  display:none !important;
+}
+
+.scene-hotspot span{
+  background:none !important;
+  border:0 !important;
+  padding:0 !important;
+  color:#fff1cf !important;
+  font-weight:1000 !important;
+  white-space:normal !important;
+  text-shadow:none !important;
+}
+
+.scene-hotspot::before{
+  content:"MISSION";
+  color:#f0c66b;
+  font:900 10px "Orbitron",sans-serif;
+  letter-spacing:1.4px;
+}
+
+.scene-hotspot:hover{
+  transform:translateY(-3px);
+  border-color:rgba(240,198,107,.72) !important;
+}
+
+.mini-stamp{
+  justify-self:end;
+  padding:4px 8px;
+  border:2px solid rgba(255,255,255,.22);
+  color:#c9c5ba;
+  font-size:12px;
+  transform:rotate(3deg);
+}
+
+.mini-stamp.done{
+  color:#f0c66b;
+  border-color:#f0c66b;
+  background:rgba(240,198,107,.12);
+}
+
+.repair-hotspot.cleared::after{
+  content:"도장 꽝!";
+  position:absolute;
+  right:-12px;
+  top:-18px;
+  padding:6px 9px;
+  border:3px solid rgba(240,198,107,.85);
+  color:#f0c66b;
+  font-size:17px;
+  font-weight:1000;
+  transform:rotate(-10deg);
+  background:rgba(20,23,25,.78);
+}
+
+/* 미션 절차 */
+.mission-steps{
+  margin:12px 0 16px;
+  padding:10px 14px 10px 30px;
+  color:#d8d1c1;
+  background:rgba(255,255,255,.05);
+  border-left:4px solid #d7ad52;
+  line-height:1.65;
+}
+
+/* 실험 안내 */
+.legend-row{
+  display:flex;
+  gap:14px;
+  flex-wrap:wrap;
+  margin:8px 0 12px;
+  color:#d8d1c1;
+}
+
+.legend-row span{
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+.legend-row i{
+  width:22px;
+  height:4px;
+  display:inline-block;
+}
+
+.legend-target{background:#6da1ff}
+.legend-player{background:#f0c66b}
+
+/* 전자기 유도 시각화 개선 */
+.emf-meter{
+  position:absolute;
+  right:18px;
+  top:18px;
+  width:180px;
+  padding:12px;
+  background:rgba(0,0,0,.42);
+  border:1px solid rgba(255,255,255,.14);
+  color:#efe2c2;
+}
+
+.emf-meter span{
+  font-size:12px;
+  font-weight:900;
+}
+
+.emf-meter div{
+  height:12px;
+  background:#101315;
+  margin:8px 0;
+  border:1px solid rgba(255,255,255,.15);
+}
+
+.emf-meter i{
+  display:block;
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,#8a5f2a,#f0c66b);
+  transition:width .2s ease;
+}
+
+.emf-meter b{
+  color:#f0c66b;
+}
+
+/* 광학 시각화 개선 */
+.optics-stage-upgraded{
+  position:relative;
+  height:300px !important;
+  background:
+    linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px),
+    #101415;
+  background-size:30px 30px;
+}
+
+.normal-line{
+  position:absolute;
+  left:50%;
+  top:25px;
+  bottom:25px;
+  width:2px;
+  background:rgba(255,255,255,.35);
+  border-left:1px dashed rgba(255,255,255,.45);
+}
+
+.interface-line{
+  position:absolute;
+  left:0;
+  right:0;
+  top:50%;
+  height:2px;
+  background:rgba(141,178,210,.36);
+}
+
+.ray{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:230px;
+  height:5px;
+  transform-origin:left center;
+  border-radius:999px;
+  box-shadow:0 0 14px currentColor;
+}
+
+.incident-ray{
+  color:#ff665e;
+  background:#ff665e;
+}
+
+.refracted-ray{
+  color:#60d5ff;
+  background:#60d5ff;
+}
+
+.reflected-ray{
+  color:#ffcf67;
+  background:#ffcf67;
+  opacity:0;
+}
+
+.lens-demo{
+  position:absolute;
+  left:95px;
+  bottom:32px;
+  width:24px;
+  height:78px;
+  border-radius:50%;
+  background:linear-gradient(90deg,rgba(110,190,255,.34),rgba(200,245,255,.78),rgba(110,190,255,.34));
+  border:2px solid rgba(205,240,255,.8);
+  transition:left .2s ease;
+}
+
+.image-dot{
+  position:absolute;
+  left:470px;
+  bottom:58px;
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:#f0c66b;
+  color:#111;
+  font-weight:900;
+  transition:left .2s ease;
+}
+
+/* 실험창 세로 구조 안정화 */
+.hybrid-lab-layout,
+.education-layout{
+  display:flex !important;
+  flex-direction:column !important;
+  gap:18px !important;
+  align-items:stretch !important;
+  width:100% !important;
+}
+
+.concept-panel,
+.interactive-lab-panel,
+.question-panel,
+.hybrid-quiz-panel{
+  width:100% !important;
+  max-width:none !important;
+  grid-column:auto !important;
+  position:relative !important;
+  top:auto !important;
+}
+
+.formula-box{
+  display:grid !important;
+  grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)) !important;
+  gap:8px !important;
+}
+
+.lab-controls label,
+.lab-controls input[type="range"],
+.lab-controls select{
+  width:100% !important;
+}
+
+.lab-row{
+  display:flex !important;
+  flex-wrap:wrap !important;
+  gap:9px !important;
+}
+
+.lab-value{
+  white-space:normal !important;
+}
+
+.quiz-title-row{
+  display:block !important;
+}
+
+.answer-line{
+  display:grid !important;
+  grid-template-columns:auto minmax(160px,1fr) auto !important;
+  gap:9px !important;
+  align-items:center !important;
+}
+
+.choice-list{
+  display:grid !important;
+  grid-template-columns:1fr !important;
+}
+
+.care-status-area,
+.rest-actions{
+  display:none !important;
+}
+
+@media(max-width:900px){
+  .intro-frame{
+    grid-template-columns:1fr;
+  }
+
+  .intro-visual{
+    min-height:320px;
+  }
+
+  .mission-status-area{
+    min-width:auto;
+  }
+
+  .character-status-bar{
+    grid-template-columns:1fr !important;
+    bottom:1.5vh !important;
+  }
+
+  .ship-mini-progress{
+    grid-template-columns:78px 1fr 42px;
+  }
+
+  .answer-line{
+    grid-template-columns:1fr !important;
+  }
+}
+
+@media(max-width:650px){
+  .intro-frame{
+    padding:18px;
+  }
+
+  .intro-copy{
+    padding:18px;
+  }
+
+  .scene-hotspot{
+    min-width:145px !important;
+    padding:11px !important;
+  }
+
+  .emf-meter{
+    position:static;
+    width:auto;
+    margin:10px;
+  }
+
+  .optics-stage-upgraded{
+    height:240px !important;
+  }
+}
+
+
+/* ==========================================================
+   INTEGER ANSWERS + CLEAR QUESTION PURPOSE UI
+   ========================================================== */
+
+.clearer-quiz-panel{
+  border-left:5px solid #d7ad52 !important;
+}
+
+.mission-quiz-brief{
+  margin-bottom:18px;
+  padding:18px;
+  background:
+    linear-gradient(135deg,rgba(215,173,82,.15),rgba(255,255,255,.045));
+  border:1px solid rgba(215,173,82,.24);
+}
+
+.mission-quiz-brief h3{
+  margin:6px 0 8px;
+  color:#fff1cf;
+  font-size:26px;
+}
+
+.mission-quiz-brief p{
+  margin:0 0 10px;
+  color:#e4dccb;
+  line-height:1.62;
+}
+
+.mission-quiz-brief ol{
+  margin:10px 0;
+  padding-left:22px;
+  color:#d8d1c1;
+  line-height:1.6;
+}
+
+.integer-rule{
+  display:inline-block;
+  margin-top:8px;
+  padding:8px 11px;
+  color:#111;
+  background:#f0c66b;
+  font-weight:1000;
+  letter-spacing:.2px;
+}
+
+.mission-question-card{
+  border-left:4px solid rgba(240,198,107,.65) !important;
+}
+
+.question-mission-box{
+  display:grid;
+  grid-template-columns:92px 1fr;
+  gap:6px 10px;
+  margin:10px 0 12px;
+  padding:12px;
+  background:rgba(0,0,0,.22);
+  border:1px solid rgba(255,255,255,.10);
+}
+
+.question-mission-box strong{
+  color:#f0c66b;
+  font-size:12px;
+  white-space:nowrap;
+}
+
+.question-mission-box p{
+  margin:0;
+  color:#d8d1c1;
+  line-height:1.45;
+  font-size:13px;
+}
+
+.question-main{
+  padding:12px 13px;
+  background:rgba(255,255,255,.055);
+  border:1px solid rgba(255,255,255,.12);
+  color:#fff2d2 !important;
+  font-weight:800;
+}
+
+.integer-answer-line input{
+  border:2px solid rgba(240,198,107,.35) !important;
+}
+
+.integer-answer-line::after{
+  content:"소수 입력 금지";
+  color:#f0c66b;
+  font-size:12px;
+  font-weight:900;
+}
+
+.lab-value b{
+  color:#f0c66b;
+}
+
+.formula-box code:last-child{
+  border-left-color:#f0c66b !important;
+  background:rgba(240,198,107,.10) !important;
+}
+
+@media(max-width:700px){
+  .question-mission-box{
+    grid-template-columns:1fr;
+  }
+
+  .integer-answer-line::after{
+    content:"";
+  }
+}
+
+
+/* ==========================================================
+   COVER TITLE LAYOUT FIX
+   표지 화면 제목 글자 밀림/어색한 자동 줄바꿈 수정
+   ========================================================== */
+
+.cover-copy{
+  width:min(560px, calc(100vw - 72px)) !important;
+  max-width:560px !important;
+  left:clamp(34px, 6vw, 96px) !important;
+}
+
+.cover-copy h1,
+.cover-title{
+  margin:12px 0 16px !important;
+  font-size:clamp(44px, 5.7vw, 86px) !important;
+  line-height:1.06 !important;
+  letter-spacing:-2.8px !important;
+  word-break:keep-all !important;
+  overflow-wrap:normal !important;
+  max-width:100% !important;
+}
+
+.cover-title span{
+  display:block;
+  white-space:nowrap;
+}
+
+.cover-title span:nth-child(3){
+  font-size:.88em;
+  letter-spacing:-2.2px;
+}
+
+.cover-description{
+  max-width:520px !important;
+  line-height:1.45 !important;
+  word-break:keep-all !important;
+}
+
+@media(max-width:820px){
+  .cover-screen{
+    background-position:58% center !important;
+  }
+
+  .cover-copy{
+    width:min(460px, calc(100vw - 44px)) !important;
+    left:22px !important;
+  }
+
+  .cover-copy h1,
+  .cover-title{
+    font-size:clamp(38px, 12vw, 64px) !important;
+    letter-spacing:-2px !important;
+  }
+
+  .cover-title span:nth-child(3){
+    letter-spacing:-1.5px;
+  }
+}
+
+@media(max-width:520px){
+  .cover-copy{
+    top:52% !important;
+    width:calc(100vw - 32px) !important;
+    left:16px !important;
+  }
+
+  .cover-copy h1,
+  .cover-title{
+    font-size:clamp(34px, 14vw, 52px) !important;
+    line-height:1.08 !important;
+    letter-spacing:-1.4px !important;
+  }
+
+  .kicker{
+    letter-spacing:1.4px !important;
+  }
+}
+
+
+/* ==========================================================
+   TRAINING PANEL POSITION + RED STAMP UPDATE
+   ========================================================== */
+
+/* 미션 설명 패널이 캐릭터를 가리지 않도록 오른쪽 고정 위치 제거 */
+.training-panel{
+  left:clamp(28px, 4vw, 70px) !important;
+  right:auto !important;
+  top:18vh !important;
+  bottom:auto !important;
+  width:min(430px, calc(100vw - 56px)) !important;
+  max-height:calc(100vh - 190px) !important;
+  overflow:auto !important;
+  z-index:26 !important;
+  background:
+    linear-gradient(145deg,rgba(17,20,23,.96),rgba(24,28,31,.91)) !important;
+  border-left:5px solid #d7ad52 !important;
+  box-shadow:0 20px 56px rgba(0,0,0,.56) !important;
+}
+
+/* 패널 안 글자가 길어져도 캐릭터 영역으로 삐져나오지 않게 */
+.training-panel h3,
+.training-panel p,
+.training-panel li{
+  word-break:keep-all !important;
+  overflow-wrap:break-word !important;
+}
+
+.training-panel .primary-button{
+  width:100% !important;
+  margin-top:8px !important;
+}
+
+/* 패널이 열렸을 때 캐릭터가 더 잘 보이도록 캐릭터 레이어 우선 */
+.scene-character{
+  z-index:18 !important;
+}
+
+.training-panel{
+  z-index:24 !important;
+}
+
+/* 기존 금색 사각 도장을 빨간 참 잘했어요 도장 느낌으로 변경 */
+.mini-stamp{
+  min-width:74px !important;
+  min-height:28px !important;
+  display:grid !important;
+  place-items:center !important;
+  padding:4px 8px !important;
+  border:2px solid rgba(255,255,255,.32) !important;
+  color:#ddd !important;
+  background:rgba(0,0,0,.18) !important;
+  font-weight:1000 !important;
+  font-size:12px !important;
+  transform:rotate(0deg) !important;
+}
+
+.mini-stamp.done{
+  width:82px !important;
+  height:82px !important;
+  min-width:82px !important;
+  min-height:82px !important;
+  padding:0 !important;
+  border:4px solid #e44435 !important;
+  border-radius:50% !important;
+  background:rgba(228,68,53,.10) !important;
+  color:#ff5a4d !important;
+  font-size:0 !important;
+  box-shadow:
+    0 0 0 3px rgba(228,68,53,.16),
+    inset 0 0 0 2px rgba(228,68,53,.40),
+    0 8px 18px rgba(0,0,0,.35) !important;
+  transform:rotate(-11deg) !important;
+}
+
+.mini-stamp.done::before{
+  content:"참";
+  display:block;
+  font-size:15px;
+  line-height:1;
+  font-weight:1000;
+  letter-spacing:.5px;
+}
+
+.mini-stamp.done::after{
+  content:"잘했어요!";
+  display:block;
+  margin-top:3px;
+  font-size:13px;
+  line-height:1;
+  font-weight:1000;
+  letter-spacing:-.4px;
+}
+
+/* 미션 클리어 후 뜨는 도장도 빨간 원형으로 */
+.repair-hotspot.cleared::after{
+  content:"참\A 잘했어요!" !important;
+  white-space:pre-line !important;
+  display:grid !important;
+  place-items:center !important;
+  width:112px !important;
+  height:112px !important;
+  right:-42px !important;
+  top:-48px !important;
+  padding:0 !important;
+  border:5px solid #e44435 !important;
+  border-radius:50% !important;
+  color:#ff5a4d !important;
+  background:rgba(26,18,18,.78) !important;
+  font-size:20px !important;
+  line-height:1.05 !important;
+  font-weight:1000 !important;
+  text-align:center !important;
+  transform:rotate(-13deg) !important;
+  box-shadow:
+    0 0 0 4px rgba(228,68,53,.14),
+    inset 0 0 0 2px rgba(228,68,53,.35),
+    0 10px 22px rgba(0,0,0,.42) !important;
+}
+
+/* 완료된 미션 버튼 자체도 '완료' 느낌이 나게 */
+.repair-hotspot.cleared{
+  border-color:rgba(228,68,53,.75) !important;
+  background:rgba(30,18,18,.82) !important;
+}
+
+/* 오른쪽에 캐릭터가 있는 장면에서는 패널이 왼쪽으로 확실히 붙도록 */
+.lab1-slide .training-panel,
+.lab4-slide .training-panel{
+  left:clamp(28px, 4vw, 70px) !important;
+}
+
+/* 모바일에서는 화면 중앙 아래쪽으로 내려서 내용이 잘 보이게 */
+@media(max-width:760px){
+  .training-panel{
+    left:16px !important;
+    right:16px !important;
+    top:16vh !important;
+    width:auto !important;
+    max-height:calc(100vh - 150px) !important;
+  }
+
+  .repair-hotspot.cleared::after{
+    width:86px !important;
+    height:86px !important;
+    right:-28px !important;
+    top:-34px !important;
+    font-size:16px !important;
+  }
+
+  .mini-stamp.done{
+    width:66px !important;
+    height:66px !important;
+    min-width:66px !important;
+    min-height:66px !important;
+  }
+
+  .mini-stamp.done::before{
+    font-size:13px;
+  }
+
+  .mini-stamp.done::after{
+    font-size:11px;
+  }
+}
+
+
+/* ==========================================================
+   STAMP AFTER QUIZ ONLY FIX
+   - 문제 통과 전에는 도장처럼 보이지 않음
+   - 문제 통과 후에만 기존 느낌의 도장 표시
+   - 과하게 큰 빨간 원형 도장 제거
+   ========================================================== */
+
+/* 기본 미완료 표시는 작은 상태표시일 뿐, 도장처럼 보이지 않게 */
+.mini-stamp{
+  width:auto !important;
+  height:auto !important;
+  min-width:auto !important;
+  min-height:auto !important;
+  display:inline-grid !important;
+  place-items:center !important;
+  padding:4px 8px !important;
+  border:1px solid rgba(255,255,255,.22) !important;
+  border-radius:0 !important;
+  color:#c9c5ba !important;
+  background:rgba(0,0,0,.20) !important;
+  font-size:12px !important;
+  font-weight:900 !important;
+  transform:rotate(0deg) !important;
+  box-shadow:none !important;
+}
+
+/* 완료 전에는 절대 빨간 도장/참잘했어요가 보이지 않게 */
+.mini-stamp::before,
+.mini-stamp::after{
+  content:none !important;
+}
+
+/* 문제를 통과한 뒤에만 기존 스타일에 가까운 수리 완료 표시 */
+.mini-stamp.done{
+  width:auto !important;
+  height:auto !important;
+  min-width:auto !important;
+  min-height:auto !important;
+  padding:5px 9px !important;
+  border:2px solid #f0c66b !important;
+  border-radius:0 !important;
+  background:rgba(240,198,107,.10) !important;
+  color:#f0c66b !important;
+  font-size:12px !important;
+  transform:rotate(-3deg) !important;
+  box-shadow:none !important;
+}
+
+/* 완료 도장은 미션 통과 후에만, 기존 디자인에 가깝게 작고 깔끔하게 */
+.repair-hotspot::after{
+  content:none !important;
+}
+
+.repair-hotspot.cleared::after{
+  content:"도장 꽝!" !important;
+  white-space:nowrap !important;
+  display:block !important;
+  width:auto !important;
+  height:auto !important;
+  right:-18px !important;
+  top:-18px !important;
+  padding:7px 10px !important;
+  border:3px solid #f0c66b !important;
+  border-radius:0 !important;
+  color:#f0c66b !important;
+  background:rgba(20,23,25,.86) !important;
+  font-size:18px !important;
+  line-height:1 !important;
+  font-weight:1000 !important;
+  text-align:center !important;
+  transform:rotate(-10deg) !important;
+  box-shadow:0 10px 22px rgba(0,0,0,.36) !important;
+}
+
+/* 완료된 미션 버튼도 빨간 느낌 말고 기존 금색 계열로 */
+.repair-hotspot.cleared{
+  border-color:rgba(240,198,107,.70) !important;
+  background:rgba(18,21,24,.82) !important;
+}
+
+/* 완료 전 미션 버튼은 평소 디자인 유지 */
+.repair-hotspot:not(.cleared){
+  border-color:rgba(240,198,107,.42) !important;
+  background:rgba(18,21,24,.78) !important;
+}
+
+/* 설명 패널은 캐릭터를 덜 가리도록 왼쪽에 유지하되 너무 튀지 않게 */
+.training-panel{
+  left:clamp(28px, 4vw, 70px) !important;
+  right:auto !important;
+  top:18vh !important;
+  width:min(430px, calc(100vw - 56px)) !important;
+  max-height:calc(100vh - 190px) !important;
+  overflow:auto !important;
+  z-index:24 !important;
+}
+
+@media(max-width:760px){
+  .repair-hotspot.cleared::after{
+    right:-10px !important;
+    top:-14px !important;
+    font-size:15px !important;
+    padding:6px 8px !important;
+  }
+}
+
+
+/* ==========================================================
+   CHARACTER ABILITIES
+   캐릭터별 패시브 능력 UI + 문제 풀이 효과
+   ========================================================== */
+
+.character-choice small{
+  display:block;
+  width:max-content;
+  max-width:130px;
+  margin:4px auto 0;
+  padding:4px 9px;
+  color:#f0c66b;
+  background:rgba(18,21,24,.76);
+  border:1px solid rgba(240,198,107,.22);
+  font-size:12px;
+  font-weight:900;
+  line-height:1.1;
+  text-shadow:0 2px 5px #000;
+}
+
+.select-ability-card{
+  margin-top:10px;
+  padding:10px 12px;
+  background:rgba(240,198,107,.09);
+  border:1px solid rgba(240,198,107,.24);
+  max-width:620px;
+}
+
+.select-ability-card strong{
+  display:block;
+  margin:4px 0 4px;
+  color:#f0c66b;
+  font-size:17px;
+}
+
+.select-ability-card p{
+  margin:0 !important;
+  color:#efe4ca !important;
+  line-height:1.45;
+}
+
+.character-info-bar{
+  min-height:150px !important;
+  align-items:flex-start !important;
+}
+
+.character-info-bar .primary-button{
+  align-self:center;
+  flex:0 0 auto;
+}
+
+.ability-active-banner{
+  margin:0 0 14px;
+  padding:13px 15px;
+  border-left:4px solid #f0c66b;
+  background:rgba(240,198,107,.10);
+  color:#efe4ca;
+}
+
+.ability-active-banner b{
+  display:block;
+  color:#f0c66b;
+  margin-bottom:4px;
+}
+
+.ability-active-banner span{
+  display:block;
+  line-height:1.55;
+}
+
+.ability-active-banner.keroro{border-left-color:#8fd06b}
+.ability-active-banner.kururu{border-left-color:#e6cc59}
+.ability-active-banner.giroro{border-left-color:#dd6052}
+.ability-active-banner.tamama{border-left-color:#9a7bff}
+.ability-active-banner.dororo{border-left-color:#7bb4ff}
+
+.ability-helper{
+  margin:10px 0 12px;
+  padding:10px 12px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.045);
+  line-height:1.5;
+}
+
+.ability-helper b{
+  display:block;
+  margin-bottom:4px;
+}
+
+.ability-helper span{
+  color:#efe4ca;
+}
+
+.kururu-helper{
+  border-left:4px solid #e6cc59;
+  background:rgba(230,204,89,.08);
+}
+
+.kururu-helper b{
+  color:#f0dc72;
+}
+
+.dororo-helper{
+  border-left:4px solid #7bb4ff;
+  background:rgba(123,180,255,.08);
+}
+
+.dororo-helper b{
+  color:#9fd0ff;
+}
+
+.dororo-focus-card .question-mission-box{
+  border-color:rgba(123,180,255,.38) !important;
+  box-shadow:0 0 0 2px rgba(123,180,255,.08);
+}
+
+.dororo-focus-card .question-mission-box strong:nth-of-type(2),
+.dororo-focus-card .question-mission-box strong:nth-of-type(2) + p{
+  color:#b9ddff !important;
+}
+
+.ability-summary{
+  display:inline-block;
+  margin-top:6px;
+  color:#f0c66b;
+  font-weight:900;
+}
+
+@media(max-width:900px){
+  .character-info-bar{
+    min-height:170px !important;
+    gap:14px !important;
+  }
+
+  .character-choice small{
+    max-width:110px;
+    font-size:11px;
+  }
+}
+
+@media(max-width:650px){
+  .character-info-bar{
+    min-height:210px !important;
+    display:block !important;
+  }
+
+  .character-info-bar .primary-button{
+    margin-top:12px;
+  }
+
+  .select-ability-card{
+    padding:9px;
+  }
+}
+
+
+/* ==========================================================
+   STEP 1: CHARACTER SELECT BODY CLIPPING FIX
+   캐릭터 선택 화면에서 설명창 때문에 하반신이 잘리는 문제 수정
+   ========================================================== */
+
+/* 설명창이 차지하는 영역을 고려해서 캐릭터들을 위쪽 안전 영역에 배치 */
+.select-screen .character-stage{
+  position:absolute !important;
+  inset:0 !important;
+  bottom:210px !important;
+  z-index:6 !important;
+  pointer-events:none;
+}
+
+/* 캐릭터 버튼은 클릭 가능하게 되돌림 */
+.select-screen .character-choice{
+  pointer-events:auto;
+  bottom:0 !important;
+  height:min(50vh, 430px) !important;
+  max-height:430px !important;
+  min-height:270px !important;
+}
+
+/* 이미지가 버튼 안에서 잘리지 않고 발끝까지 들어오게 */
+.select-screen .character-choice img{
+  height:calc(100% - 58px) !important;
+  max-height:100% !important;
+  object-fit:contain !important;
+  object-position:center bottom !important;
+}
+
+/* 이름 + 능력 태그가 캐릭터 몸통을 밀어내지 않도록 살짝 압축 */
+.select-screen .character-choice b{
+  margin-top:2px !important;
+  padding:4px 10px !important;
+  font-size:16px !important;
+}
+
+.select-screen .character-choice small{
+  margin-top:3px !important;
+  padding:3px 8px !important;
+  font-size:11px !important;
+}
+
+/* 선택했을 때 위로 올라가는 애니메이션도 과하게 올라가지 않게 */
+.select-screen .character-choice:hover{
+  transform:translateY(-8px) scale(1.025) !important;
+}
+
+.select-screen .character-choice.selected{
+  transform:translateY(-12px) scale(1.04) !important;
+}
+
+/* 하단 설명창은 캐릭터를 덜 침범하도록 조금 낮고 넓게 정리 */
+.select-screen .character-info-bar{
+  min-height:165px !important;
+  max-height:190px !important;
+  bottom:1.5vh !important;
+  padding:16px 24px !important;
+  z-index:12 !important;
+}
+
+/* 능력 설명 박스가 너무 높아져서 캐릭터 영역을 잡아먹지 않도록 */
+.select-screen .select-ability-card{
+  margin-top:8px !important;
+  padding:8px 10px !important;
+}
+
+.select-screen .select-ability-card strong{
+  font-size:15px !important;
+}
+
+.select-screen .select-ability-card p{
+  font-size:14px !important;
+  line-height:1.38 !important;
+}
+
+/* 화면이 낮은 기기에서는 캐릭터를 더 작게 만들어서 발까지 보이게 */
+@media(max-height:760px){
+  .select-screen .character-stage{
+    bottom:185px !important;
+  }
+
+  .select-screen .character-choice{
+    height:min(46vh, 360px) !important;
+    min-height:230px !important;
+  }
+
+  .select-screen .character-info-bar{
+    min-height:150px !important;
+    max-height:170px !important;
+    padding:13px 20px !important;
+  }
+}
+
+/* 모바일/좁은 화면에서도 설명창과 캐릭터가 겹치지 않게 */
+@media(max-width:700px){
+  .select-screen .character-stage{
+    bottom:235px !important;
+  }
+
+  .select-screen .character-choice{
+    height:min(38vh, 280px) !important;
+    min-height:200px !important;
+  }
+
+  .select-screen .character-info-bar{
+    min-height:210px !important;
+    max-height:none !important;
+  }
+}
+
+
+/* ==========================================================
+   CUTE ABILITY SPEECH BUBBLE FIX
+   능력 안내를 작은 대원 + 말풍선 UI로 변경
+   ========================================================== */
+
+.ability-active-banner{
+  display:none !important;
+}
+
+/* 기존 딱딱한 능력 박스 대신 말풍선형으로 */
+.ability-chibi-helper{
+  display:grid;
+  grid-template-columns:74px minmax(0,1fr);
+  gap:12px;
+  align-items:end;
+  margin:12px 0 14px;
+}
+
+.ability-chibi-helper.mission-bubble{
+  margin:0 0 16px;
+  padding:12px;
+  background:rgba(255,255,255,.035);
+  border:1px solid rgba(255,255,255,.10);
+}
+
+.ability-chibi-portrait{
+  width:74px;
+  height:74px;
+  border-radius:50%;
+  display:grid;
+  place-items:end center;
+  overflow:hidden;
+  background:radial-gradient(circle at 50% 40%,rgba(240,198,107,.20),rgba(0,0,0,.22));
+  border:2px solid rgba(240,198,107,.38);
+  box-shadow:0 8px 18px rgba(0,0,0,.35);
+}
+
+.ability-chibi-portrait img{
+  width:92%;
+  height:92%;
+  object-fit:contain;
+  object-position:center bottom;
+  filter:drop-shadow(0 6px 5px rgba(0,0,0,.35));
+}
+
+.ability-speech{
+  position:relative;
+  padding:12px 14px;
+  color:#efe4ca;
+  background:rgba(18,21,24,.88);
+  border:1px solid rgba(240,198,107,.26);
+  border-radius:18px 18px 18px 6px;
+  box-shadow:0 8px 20px rgba(0,0,0,.28);
+}
+
+.ability-speech::before{
+  content:"";
+  position:absolute;
+  left:-10px;
+  bottom:16px;
+  width:18px;
+  height:18px;
+  background:rgba(18,21,24,.88);
+  border-left:1px solid rgba(240,198,107,.26);
+  border-bottom:1px solid rgba(240,198,107,.26);
+  transform:rotate(45deg);
+}
+
+.ability-speech b{
+  display:block;
+  margin-bottom:4px;
+  color:#f0c66b;
+  font-size:13px;
+}
+
+.ability-speech span{
+  display:block;
+  line-height:1.52;
+  font-size:14px;
+  word-break:keep-all;
+}
+
+.ability-chibi-helper.keroro .ability-chibi-portrait{border-color:rgba(143,208,107,.62)}
+.ability-chibi-helper.kururu .ability-chibi-portrait{border-color:rgba(230,204,89,.68)}
+.ability-chibi-helper.giroro .ability-chibi-portrait{border-color:rgba(221,96,82,.68)}
+.ability-chibi-helper.tamama .ability-chibi-portrait{border-color:rgba(154,123,255,.68)}
+.ability-chibi-helper.dororo .ability-chibi-portrait{border-color:rgba(123,180,255,.70)}
+
+.ability-chibi-helper.keroro .ability-speech{border-color:rgba(143,208,107,.42)}
+.ability-chibi-helper.kururu .ability-speech{border-color:rgba(230,204,89,.44)}
+.ability-chibi-helper.giroro .ability-speech{border-color:rgba(221,96,82,.44)}
+.ability-chibi-helper.tamama .ability-speech{border-color:rgba(154,123,255,.44)}
+.ability-chibi-helper.dororo .ability-speech{border-color:rgba(123,180,255,.48)}
+
+/* 기존 쿠루루/도로로 텍스트형 보조 박스는 새 말풍선과 충돌하지 않게 약화 */
+.ability-helper{
+  display:none !important;
+}
+
+/* ==========================================================
+   CHARACTER SELECT DESCRIPTION OVERFLOW FIX
+   하단 설명/능력 박스 밀림 방지
+   ========================================================== */
+
+.select-screen .character-info-bar{
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) auto !important;
+  align-items:center !important;
+  gap:18px !important;
+  min-height:142px !important;
+  max-height:178px !important;
+  bottom:18px !important;
+  padding:14px 22px !important;
+  overflow:auto !important;
+}
+
+.select-screen .character-info-bar h3{
+  font-size:clamp(24px,3vw,30px) !important;
+  line-height:1.08 !important;
+}
+
+.select-screen .character-info-bar p{
+  font-size:14px !important;
+  line-height:1.42 !important;
+}
+
+.select-screen .select-ability-card{
+  display:grid !important;
+  grid-template-columns:150px minmax(0,1fr) !important;
+  gap:4px 12px !important;
+  align-items:start !important;
+  margin-top:8px !important;
+  padding:8px 10px !important;
+  max-width:760px !important;
+}
+
+.select-screen .select-ability-card .small-label{
+  grid-column:1 / 2;
+  align-self:center;
+}
+
+.select-screen .select-ability-card strong{
+  grid-column:1 / 2;
+  margin:0 !important;
+  font-size:14px !important;
+  line-height:1.25 !important;
+}
+
+.select-screen .select-ability-card p{
+  grid-column:2 / 3;
+  grid-row:1 / span 2;
+  margin:0 !important;
+  font-size:13px !important;
+  line-height:1.38 !important;
+}
+
+.select-screen .character-info-bar .primary-button{
+  white-space:nowrap !important;
+  align-self:center !important;
+}
+
+@media(max-height:760px){
+  .select-screen .character-info-bar{
+    min-height:130px !important;
+    max-height:158px !important;
+    bottom:12px !important;
+    padding:12px 18px !important;
+  }
+
+  .select-screen .select-ability-card{
+    grid-template-columns:135px minmax(0,1fr) !important;
+  }
+}
+
+@media(max-width:760px){
+  .ability-chibi-helper{
+    grid-template-columns:58px minmax(0,1fr);
+    gap:9px;
+  }
+
+  .ability-chibi-portrait{
+    width:58px;
+    height:58px;
+  }
+
+  .ability-speech{
+    padding:10px 12px;
+  }
+
+  .ability-speech span{
+    font-size:13px;
+  }
+
+  .select-screen .character-info-bar{
+    display:block !important;
+    max-height:230px !important;
+    overflow:auto !important;
+  }
+
+  .select-screen .select-ability-card{
+    display:block !important;
+  }
+
+  .select-screen .character-info-bar .primary-button{
+    margin-top:10px !important;
+    width:100% !important;
+  }
+}
+
+
+/* ==========================================================
+   DIARY STORY IMAGE MODE
+   인트로/수리 성공 장면을 대원 일기 그림으로 교체
+   ========================================================== */
+
+.diary-intro-screen{
+  background-image:url("assets/lab_4.webp") !important;
+  background-size:cover !important;
+  background-position:center !important;
+  display:grid !important;
+  place-items:center !important;
+  padding:22px !important;
+  overflow:hidden !important;
+}
+
+.diary-bg-dim{
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 50% 50%,rgba(240,198,107,.08),transparent 40%),
+    linear-gradient(120deg,rgba(4,6,8,.92),rgba(8,10,12,.64),rgba(4,6,8,.93));
+}
+
+.diary-intro-card{
+  position:relative;
+  z-index:2;
+  width:min(1450px,96vw);
+  max-height:92vh;
+  padding:0;
+  border:0;
+  background:transparent;
+  cursor:pointer;
+  display:grid;
+  place-items:center;
+}
+
+.diary-intro-card img{
+  width:100%;
+  max-height:92vh;
+  object-fit:contain;
+  display:block;
+  filter:drop-shadow(0 24px 50px rgba(0,0,0,.55));
+}
+
+.diary-start-pill{
+  position:absolute;
+  left:50%;
+  bottom:clamp(16px,3vh,34px);
+  transform:translateX(-50%);
+  padding:10px 18px;
+  color:#fff0ca;
+  background:rgba(16,18,20,.72);
+  border:1px solid rgba(240,198,107,.46);
+  font-weight:1000;
+  letter-spacing:.4px;
+  box-shadow:0 10px 22px rgba(0,0,0,.38);
+  pointer-events:none;
+}
+
+/* 이전 CSS로 만든 우주선 인트로 도형은 더 이상 사용하지 않음 */
+.diary-intro-screen .intro-frame,
+.diary-intro-screen .intro-visual,
+.diary-intro-screen .intro-copy,
+.diary-intro-screen .ship-illustration{
+  display:none !important;
+}
+
+/* Diary dialog */
+.diary-dialog{
+  width:min(1500px,96vw);
+  max-width:96vw;
+  padding:0;
+  border:0;
+  background:transparent;
+}
+
+.diary-dialog::backdrop{
+  background:rgba(0,0,0,.76);
+  backdrop-filter:blur(3px);
+}
+
+.diary-dialog-box{
+  position:relative;
+  width:100%;
+  max-height:96vh;
+  display:grid;
+  place-items:center;
+}
+
+.diary-dialog-box img{
+  width:100%;
+  max-height:90vh;
+  object-fit:contain;
+  display:block;
+  border:1px solid rgba(255,255,255,.18);
+  box-shadow:0 28px 70px rgba(0,0,0,.62);
+  background:#111;
+}
+
+.diary-close-x{
+  position:absolute;
+  right:10px;
+  top:10px;
+  z-index:3;
+  width:44px;
+  height:44px;
+  border:1px solid rgba(255,255,255,.22);
+  color:#fff;
+  background:rgba(0,0,0,.54);
+  font-size:30px;
+  line-height:1;
+  cursor:pointer;
+}
+
+.diary-dialog-actions{
+  position:absolute;
+  left:50%;
+  bottom:16px;
+  transform:translateX(-50%);
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:10px 12px;
+  background:rgba(9,11,13,.76);
+  border:1px solid rgba(240,198,107,.36);
+  box-shadow:0 12px 25px rgba(0,0,0,.42);
+}
+
+.diary-dialog-actions p{
+  margin:0;
+  color:#ffe9b0;
+  font-weight:900;
+  white-space:nowrap;
+}
+
+.diary-summary-note{
+  display:inline-block;
+  margin-top:6px;
+  color:#f0c66b;
+  font-weight:900;
+}
+
+@media(max-width:700px){
+  .diary-intro-screen{
+    padding:10px !important;
+  }
+
+  .diary-start-pill{
+    width:max-content;
+    max-width:calc(100vw - 40px);
+    text-align:center;
+    font-size:13px;
+  }
+
+  .diary-dialog{
+    width:98vw;
+    max-width:98vw;
+  }
+
+  .diary-dialog-actions{
+    position:static;
+    transform:none;
+    margin-top:8px;
+    width:100%;
+    justify-content:space-between;
+    flex-wrap:wrap;
+  }
+
+  .diary-dialog-box img{
+    max-height:82vh;
+  }
+}
+
+
+/* ==========================================================
+   DIARY INTRO CLICK / SCREEN VISIBILITY FIX
+   기존 diary-intro-screen display:grid !important 때문에
+   world로 넘어가도 인트로가 계속 덮여 있던 문제 수정
+   ========================================================== */
+
+.screen.diary-intro-screen{
+  display:none !important;
+}
+
+.screen.diary-intro-screen.active{
+  display:grid !important;
+}
+
+.diary-bg-dim{
+  pointer-events:none !important;
+}
+
+.diary-intro-card{
+  pointer-events:auto !important;
+  cursor:pointer !important;
+  border:none !important;
+  outline-offset:4px !important;
+}
+
+.diary-intro-card img,
+.diary-start-pill{
+  pointer-events:none !important;
+}
+
+.diary-intro-card:focus-visible{
+  outline:3px solid #f0c66b !important;
+}
+
+
+
+/* ==========================================================
+   CLEAR LAB OBJECTIVES / STUDY-BASED EXPERIMENT UI
+   실험에서 뭘 해야 하는지 확실하게 보이도록 추가
+   ========================================================== */
+
+.lab-clarity-brief{
+  display:grid;
+  grid-template-columns:minmax(0,1.15fr) minmax(260px,.85fr);
+  gap:14px;
+  padding:18px;
+  background:
+    linear-gradient(135deg,rgba(240,198,107,.14),rgba(255,255,255,.045));
+  border:1px solid rgba(240,198,107,.25);
+  border-left:6px solid #f0c66b;
+}
+
+.lab-clarity-brief h3{
+  margin:6px 0 10px;
+  color:#fff0ca;
+  font-size:24px;
+}
+
+.lab-clarity-brief ol{
+  margin:0;
+  padding-left:22px;
+  color:#eee3ce;
+  line-height:1.65;
+  font-weight:700;
+}
+
+.brief-side{
+  padding:12px;
+  background:rgba(0,0,0,.22);
+  border:1px solid rgba(255,255,255,.11);
+}
+
+.brief-side b{
+  display:block;
+  color:#f0c66b;
+  margin-bottom:4px;
+}
+
+.brief-side p{
+  margin:0 0 10px;
+  color:#d9d1c0;
+  line-height:1.5;
+}
+
+.brief-side code{
+  display:block;
+  padding:9px 10px;
+  background:#101315;
+  border-left:4px solid #d7ad52;
+  color:#ffe2a3;
+  white-space:normal;
+}
+
+.what-next-card{
+  margin-top:12px;
+  padding:12px 14px;
+  background:rgba(123,180,255,.08);
+  border:1px solid rgba(123,180,255,.22);
+  border-left:4px solid #7bb4ff;
+}
+
+.what-next-card b{
+  color:#9fd0ff;
+}
+
+.what-next-card p{
+  margin:5px 0 0;
+  color:#e1e6ec;
+  line-height:1.55;
+}
+
+/* 실험 화면 라벨 */
+.stage-label{
+  position:absolute;
+  z-index:8;
+  padding:5px 8px;
+  color:#111;
+  background:#f0c66b;
+  border:1px solid rgba(0,0,0,.25);
+  font-weight:1000;
+  font-size:12px;
+  box-shadow:0 6px 12px rgba(0,0,0,.28);
+  pointer-events:none;
+}
+
+.optics-stage-upgraded{
+  overflow:hidden !important;
+}
+
+.incident-label{
+  left:54%;
+  top:10%;
+  background:#ff7169;
+  color:#160909;
+}
+
+.refract-label{
+  left:62%;
+  top:62%;
+  background:#67d9ff;
+  color:#061217;
+}
+
+.reflect-label{
+  left:36%;
+  top:12%;
+  background:#ffd36c;
+  color:#1b1200;
+}
+
+.normal-label{
+  left:51.2%;
+  top:31%;
+  background:rgba(255,255,255,.9);
+  color:#111;
+}
+
+.boundary-label{
+  left:54%;
+  top:50%;
+  background:#9eb7c7;
+  color:#071013;
+}
+
+.lens-label{
+  left:9%;
+  bottom:20%;
+  background:#b9e9ff;
+  color:#061217;
+}
+
+.live-formula-card{
+  position:absolute;
+  right:18px;
+  bottom:18px;
+  z-index:9;
+  min-width:220px;
+  padding:10px 12px;
+  color:#efe4ca;
+  background:rgba(8,10,12,.80);
+  border:1px solid rgba(240,198,107,.30);
+  box-shadow:0 8px 20px rgba(0,0,0,.38);
+  line-height:1.45;
+  font-size:13px;
+}
+
+.live-formula-card b{
+  color:#f0c66b;
+}
+
+/* 전자기 유도 라벨 */
+.electro-stage{
+  position:relative;
+}
+
+.electro-label{
+  background:#f0c66b;
+  color:#111;
+}
+
+.magnet-label{
+  left:18%;
+  top:18%;
+}
+
+.coil-label{
+  left:47%;
+  bottom:19%;
+  background:#b9e9ff;
+}
+
+/* 파형 그래프가 조작 실험임을 더 명확하게 */
+.wave-svg{
+  border:1px solid rgba(123,180,255,.25);
+  background:
+    linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px),
+    rgba(6,10,12,.55);
+  background-size:28px 28px;
+}
+
+.legend-row{
+  padding:8px 10px;
+  background:rgba(0,0,0,.20);
+  border:1px solid rgba(255,255,255,.10);
+}
+
+.interactive-lab-panel h3::after{
+  content:"  ← 여기 값을 움직여 보고 아래 문제를 풉니다";
+  display:block;
+  margin-top:5px;
+  color:#f0c66b;
+  font-size:14px;
+  font-weight:900;
+}
+
+/* 문제 영역까지 가야 한다는 안내 */
+.clearer-quiz-panel{
+  position:relative;
+}
+
+.clearer-quiz-panel::before{
+  content:"실험을 만졌다면 이제 여기서 수리 코드를 입력하세요";
+  display:block;
+  margin-bottom:12px;
+  padding:10px 12px;
+  color:#111;
+  background:#f0c66b;
+  font-weight:1000;
+}
+
+@media(max-width:850px){
+  .lab-clarity-brief{
+    grid-template-columns:1fr;
+  }
+
+  .stage-label{
+    font-size:10px;
+    padding:4px 6px;
+  }
+
+  .live-formula-card{
+    position:static;
+    margin:10px;
+    min-width:0;
+  }
+
+  .interactive-lab-panel h3::after{
+    font-size:12px;
+  }
+}
+
+@media(max-width:560px){
+  .lab-clarity-brief{
+    padding:14px;
+  }
+
+  .lab-clarity-brief h3{
+    font-size:20px;
+  }
+
+  .stage-label{
+    display:none;
+  }
+}
+.mission-steps li b{display:block;color:var(--academy-blue);font-size:14px}
+
+/* 생성한 지구 도착 그림을 관제실의 핵심 콘텐츠로 사용 */
+.earth-route-preview{position:absolute;z-index:11;left:6vw;top:20%;width:min(600px,52vw);padding:14px;color:var(--academy-ink);background:rgba(249,253,254,.82);border:1px solid rgba(255,255,255,.82);border-radius:20px;box-shadow:0 24px 60px rgba(6,28,38,.3);backdrop-filter:blur(15px) saturate(1.15)}
+.earth-route-preview header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:10px}.earth-route-preview header span{color:var(--academy-blue);font-size:10px;font-weight:1000;letter-spacing:.14em}.earth-route-preview h2{margin:3px 0 0;color:var(--academy-ink);font-size:23px;line-height:1.15}.earth-route-preview header>b{max-width:210px;padding:7px 9px;color:#315664;background:rgba(227,242,247,.9);border:1px solid #afd0dc;border-radius:999px;font-size:11px;line-height:1.35;text-align:center}.earth-route-preview header>b.ready{color:#17603f;background:#e5f7ed;border-color:#88c8a7}
+.earth-route-preview figure{position:relative;margin:0;overflow:hidden;border-radius:13px;background:#b9d7e2;aspect-ratio:16/9}.earth-route-preview figure>img{display:block;width:100%;height:100%;object-fit:cover;transition:opacity .2s ease,transform .45s ease}.earth-route-preview figure>img.changing{opacity:.2;transform:scale(1.025)}.earth-route-preview figcaption{position:absolute;left:10px;bottom:10px;padding:7px 10px;color:#fff;background:rgba(12,48,63,.8);border:1px solid rgba(255,255,255,.35);border-radius:999px;font-size:12px;font-weight:900;backdrop-filter:blur(5px)}
+.earth-story-thumbs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:9px}.earth-story-thumbs button{min-width:44px;min-height:52px;padding:3px;overflow:hidden;background:rgba(255,255,255,.66);border:2px solid transparent;border-radius:9px;cursor:pointer;transition:border-color .16s ease,transform .16s ease,box-shadow .16s ease}.earth-story-thumbs button:hover{border-color:#5cabc8}.earth-story-thumbs button:active{transform:scale(.98)}.earth-story-thumbs button.active{border-color:var(--academy-orange);box-shadow:0 0 0 3px rgba(217,109,46,.15)}.earth-story-thumbs img{display:block;width:100%;height:48px;object-fit:cover;border-radius:5px}
+.lab4-slide .command-hotspot{left:auto!important;right:7%!important;top:38%!important}
+
+/* ==========================================================
+   HOVER JITTER FIX
+   수리 기록/미션 블럭에 마우스를 올릴 때 지지직거리던 문제 수정
+   ========================================================== */
+
+/* 원인: hover 시 transform으로 버튼 위치가 바뀌면서 hover on/off가 반복됨.
+   해결: 위치 이동은 없애고, 테두리/그림자/밝기만 바뀌게 함. */
+.scene-hotspot,
+.repair-hotspot,
+.command-hotspot{
+  transform:none !important;
+  transition:
+    border-color .16s ease,
+    background-color .16s ease,
+    box-shadow .16s ease,
+    filter .16s ease !important;
+  will-change:auto !important;
+  backface-visibility:hidden !important;
+}
+
+/* hover해도 블럭 위치가 움직이지 않음 */
+.scene-hotspot:hover,
+.repair-hotspot:hover,
+.command-hotspot:hover{
+  transform:none !important;
+  border-color:rgba(240,198,107,.78) !important;
+  background:rgba(26,30,34,.88) !important;
+  box-shadow:
+    0 0 0 2px rgba(240,198,107,.10),
+    0 14px 32px rgba(0,0,0,.38) !important;
+  filter:brightness(1.06) !important;
+}
+
+/* 클릭 순간에도 위치가 흔들리지 않게 고정 */
+.scene-hotspot:active,
+.repair-hotspot:active,
+.command-hotspot:active{
+  transform:none !important;
+}
+
+/* 수리 기록 블럭은 특히 떨림이 잘 보여서 hover 효과를 더 안정적으로 고정 */
+.command-hotspot{
+  pointer-events:auto !important;
+  isolation:isolate !important;
+}
+
+.command-hotspot:hover{
+  outline:1px solid rgba(240,198,107,.42) !important;
+  outline-offset:2px !important;
+}
+
+/* 도장 pseudo-element가 마우스 판정에 끼어들어 hover가 끊기지 않도록 */
+.repair-hotspot::after,
+.repair-hotspot.cleared::after{
+  pointer-events:none !important;
+}
+
+/* 내부 텍스트/상태표시도 hover 판정에 방해되지 않게 */
+.scene-hotspot span,
+.scene-hotspot b,
+.scene-hotspot::before{
+  pointer-events:none !important;
+}
+
+/* REFINED LEARNING GAMES */
+.learning-game{display:grid;gap:14px;max-width:1000px;margin:0 auto;color:#e7e9e7}.learning-game-head{padding:18px 20px;background:linear-gradient(135deg,rgba(15,23,28,.98),rgba(8,12,15,.98));border:1px solid rgba(240,198,107,.28)}.learning-game-head>span{color:#8fcce8;font-size:11px;font-weight:1000;letter-spacing:.18em}.learning-game-head h3{margin:5px 0 7px;color:#f0c66b;font-size:26px}.learning-game-head p{margin:0;color:#c8ced1;line-height:1.6}.learning-loop{display:flex;align-items:center;justify-content:center;gap:10px;padding:10px;background:#11181d;border:1px solid rgba(185,233,255,.16);font-size:12px}.learning-loop b{color:#b9e9ff}.learning-loop i{color:#65747d}.learning-stage-card{padding:16px;background:#0b1014;border:1px solid rgba(185,233,255,.2);box-shadow:0 18px 45px rgba(0,0,0,.25)}.learning-stage-title{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:12px}.learning-stage-title small{color:#83c9e8;font-weight:900}.learning-stage-title h4{margin:4px 0 0;color:#f0c66b;font-size:19px;line-height:1.45}.learning-stage-title>b{flex:0 0 auto;padding:7px 10px;color:#b9e9ff;background:rgba(80,160,194,.12);border:1px solid rgba(185,233,255,.2);font-size:12px}.learning-canvas{display:block;width:100%;height:auto;max-height:52vh;background:#071018;border:1px solid rgba(185,233,255,.18)}.wave-legend{display:flex;gap:22px;margin:9px 0 14px;font-size:12px;color:#cbd2d5}.wave-legend i{display:inline-block;width:24px;height:4px;margin-right:7px;vertical-align:middle}.wave-legend i.target{background:#78beff}.wave-legend i.current{background:#f0c66b}.cause-controls{display:grid;grid-template-columns:1fr 1fr;gap:14px}.cause-controls label,.optic-control-panel label{padding:12px;background:#12191e;border:1px solid rgba(255,255,255,.08)}.cause-controls label>span{display:block;color:#f0c66b;font-weight:1000}.cause-controls label>small{display:block;margin:3px 0 9px;color:#9ea8ad}.cause-controls input,.optic-control-panel input{width:100%;accent-color:#f0c66b}.relation-meter{display:grid;grid-template-columns:auto 1fr;gap:7px 12px;align-items:center;margin-top:12px;padding:11px 12px;background:#0f161a;border-left:3px solid #8fcce8;font-size:12px}.relation-meter>b{color:#dbe6e9}.relation-meter>i{grid-column:1/-1;display:block;height:9px;background:#05080a;overflow:hidden}.relation-meter em{display:block;height:100%;background:linear-gradient(90deg,#4da7d4,#b9e9ff)}.relation-meter small{grid-column:1/-1;color:#93a1a8}.learning-feedback{min-height:48px;margin:12px 0;padding:12px 14px;color:#d5dadd;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09);line-height:1.55}.learning-feedback b{color:#75efb2}.learning-stage-card>.primary-button{width:100%}.induction-lab{position:relative;height:250px;overflow:hidden;background:radial-gradient(circle at 50% 50%,rgba(82,160,194,.08),transparent 28%),#071018;border:1px solid rgba(185,233,255,.18)}.learn-magnet{position:absolute;z-index:3;left:12%;top:50%;width:110px;height:52px;transform:translateY(-50%);display:grid;place-items:center;color:#fff;background:linear-gradient(90deg,#bd4a42 50%,#536978 50%);font-weight:1000}.learn-magnet.slow{animation:learnMagnetMove 1.2s ease}.learn-magnet.fast{animation:learnMagnetMove .45s ease}@keyframes learnMagnetMove{50%{left:58%}100%{left:12%}}.learn-coil{position:absolute;left:50%;top:50%;width:190px;height:100px;transform:translate(-50%,-50%);border:12px double #b87845;border-radius:50%}.learn-bulb{position:absolute;right:8%;top:50%;width:58px;height:58px;transform:translateY(-50%);display:grid;place-items:center;border-radius:50%;color:#7d858a;background:#242a2e;border:4px solid #4c555a;font-size:12px}.learn-bulb.on{color:#27200c;background:#ffe57f;box-shadow:0 0 35px rgba(255,226,112,.65)}.induction-pulse{position:absolute;left:50%;top:50%;width:90px;height:90px;transform:translate(-50%,-50%);border-radius:50%;pointer-events:none}.induction-pulse.on{animation:inductionPulse .35s ease}@keyframes inductionPulse{50%{background:radial-gradient(circle,rgba(105,211,255,.75),transparent 65%);transform:translate(-50%,-50%) scale(1.35)}}.equipment-controls{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}.equipment-controls label{display:grid;gap:7px;padding:10px;background:#12191e;font-size:12px;font-weight:900}.equipment-controls select{padding:9px;color:#e5e8e8;background:#0a0f12;border:1px solid rgba(255,255,255,.16)}.action-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:12px}.dual-learning-bars{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:13px}.dual-learning-bars label{font-size:12px;font-weight:900}.dual-learning-bars label>b{float:right}.dual-learning-bars i{display:block;height:11px;margin-top:6px;background:#05080a;overflow:hidden}.dual-learning-bars span{display:block;width:0;height:100%;background:linear-gradient(90deg,#4da7d4,#b9e9ff);transition:width .2s}.dual-learning-bars label:last-child span{background:linear-gradient(90deg,#e8bc54,#e86652)}.optic-control-panel{margin:13px 0;padding:12px;background:#11181d;border:1px solid rgba(255,255,255,.08)}.optic-control-panel>span{display:block;margin-bottom:9px;color:#f0c66b;font-weight:1000}.material-buttons{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.material-buttons button.selected{color:#102019!important;background:#b9e9ff!important;border-color:#fff!important}
+.optic-control-panel[hidden]{display:none!important}
+@media(max-width:650px){.learning-game-head h3{font-size:21px}.learning-loop{gap:5px;font-size:10px}.learning-stage-title{flex-direction:column}.cause-controls,.equipment-controls,.dual-learning-bars{grid-template-columns:1fr}.action-grid{grid-template-columns:1fr}.induction-lab{height:210px}.learn-coil{width:145px;height:82px}.learn-magnet{width:88px}.learning-canvas{min-height:230px}}
+
+/* MISSION CLEAR EVENT */
+.clear-event-dialog{width:min(92vw,620px);padding:0;border:0;background:transparent;color:#e9edef}.clear-event-dialog::backdrop{background:rgba(2,7,10,.88);backdrop-filter:blur(8px)}.clear-event-box{position:relative;overflow:hidden;padding:30px;background:linear-gradient(155deg,#15232b,#080d10 62%);border:2px solid rgba(240,198,107,.7);box-shadow:0 0 0 7px rgba(240,198,107,.08),0 30px 90px rgba(0,0,0,.7);text-align:center;animation:clearEventEnter .45s cubic-bezier(.2,.85,.3,1.2)}.clear-event-box::before{content:"";position:absolute;inset:-40%;background:conic-gradient(from 0deg,transparent,rgba(185,233,255,.09),transparent 18%);animation:clearEventScan 5s linear infinite;pointer-events:none}.clear-event-code{position:relative;color:#8fd8f5;font-size:12px;font-weight:1000;letter-spacing:.24em}.clear-event-icon{position:relative;display:grid;place-items:center;width:92px;height:92px;margin:18px auto 12px;border:3px solid #f0c66b;border-radius:50%;color:#f0c66b;background:rgba(240,198,107,.09);box-shadow:0 0 36px rgba(240,198,107,.25);font-size:49px;font-weight:1000;animation:clearIconPulse 1.4s ease-in-out infinite}.clear-event-box h2{position:relative;margin:0;color:#fff0bd;font-size:30px}.clear-event-result{position:relative;margin:8px 0 18px;color:#b9c5ca}.clear-event-discovery{position:relative;padding:15px;background:rgba(3,8,11,.65);border-left:4px solid #8fd8f5;text-align:left}.clear-event-discovery small{display:block;margin-bottom:5px;color:#8fd8f5;font-weight:900}.clear-event-discovery strong{color:#e8edef;line-height:1.55}.clear-event-progress{position:relative;display:grid;grid-template-columns:1fr auto;gap:7px 12px;align-items:center;margin:16px 0;text-align:left;font-size:12px}.clear-event-progress>div{grid-column:1/-1;height:12px;background:#030608;border:1px solid rgba(255,255,255,.14);overflow:hidden}.clear-event-progress i{display:block;height:100%;background:linear-gradient(90deg,#4aa9d7,#77efb7,#f0c66b);transition:width .8s ease}.clear-event-progress b{color:#f0c66b}.clear-event-character{position:relative;display:grid;grid-template-columns:66px 1fr;gap:12px;align-items:center;margin-bottom:16px;padding:10px 13px;background:rgba(255,255,255,.05);text-align:left}.clear-event-character img{width:66px;height:66px;object-fit:contain}.clear-event-character p{margin:0;color:#e5eaec;line-height:1.5}.clear-event-box>.primary-button{position:relative;width:100%}.clear-event-box.final-clear{border-color:#74efb5;background:radial-gradient(circle at 50% 16%,rgba(75,199,153,.2),transparent 30%),linear-gradient(155deg,#15232b,#080d10 65%)}.clear-event-box.final-clear .clear-event-icon{color:#76efb8;border-color:#76efb8;box-shadow:0 0 48px rgba(118,239,184,.4)}.clear-event-burst i{position:absolute;left:50%;top:92px;width:7px;height:24px;background:#f0c66b;transform-origin:0 175px;animation:clearBurst 1.2s ease-out both}.clear-event-burst i:nth-child(2){transform:rotate(45deg);background:#78d8ff}.clear-event-burst i:nth-child(3){transform:rotate(90deg);background:#76efb8}.clear-event-burst i:nth-child(4){transform:rotate(135deg)}.clear-event-burst i:nth-child(5){transform:rotate(180deg);background:#78d8ff}.clear-event-burst i:nth-child(6){transform:rotate(225deg);background:#76efb8}.clear-event-burst i:nth-child(7){transform:rotate(270deg)}.clear-event-burst i:nth-child(8){transform:rotate(315deg);background:#78d8ff}@keyframes clearEventEnter{from{opacity:0;transform:scale(.75) translateY(35px)}to{opacity:1;transform:scale(1) translateY(0)}}@keyframes clearIconPulse{50%{transform:scale(1.07);box-shadow:0 0 55px rgba(240,198,107,.42)}}@keyframes clearEventScan{to{transform:rotate(360deg)}}@keyframes clearBurst{from{opacity:1;margin-top:0}to{opacity:0;margin-top:-115px}}@media(max-width:560px){.clear-event-box{padding:23px 17px}.clear-event-box h2{font-size:24px}.clear-event-icon{width:76px;height:76px;font-size:40px}.clear-event-character{grid-template-columns:54px 1fr}.clear-event-character img{width:54px;height:54px}}
+
+/* GAME-FIRST PHYSICS MISSIONS */
+.physics-game-shell{display:grid;gap:16px;max-width:980px;margin:0 auto}.physics-game-header{padding:18px 20px;background:linear-gradient(135deg,rgba(15,23,28,.98),rgba(9,13,16,.98));border:1px solid rgba(240,198,107,.28)}.physics-game-header h3{margin:5px 0 8px;color:#f0c66b;font-size:26px}.physics-game-header p{margin:0;color:#cbd0d2;line-height:1.65}.wave-flight-card,.generator-action-card,.optics-puzzle-card{padding:16px;background:#0c1115;border:1px solid rgba(185,233,255,.22);box-shadow:0 18px 45px rgba(0,0,0,.28)}.game-hud{display:flex;justify-content:space-between;gap:16px;margin-bottom:10px;padding:9px 12px;background:#151d22;border-left:4px solid #f0c66b;color:#dce2e5}.game-hud b{color:#f0c66b}.game-canvas{display:block;width:100%;height:auto;max-height:56vh;background:#071018;border:1px solid rgba(185,233,255,.2);touch-action:none}.game-progress{height:12px;margin-top:10px;background:#05080a;border:1px solid rgba(255,255,255,.12);overflow:hidden}.game-progress i{display:block;width:0;height:100%;background:linear-gradient(90deg,#4ba6d5,#b9e9ff);transition:width .12s linear}.game-tip{margin:12px 0;padding:11px 13px;color:#d5dadd;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09);line-height:1.5}.generator-stage{position:relative;height:280px;overflow:hidden;background:radial-gradient(circle at 52% 50%,rgba(82,160,194,.09),transparent 28%),#071018;border:1px solid rgba(185,233,255,.2)}.generator-coil{position:absolute;left:52%;top:50%;width:210px;height:120px;transform:translate(-50%,-50%);border:13px double #b87845;border-radius:50%;box-shadow:0 0 24px rgba(184,120,69,.25)}.drag-magnet{position:absolute;z-index:4;left:15%;top:50%;width:120px;height:56px;transform:translateY(-50%);border:0;border-radius:5px;color:#fff;background:linear-gradient(90deg,#bd4a42 50%,#536978 50%);font-weight:1000;cursor:grab;touch-action:none}.drag-magnet.dragging{cursor:grabbing;box-shadow:0 0 0 3px rgba(240,198,107,.4)}.generator-glow{position:absolute;left:52%;top:50%;width:130px;height:130px;transform:translate(-50%,-50%);border-radius:50%;pointer-events:none}.generator-glow.pulse{animation:generatorPulse .35s ease}@keyframes generatorPulse{50%{background:radial-gradient(circle,rgba(120,220,255,.85),transparent 65%);transform:translate(-50%,-50%) scale(1.25)}}.drag-instruction{position:absolute;left:16px;bottom:14px;color:#b9e9ff;font-size:12px}.dual-game-bars{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}.dual-game-bars label{font-weight:900;font-size:13px}.dual-game-bars label>b{float:right}.dual-game-bars i{display:block;height:13px;margin-top:7px;background:#05080a;border:1px solid rgba(255,255,255,.12);overflow:hidden}.dual-game-bars span{display:block;width:0;height:100%;background:linear-gradient(90deg,#4ba6d5,#b9e9ff);transition:width .1s}.dual-game-bars label:last-child span{width:100%;background:linear-gradient(90deg,#e9b84f,#76e7a8)}.optics-controller{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;margin-top:12px}.optics-controller input{width:100%;accent-color:#f0c66b}.physics-game-shell .primary-button{width:100%;margin-top:10px}.physics-game-shell .secondary-button{padding:10px 13px}
+@media(max-width:650px){.physics-game-header h3{font-size:21px}.game-hud{align-items:flex-start;flex-direction:column;gap:4px}.generator-stage{height:220px}.generator-coil{width:155px;height:92px}.drag-magnet{width:94px}.dual-game-bars{grid-template-columns:1fr}.optics-controller{grid-template-columns:1fr 1fr}.optics-controller input{grid-column:1/-1;grid-row:1}.game-canvas{min-height:250px}}
+
+/* UI/UX PRO MAX AUDIT */
+:root{--focus:#b9e9ff;--surface-1:rgba(12,18,22,.94);--surface-2:rgba(24,32,37,.92);--radius-sm:8px;--radius-md:14px;--shadow-raised:0 18px 50px rgba(0,0,0,.42)}
+body{line-height:1.5;-webkit-tap-highlight-color:transparent}
+@supports(height:100dvh){#app,.screen{height:100dvh}}
+button,input,select{min-height:44px}
+button{touch-action:manipulation}
+button:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--focus)!important;outline-offset:3px!important;box-shadow:0 0 0 6px rgba(185,233,255,.18)!important}
+.panel-close{width:44px;height:44px;display:grid;place-items:center;right:6px;top:5px;border-radius:50%}.panel-close:hover{background:rgba(255,255,255,.1)}
+.nav-arrow:disabled{cursor:default;pointer-events:none;filter:saturate(.2)}
+.primary-button,.secondary-button,.tiny-button{transition:transform .16s ease,filter .16s ease,border-color .16s ease,background-color .16s ease}
+.primary-button:active:not(:disabled),.secondary-button:active:not(:disabled),.tiny-button:active:not(:disabled){transform:scale(.97)}
+.location-stepper{position:absolute;z-index:24;left:50%;top:20px;transform:translateX(-50%);display:grid;grid-template-columns:repeat(4,1fr);gap:5px;padding:5px;background:rgba(9,14,17,.78);border:1px solid rgba(255,255,255,.14);border-radius:var(--radius-md);backdrop-filter:blur(8px);box-shadow:var(--shadow-raised)}
+.location-stepper button{min-width:66px;padding:6px 10px;border:1px solid transparent;border-radius:9px;color:#c9d2d6;background:transparent;cursor:pointer;text-align:left}.location-stepper button span{display:block;color:#8da0aa;font:800 9px "Orbitron",sans-serif;letter-spacing:.08em}.location-stepper button b{font-size:13px}.location-stepper button:hover{background:rgba(255,255,255,.07)}.location-stepper button.active{color:#171b1d;background:linear-gradient(135deg,#f1ca71,#d7ad52);border-color:#ffe9a7;box-shadow:0 5px 18px rgba(215,173,82,.25)}.location-stepper button.active span{color:#5b461b}
+.training-panel,.experiment-window,.learning-stage-card,.learning-game-head,.clear-event-box,.modal-box{border-radius:var(--radius-md)}
+.training-panel{border:1px solid rgba(240,198,107,.28);border-left:5px solid var(--gold);box-shadow:var(--shadow-raised)}
+.experiment-window{scrollbar-gutter:stable;overscroll-behavior:contain}.experiment-window>h2{padding-right:42px;text-wrap:balance}.learning-game-head p,.learning-feedback,.training-panel p{text-wrap:pretty}.learning-stage-card{border-color:rgba(185,233,255,.24)}.learning-feedback{border-left:4px solid #8fcce8;background:rgba(143,204,232,.075)}
+.cause-controls label,.equipment-controls label,.optic-control-panel{border-radius:var(--radius-sm)}.cause-controls input[type="range"],.optic-control-panel input[type="range"]{cursor:pointer}.learning-loop{flex-wrap:wrap;border-radius:var(--radius-sm)}
+.character-choice:focus-visible{border-radius:20px}.character-choice.selected b{color:#181a1b;background:#f1ca71;border-color:#fff0bd;text-shadow:none}.scene-hotspot{min-width:96px;min-height:96px}.mini-stamp{white-space:nowrap}
+@media(max-width:1100px){.location-stepper{top:78px}}
+@media(max-width:760px){
+  .world-top-ui{left:10px!important;right:10px!important;top:max(10px,env(safe-area-inset-top))!important;display:grid!important;grid-template-columns:1fr 1fr!important;gap:7px!important}
+  .world-top-ui>span:not(#worldLocationName){display:none!important}#worldLocationName{grid-column:1/-1;grid-row:1;padding:8px 10px!important;text-align:center;font-weight:900}.world-top-ui .tiny-button{grid-row:2;width:100%;padding:8px!important}
+  .location-tag{display:none}.location-stepper{top:112px;width:calc(100vw - 72px);gap:3px;padding:4px}.location-stepper button{min-width:0;padding:6px 5px;text-align:center}.location-stepper button span{font-size:8px}.location-stepper button b{font-size:11px}
+  .nav-arrow{top:46%;width:44px!important;min-height:68px}.training-panel{left:8px;right:8px;top:auto;bottom:max(8px,env(safe-area-inset-bottom));width:auto;max-height:76vh;overflow:auto;padding:22px 18px 18px}.character-status-bar{bottom:max(8px,env(safe-area-inset-bottom))!important;border-radius:var(--radius-md)}
+  .experiment-overlay{padding:max(8px,env(safe-area-inset-top)) 8px max(8px,env(safe-area-inset-bottom))}.experiment-window{width:100%!important;max-height:100%!important;padding:20px 15px!important;border-left-width:3px}.learning-game-head{padding:16px}.learning-stage-card{padding:12px}.wave-legend{flex-wrap:wrap;gap:7px 16px}.clear-event-dialog{max-height:calc(100dvh - 16px);overflow:auto}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.scene-hotspot i,.clear-event-icon,.clear-event-box::before{animation:none!important}}
+
+/* WRONG-ANSWER RISK FEEDBACK */
+.inline-risk{display:block;margin-top:9px;padding:8px 10px;color:#ffd3cf;background:rgba(189,74,66,.16);border-left:4px solid #ef6b61;font-weight:1000}
+.risk-hit-notice{position:fixed;z-index:250;left:50%;top:16%;transform:translate(-50%,-24px) scale(.92);min-width:190px;padding:13px 20px;color:#fff4f2;background:linear-gradient(135deg,#a92f2b,#6e1f20);border:2px solid #ff8b80;border-radius:10px;box-shadow:0 18px 45px rgba(89,5,5,.52);font:1000 18px "Gowun Dodum",sans-serif;text-align:center;opacity:0;pointer-events:none}.risk-hit-notice.show{animation:riskNotice 1.05s ease both}
+body.risk-impact #dangerFill{animation:riskBarFlash .55s ease 2}body.risk-impact .danger{animation:riskDangerShake .32s ease 2}
+@keyframes riskNotice{0%{opacity:0;transform:translate(-50%,-24px) scale(.92)}16%,72%{opacity:1;transform:translate(-50%,0) scale(1)}100%{opacity:0;transform:translate(-50%,-10px) scale(.98)}}
+@keyframes riskBarFlash{50%{filter:brightness(1.8);box-shadow:0 0 18px #ff645b}}
+@keyframes riskDangerShake{25%{transform:translateX(-3px)}75%{transform:translateX(3px)}}
+
+/* ==========================================================
+   BRIGHT REPAIR ACADEMY — LEARNING-FIRST VISUAL REBUILD
+   ========================================================== */
+:root{--academy-paper:#f7f7f2;--academy-white:#ffffff;--academy-ink:#15252f;--academy-muted:#4c626d;--academy-blue:#166b8f;--academy-sky:#dff3fb;--academy-orange:#d96d2e;--academy-danger:#c43d39;--academy-success:#267a55;--academy-line:#c9d9df}
+body{font-family:system-ui,-apple-system,"Noto Sans KR","Malgun Gothic",sans-serif;font-size:16px;color:var(--academy-ink);background:#dfe9ed}
+
+/* 배경은 장소 정보만 전달하고 임무 카드보다 뒤로 물러나게 */
+.slide-overlay,.slide-overlay.light{background:linear-gradient(90deg,rgba(239,247,249,.34),rgba(239,247,249,.08) 55%,rgba(13,31,40,.12)),linear-gradient(0deg,rgba(10,25,33,.44),transparent 48%)!important;backdrop-filter:saturate(.68) brightness(.94)}
+.location-tag{color:var(--academy-ink)!important;background:rgba(255,255,255,.91)!important;border-left-color:var(--academy-orange)!important;box-shadow:0 10px 28px rgba(10,30,40,.16)!important}.location-tag span{color:var(--academy-blue)!important}.location-tag strong{color:var(--academy-ink)!important}
+.world-top-ui .mission-chip{display:none!important}.world-top-ui>span,.world-top-ui .tiny-button{color:var(--academy-ink)!important;background:rgba(255,255,255,.92)!important;border:1px solid rgba(33,77,95,.18)!important;box-shadow:0 8px 24px rgba(15,40,52,.13)!important}.world-top-ui .tiny-button:hover{background:#eaf7fb!important}
+.location-stepper{color:var(--academy-ink)!important;background:rgba(255,255,255,.94)!important;border-color:rgba(33,77,95,.2)!important}.location-stepper button{color:#3e5662!important}.location-stepper button span{color:#6b838e!important}.location-stepper button:hover{background:#e9f5f8!important}.location-stepper button.active{color:#fff!important;background:linear-gradient(135deg,#19799e,#115a78)!important;border-color:#7ccbe7!important;box-shadow:0 7px 18px rgba(22,107,143,.25)!important}.location-stepper button.active span{color:#d8f5ff!important}
+
+/* 하단 정보는 밝은 정비 관제 패널로 단순화 */
+.character-status-bar{color:var(--academy-ink)!important;background:linear-gradient(100deg,rgba(255,255,255,.96),rgba(235,247,250,.94))!important;border:1px solid rgba(33,77,95,.2)!important;border-left:6px solid var(--academy-blue)!important;box-shadow:0 16px 40px rgba(10,32,42,.2)!important}.character-status-bar .small-label{color:var(--academy-blue)!important}.status-main h3,.status-main p,.mission-status-area,.ship-mini-progress{color:var(--academy-ink)!important}.status-main p{color:var(--academy-muted)!important}.bond-track{height:12px!important;background:#d7e2e6!important;border-color:#b7cbd3!important;border-radius:999px}.ship-mini-progress.danger .bond-track i,#dangerFill{background:linear-gradient(90deg,#efb045,#d5423d)!important}
+
+/* 작은 핫스폿 대신 시설 상태가 한눈에 보이는 큰 수리 카드 */
+.scene-hotspot{width:320px!important;min-height:142px!important;padding:18px!important;display:grid!important;grid-template-columns:58px minmax(0,1fr)!important;grid-template-rows:auto auto!important;align-items:center!important;place-items:initial!important;gap:10px 14px!important;color:var(--academy-ink)!important;background:rgba(255,255,255,.96)!important;border:2px solid var(--academy-danger)!important;border-radius:18px!important;box-shadow:0 18px 42px rgba(8,28,38,.25),0 0 0 5px rgba(255,255,255,.35)!important;text-align:left!important}
+.scene-hotspot::before{content:"긴급 수리 임무"!important;position:absolute!important;left:18px!important;top:-13px!important;padding:5px 10px!important;color:#fff!important;background:var(--academy-danger)!important;border-radius:999px!important;font:900 11px system-ui,sans-serif!important;letter-spacing:.04em!important}
+.scene-hotspot i{display:block!important;grid-column:1!important;grid-row:1!important;width:58px!important;height:58px!important;border:3px solid var(--academy-danger)!important;border-radius:16px!important;background:#fff0ee!important;box-shadow:none!important;animation:none!important}.scene-hotspot i::before,.scene-hotspot i::after{background:var(--academy-danger)!important}.scene-hotspot i::before{width:24px!important;height:4px!important}.scene-hotspot i::after{width:4px!important;height:24px!important}
+.scene-hotspot .hotspot-copy{grid-column:2!important;grid-row:1!important;display:grid!important;gap:2px!important;padding:0!important;color:var(--academy-ink)!important;background:none!important;border:0!important}.hotspot-copy small{color:var(--academy-blue)!important;font:800 10px "Orbitron",system-ui,sans-serif!important;letter-spacing:.08em!important}.hotspot-copy strong{color:var(--academy-ink)!important;font-size:22px!important;line-height:1.2!important}.hotspot-copy em{color:var(--academy-muted)!important;font-size:14px!important;font-style:normal!important;font-weight:700!important}
+.scene-hotspot .mini-stamp{grid-column:1/-1!important;grid-row:2!important;justify-self:stretch!important;padding:8px 11px!important;color:#8c2926!important;background:#fff0ee!important;border:1px solid #e7a3a0!important;border-radius:8px!important;font-size:13px!important;text-align:center!important;transform:none!important}.scene-hotspot .mini-stamp::before{content:"●"!important;margin-right:7px!important;color:var(--academy-danger)!important;font-size:11px!important}.scene-hotspot .mini-stamp.done{color:#175b3d!important;background:#e8f7ef!important;border-color:#8bc7aa!important;transform:none!important}.scene-hotspot .mini-stamp.done::before{content:"✓"!important;color:var(--academy-success)!important;font-size:14px!important}.scene-hotspot .mini-stamp.done::after{content:none!important}
+.repair-hotspot.cleared{color:var(--academy-ink)!important;background:rgba(250,255,252,.97)!important;border-color:var(--academy-success)!important}.repair-hotspot.cleared::before{content:"수리 완료 · 온라인"!important;background:var(--academy-success)!important}.repair-hotspot.cleared i{border-color:var(--academy-success)!important;background:#e8f7ef!important}.repair-hotspot.cleared i::before,.repair-hotspot.cleared i::after{background:var(--academy-success)!important}.repair-hotspot::after,.repair-hotspot.cleared::after{content:none!important;display:none!important}.repair-hotspot:hover{filter:none!important;border-color:var(--academy-blue)!important;background:#fff!important;box-shadow:0 22px 46px rgba(8,28,38,.3),0 0 0 5px rgba(124,203,231,.3)!important}
+.wave-hotspot{left:8%!important;top:34%!important}.electro-hotspot,.optics-hotspot{left:auto!important;right:8%!important;top:34%!important}.command-hotspot{left:calc(50% - 160px)!important;top:34%!important}.command-hotspot::before{content:"출항 관제"!important;background:var(--academy-blue)!important}.command-hotspot{border-color:var(--academy-blue)!important}.command-hotspot i{border-color:var(--academy-blue)!important;background:#e8f6fb!important}.command-hotspot i::before,.command-hotspot i::after{background:var(--academy-blue)!important}.command-hotspot .command-state{color:#244f61!important;background:#e8f6fb!important;border-color:#a5cfdf!important}.command-hotspot .command-state::before{color:var(--academy-blue)!important}
+
+/* 임무 창: 작은 팝업이 아니라 읽기 쉬운 밝은 브리핑 카드 */
+.training-panel{left:clamp(24px,5vw,80px)!important;right:auto!important;top:13vh!important;width:min(570px,calc(100vw - 48px))!important;max-height:calc(100vh - 150px)!important;padding:34px 32px 28px!important;color:var(--academy-ink)!important;background:linear-gradient(145deg,#fff,#eef8fa)!important;border:1px solid #b7d2dc!important;border-left:8px solid var(--academy-orange)!important;border-radius:20px!important;box-shadow:0 28px 70px rgba(7,30,40,.32)!important}.training-panel>span{color:var(--academy-blue)!important;font-size:11px!important}.training-panel h3{margin:9px 48px 14px 0!important;color:var(--academy-ink)!important;font-size:clamp(28px,3vw,38px)!important;line-height:1.18!important;text-wrap:balance}.mission-goal-label{display:inline-block!important;margin-bottom:4px!important;padding:5px 10px!important;color:#934319!important;background:#fff0e5!important;border-radius:999px!important;font-size:13px!important}.training-panel p{margin:8px 0 16px!important;color:#334c58!important;font-size:17px!important;line-height:1.68!important}.training-panel .panel-close{color:#294653!important;background:#e3eff3!important}.mission-steps{margin:16px 0 20px!important;padding:16px 18px 16px 42px!important;color:#263e49!important;background:#fff!important;border:1px solid #cbdde3!important;border-left:5px solid var(--academy-blue)!important;border-radius:12px!important;font-size:15px!important;line-height:1.75!important}.mission-steps li::marker{color:var(--academy-blue);font-weight:1000}.training-panel .primary-button{min-height:54px!important;font-size:17px!important}
+
+/* 학습창: 밝은 정비 매뉴얼 + 어두운 시뮬레이션 화면 */
+.experiment-overlay{background:rgba(25,48,59,.38)!important;backdrop-filter:blur(9px) saturate(.8)!important}.experiment-window{color:var(--academy-ink)!important;background-color:#edf4f6!important;background-image:linear-gradient(rgba(50,101,121,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(50,101,121,.055) 1px,transparent 1px),linear-gradient(145deg,#f8fbfc,#eaf3f5)!important;background-size:28px 28px,28px 28px,auto!important;border:1px solid #abc7d2!important;border-top:8px solid var(--academy-blue)!important;border-left:1px solid #abc7d2!important;box-shadow:0 32px 85px rgba(7,30,40,.35)!important}.experiment-window .small-label{color:var(--academy-blue)!important}.experiment-window>h2{color:var(--academy-ink)!important;font-size:clamp(30px,4vw,44px)!important;line-height:1.18!important}.experiment-window>p{max-width:820px!important;color:#3d5661!important;font-size:17px!important;line-height:1.7!important}.experiment-close{color:#294653!important;background:#dcebef!important}
+.learning-game{color:var(--academy-ink)!important}.learning-game-head{color:#fff!important;background:linear-gradient(135deg,#176d90,#245b71)!important;border:0!important;border-radius:16px!important;box-shadow:0 12px 30px rgba(21,80,104,.2)!important}.learning-game-head>span{color:#bdefff!important}.learning-game-head h3{color:#fff5c7!important}.learning-game-head p{color:#eefaff!important;font-size:16px!important}.learning-loop{color:#2b4b59!important;background:#e6f3f7!important;border-color:#b6d5e1!important}.learning-loop b{color:#155f7d!important}.learning-loop i{color:#7595a2!important}
+.learning-stage-card{color:var(--academy-ink)!important;background:rgba(255,255,255,.98)!important;border:1px solid #bfd3db!important;border-radius:16px!important;box-shadow:0 16px 38px rgba(21,60,76,.14)!important}.learning-stage-title small{color:var(--academy-blue)!important}.learning-stage-title h4{color:var(--academy-ink)!important;font-size:21px!important}.learning-stage-title>b{color:#125875!important;background:#e5f4f9!important;border-color:#aad3e3!important;border-radius:999px!important}.wave-legend{color:#344f5b!important}.cause-controls label,.equipment-controls label,.optic-control-panel{color:var(--academy-ink)!important;background:#f3f7f8!important;border-color:#cbdce2!important}.cause-controls label>span,.optic-control-panel>span{color:#155f7d!important}.cause-controls label>small{color:#526c77!important}.equipment-controls select{color:var(--academy-ink)!important;background:#fff!important;border-color:#afc8d1!important}.relation-meter{color:#324d58!important;background:#eef7fa!important;border-left-color:var(--academy-blue)!important}.relation-meter>b{color:#173b4b!important}.relation-meter small{color:#526c77!important}.learning-feedback{color:#243f4b!important;background:#eaf6fa!important;border:1px solid #b5d9e6!important;border-left:5px solid var(--academy-blue)!important;font-size:15px!important}.learning-feedback b{color:#176b49!important}.inline-risk{color:#8b2b28!important;background:#fff0ee!important}.induction-lab{background:radial-gradient(circle at 50% 50%,rgba(34,129,167,.13),transparent 30%),#e7f2f5!important;border-color:#b7d3dd!important}.dual-learning-bars label{color:#263f4a!important}.optic-control-panel label{color:var(--academy-ink)!important}.material-buttons button.selected{color:#fff!important;background:var(--academy-blue)!important;border-color:#0e526f!important}
+
+/* 시작/선택 화면도 밝은 정보 카드로 정리 */
+.cover-copy{padding:30px 34px;max-width:680px;color:var(--academy-ink);background:rgba(255,255,255,.9);border-left:8px solid var(--academy-orange);border-radius:0 20px 20px 0;box-shadow:0 24px 60px rgba(8,28,38,.25);text-shadow:none}.cover-copy h1{color:var(--academy-ink)}.cover-description{color:#3a535f}.kicker{color:var(--academy-blue)}
+.floating-header,.character-info-bar{color:var(--academy-ink)!important;background:rgba(255,255,255,.93)!important;border-color:var(--academy-orange)!important;box-shadow:0 16px 36px rgba(8,28,38,.2)!important}.floating-header span,.character-info-bar .small-label{color:var(--academy-blue)!important}.floating-header h2,.character-info-bar h3,.character-info-bar p{color:var(--academy-ink)!important}.select-ability-card{color:var(--academy-ink)!important;background:#eef7fa!important;border-color:#b9d7e2!important}.select-ability-card p{color:#36525e!important}
+
+@media(max-width:760px){.scene-hotspot{left:16px!important;right:16px!important;top:31%!important;width:auto!important;min-height:124px!important;padding:16px!important;grid-template-columns:50px minmax(0,1fr)!important}.scene-hotspot i{width:50px!important;height:50px!important}.hotspot-copy strong{font-size:19px!important}.hotspot-copy em{font-size:13px!important}.training-panel{left:10px!important;right:10px!important;top:auto!important;bottom:max(10px,env(safe-area-inset-bottom))!important;width:auto!important;max-height:78vh!important;padding:27px 20px 20px!important}.training-panel h3{font-size:28px!important}.training-panel p{font-size:16px!important}.mission-steps{font-size:14px!important;padding:13px 13px 13px 34px!important}.character-status-bar{grid-template-columns:1fr!important}.experiment-window>p{font-size:15px!important}.cover-copy{left:5vw!important;right:5vw!important;padding:24px!important;border-radius:16px!important}.cover-copy h1{font-size:clamp(42px,14vw,72px)!important;letter-spacing:-2px!important}}
+
+/* 밝은 화면에서도 모든 행동 버튼의 역할이 즉시 구분되도록 */
+.primary-button{color:#fff!important;background:linear-gradient(180deg,#cf6428,#ad4315)!important;border:1px solid #8d3511!important;border-radius:10px!important;box-shadow:0 8px 18px rgba(137,52,18,.22)!important}.primary-button:hover:not(:disabled){filter:brightness(1.06)!important}.secondary-button{min-height:46px;padding:10px 14px;color:#155f7d;background:#fff;border:1px solid #8fbdce;border-radius:9px;font-weight:900;cursor:pointer;box-shadow:0 5px 12px rgba(26,89,113,.09)}.secondary-button:hover{color:#0c4a63;background:#e8f6fb;border-color:#4e9ab7}.scene-character{z-index:6!important;opacity:.88!important}.scene-hotspot{z-index:12!important}.training-panel{z-index:32!important}
+[hidden]{display:none!important}.location-stepper button{position:relative}.location-stepper button::after{content:"";position:absolute;right:6px;top:7px;width:7px;height:7px;border-radius:50%;background:#9aaab1}.location-stepper button.damaged::after{background:var(--academy-danger);box-shadow:0 0 0 3px rgba(196,61,57,.12)}.location-stepper button.repaired::after{background:#35a36f;box-shadow:0 0 0 3px rgba(53,163,111,.13)}.location-stepper button.active::after{background:#fff;box-shadow:0 0 0 3px rgba(255,255,255,.2)}
+
+/* ==========================================================
+   MISSION FOCUS + EARTH ARRIVAL STORY
+   ========================================================== */
+.learning-game-head{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) 82px;
+  align-items:center;
+  gap:16px;
+  padding:13px 18px!important;
+}
+.learning-game-head h3{margin:3px 0 4px!important;font-size:24px!important}
+.learning-game-head p{margin:0!important;font-size:14px!important;line-height:1.45!important}
+.mission-mascot{width:78px;height:78px;object-fit:contain;filter:drop-shadow(0 7px 10px rgba(0,0,0,.23))}
+.mission-phase{display:grid;grid-template-columns:auto repeat(3,minmax(0,1fr));gap:8px;align-items:center;padding:8px 10px;color:#35505c;background:#fff;border:1px solid #bfd3db;border-radius:12px;box-shadow:0 7px 20px rgba(21,60,76,.08)}
+.mission-phase>strong{padding:7px 10px;color:#934319;background:#fff0e5;border-radius:8px;font-size:13px;white-space:nowrap}
+.mission-phase>span{display:flex;align-items:center;justify-content:center;gap:7px;min-height:34px;padding:6px 8px;border:1px solid #d4e1e6;border-radius:8px;color:#617681;background:#f4f7f8;font-size:13px;font-weight:800;text-align:center}
+.mission-phase b{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:#dce7eb;color:#49616c;font-size:12px}
+.mission-phase>span.active{color:#fff;background:#176d90;border-color:#176d90;box-shadow:0 4px 12px rgba(23,109,144,.22)}
+.mission-phase>span.active b{color:#176d90;background:#fff}
+.mission-phase>span.complete{color:#176b49;background:#e9f7f0;border-color:#9ecdb5}
+.mission-phase>span.complete b{color:#fff;background:#267a55}
+.control-callout{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;color:#71350f;background:#fff3e8;border:2px solid #e18a51;border-radius:10px}
+.control-callout b{font-size:15px;white-space:nowrap}.control-callout span{color:#76513b;font-size:12px;text-align:right}
+
+@media(min-width:901px){
+  .experiment-overlay{padding:12px!important}
+  .experiment-window{width:min(1180px,calc(100vw - 24px))!important;height:min(850px,calc(100dvh - 24px))!important;max-height:calc(100dvh - 24px)!important;overflow:hidden!important;padding:18px 22px 20px!important}
+  .experiment-window>.small-label{display:none!important}
+  .experiment-window>h2{margin:0!important;font-size:29px!important;line-height:1.12!important}
+  .experiment-window>p{margin:3px 0 8px!important;font-size:14px!important;line-height:1.4!important}
+  .experiment-content{height:calc(100% - 66px)!important;margin-top:0!important;overflow:hidden!important}
+  .learning-game{height:100%;max-width:none!important;grid-template-rows:auto auto minmax(0,1fr);gap:8px!important}
+  .learning-stage-card{min-height:0;overflow:hidden;display:grid!important;grid-template-columns:minmax(0,1.4fr) minmax(310px,.78fr);gap:9px 14px;align-content:start;padding:13px!important}
+  .learning-stage-title{grid-column:1/-1;grid-row:1;margin-bottom:0!important}
+  .learning-stage-title h4{font-size:17px!important;line-height:1.32!important}
+  .learning-canvas{grid-column:1;grid-row:2/7;width:100%;height:100%;min-height:260px;max-height:none!important;object-fit:contain}
+  .wave-legend{grid-column:1;grid-row:7;margin:0!important}
+  .control-callout{grid-column:2;grid-row:2}
+  .learning-feedback{grid-column:2;margin:0!important;min-height:54px;padding:9px 11px!important;font-size:13px!important;line-height:1.4!important}
+  .learning-stage-card>.primary-button{grid-column:2;min-height:43px}
+  .wave-learning .cause-controls{grid-column:2;grid-row:3;gap:8px}
+  .wave-learning .cause-controls label{padding:9px!important}
+  .wave-learning .relation-meter{grid-column:2;grid-row:4;margin-top:0!important;padding:8px 10px!important}
+  .wave-learning .learning-feedback{grid-row:5}
+  .wave-learning .learning-stage-card>.primary-button{grid-row:6}
+  .electro-learning .induction-lab{grid-column:1;grid-row:2/8;height:100%!important;min-height:280px}
+  .electro-learning .equipment-controls{grid-column:2;grid-row:3;margin-top:0!important;gap:8px}
+  .electro-learning .action-grid{grid-column:2;grid-row:4;margin-top:0!important;gap:6px}
+  .electro-learning .action-grid button{padding:8px 7px;font-size:12px}
+  .electro-learning .dual-learning-bars{grid-column:2;grid-row:5;margin-top:0!important;gap:8px}
+  .electro-learning .learning-feedback{grid-row:6}
+  .electro-learning .learning-stage-card>.primary-button{grid-row:7}
+  .optics-learning .learning-canvas{grid-row:2/6}
+  .optics-learning .optic-control-panel{grid-column:2;grid-row:3;margin:0!important;padding:10px!important}
+  .optics-learning .learning-feedback{grid-row:4}
+  .optics-learning .learning-stage-card>.primary-button{grid-row:5}
+}
+
+.arrival-sequence-dialog{width:min(1120px,96vw);max-height:95dvh;padding:0;border:0;border-radius:24px;background:transparent;color:var(--academy-ink);overflow:visible}
+.arrival-sequence-dialog::backdrop{background:rgba(10,29,38,.82);backdrop-filter:blur(10px) saturate(.8)}
+.arrival-sequence-card{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(340px,.72fr);overflow:hidden;background:#fff;border:1px solid rgba(255,255,255,.65);border-radius:24px;box-shadow:0 36px 110px rgba(0,0,0,.52);animation:arrivalEnter .48s cubic-bezier(.2,.85,.28,1.12)}
+.arrival-visual{position:relative;min-height:540px;background:#dff3fb;overflow:hidden}
+.arrival-visual::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 80px rgba(16,70,92,.13);pointer-events:none}
+.arrival-visual img{width:100%;height:100%;object-fit:cover;transition:opacity .22s ease,transform .6s ease}
+.arrival-visual img.changing{opacity:.18;transform:scale(1.035)}
+.arrival-visual span{position:absolute;z-index:2;left:20px;top:20px;padding:7px 10px;color:#fff;background:rgba(16,67,87,.86);border:1px solid rgba(255,255,255,.45);border-radius:999px;font:900 11px system-ui,sans-serif;letter-spacing:.12em}
+.arrival-story-panel{display:flex;flex-direction:column;justify-content:center;padding:32px;background:linear-gradient(160deg,#fff,#eef9fc)}
+.arrival-dots{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:26px}
+.arrival-dots i{height:7px;border-radius:99px;background:#cbdde4;transition:.2s}.arrival-dots i.active{background:var(--academy-orange);box-shadow:0 0 0 3px rgba(217,109,46,.13)}.arrival-dots i.complete{background:var(--academy-success)}
+.arrival-kicker{color:var(--academy-blue);font-size:11px;font-weight:1000;letter-spacing:.2em}
+.arrival-story-panel h2{margin:8px 0 12px;color:var(--academy-ink);font-size:clamp(30px,3vw,43px);line-height:1.15;text-wrap:balance}
+.arrival-story-panel>p{min-height:76px;margin:0 0 24px;color:#405c68;font-size:17px;line-height:1.65;text-wrap:pretty}
+.arrival-encouragement{display:grid;grid-template-columns:82px 1fr;gap:13px;align-items:center;margin:-6px 0 22px;padding:13px;color:#244350;background:#fff8e8;border:1px solid #e9ca79;border-left:5px solid var(--academy-orange);border-radius:13px}
+.arrival-encouragement img{width:82px;height:82px;object-fit:contain}.arrival-encouragement strong{color:#81401b}.arrival-encouragement p{margin:6px 0 0;line-height:1.55}
+.arrival-actions{display:grid;grid-template-columns:auto 1fr;gap:9px;margin-top:auto}.arrival-actions .primary-button,.arrival-actions .secondary-button{min-height:52px}
+@keyframes arrivalEnter{from{opacity:0;transform:translateY(24px) scale(.94)}to{opacity:1;transform:none}}
+
+@media(max-width:900px){
+  .experiment-window{height:auto!important;overflow:auto!important}.experiment-content{height:auto!important;overflow:visible!important}.learning-game{height:auto!important}.learning-stage-card{display:block!important;overflow:visible!important}.control-callout{margin:10px 0}.mission-phase{grid-template-columns:1fr 1fr}.mission-phase>strong{grid-column:1/-1;text-align:center}.mission-mascot{width:66px;height:66px}
+  .arrival-sequence-dialog{width:min(94vw,700px);max-height:calc(100dvh - 16px);overflow:auto}.arrival-sequence-card{grid-template-columns:1fr}.arrival-visual{min-height:0;aspect-ratio:16/9}.arrival-story-panel{padding:24px}.arrival-story-panel>p{min-height:0}.arrival-dots{margin-bottom:18px}
+}
+@media(max-width:560px){
+  .learning-game-head{grid-template-columns:1fr 58px;padding:11px 12px!important}.learning-game-head h3{font-size:20px!important}.learning-game-head p{font-size:13px!important}.mission-mascot{width:56px;height:56px}.mission-phase>span{font-size:11px}.control-callout{align-items:flex-start;flex-direction:column;gap:3px}.control-callout span{text-align:left}
+  .arrival-story-panel{padding:20px}.arrival-story-panel h2{font-size:28px}.arrival-story-panel>p{font-size:15px;margin-bottom:17px}.arrival-encouragement{grid-template-columns:64px 1fr}.arrival-encouragement img{width:64px;height:64px}.arrival-actions{grid-template-columns:1fr}.arrival-actions .secondary-button{order:2}
+}
+
+/* 최종 우선순위: 관제실 그림과 반투명 하단 HUD */
+.lab4-slide>.scene-character{display:none!important}
+.character-status-bar{background:linear-gradient(105deg,rgba(255,255,255,.68),rgba(224,242,247,.54))!important;border:1px solid rgba(255,255,255,.68)!important;border-left:6px solid rgba(22,107,143,.78)!important;box-shadow:0 18px 45px rgba(8,35,47,.22),inset 0 1px rgba(255,255,255,.58)!important;backdrop-filter:blur(18px) saturate(1.28)!important;-webkit-backdrop-filter:blur(18px) saturate(1.28)!important}
+.character-status-bar .status-main h3,.character-status-bar .status-main p,.character-status-bar .mission-status-area,.character-status-bar .ship-mini-progress{color:#122f3c!important;text-shadow:0 1px 0 rgba(255,255,255,.72)}
+.character-status-bar .small-label{color:#0d5d7e!important}.character-status-bar .bond-track{background:rgba(18,53,68,.18)!important;border-color:rgba(20,68,86,.24)!important;box-shadow:inset 0 1px 3px rgba(10,37,49,.13)}
+
+@media(min-width:761px) and (max-width:900px){
+  .earth-route-preview{left:40px!important;right:auto!important;top:22%!important;width:calc(100vw - 430px)!important;min-width:330px}.earth-route-preview figure{height:190px;max-height:none;aspect-ratio:auto}.lab4-slide .command-hotspot{left:auto!important;right:40px!important;top:38%!important;bottom:auto!important}
+}
+@media(max-width:760px){
+  .earth-route-preview{left:12px!important;right:12px!important;top:19%!important;width:auto!important;padding:8px!important}.earth-route-preview header{margin-bottom:5px}.earth-route-preview h2{font-size:17px}.earth-route-preview header>b{display:none}.earth-route-preview figure{height:130px!important;max-height:none!important;aspect-ratio:auto}.earth-route-preview figcaption{left:6px;bottom:6px;padding:5px 7px;font-size:10px}.earth-story-thumbs{gap:5px;margin-top:5px}.earth-story-thumbs button{min-height:40px;padding:2px}.earth-story-thumbs img{height:32px}.lab4-slide .command-hotspot{left:16px!important;right:16px!important;top:calc(19% + 235px)!important;bottom:auto!important;min-height:104px!important;padding:11px 14px!important}
+}
+
+/* ==========================================================
+   FROSTED GLASS UI — 모든 밝은 블록을 한 가지 재질로 통일
+   ========================================================== */
+:root{
+  --glass-light:rgba(244,250,252,.64);
+  --glass-soft:rgba(234,246,250,.52);
+  --glass-line:rgba(255,255,255,.72);
+  --glass-shadow:0 20px 52px rgba(5,29,41,.24),inset 0 1px rgba(255,255,255,.58);
+}
+
+.cover-copy,
+.floating-header,
+.character-info-bar,
+.select-ability-card,
+.location-tag,
+.location-stepper,
+.world-top-ui>span,
+.world-top-ui .tiny-button,
+.character-status-bar,
+.training-panel,
+.experiment-window,
+.learning-stage-card,
+.mission-phase,
+.mission-steps,
+.cause-controls label,
+.equipment-controls label,
+.optic-control-panel,
+.relation-meter,
+.learning-feedback,
+.earth-route-preview,
+.modal-box,
+.diary-dialog-actions,
+.arrival-story-panel,
+.arrival-encouragement{
+  background:linear-gradient(135deg,var(--glass-light),var(--glass-soft))!important;
+  border-color:var(--glass-line)!important;
+}
+
+.cover-copy,
+.floating-header,
+.character-info-bar,
+.location-tag,
+.location-stepper,
+.world-top-ui>span,
+.world-top-ui .tiny-button,
+.character-status-bar,
+.training-panel,
+.experiment-window,
+.learning-stage-card,
+.earth-route-preview,
+.modal-box,
+.diary-dialog-actions,
+.arrival-story-panel{
+  box-shadow:var(--glass-shadow)!important;
+  backdrop-filter:blur(18px) saturate(1.3)!important;
+  -webkit-backdrop-filter:blur(18px) saturate(1.3)!important;
+}
+
+.floating-header,.character-info-bar,.training-panel,.experiment-window,.earth-route-preview{
+  border:1px solid var(--glass-line)!important;
+  border-top:1px solid rgba(255,255,255,.9)!important;
+}
+.floating-header{border-left:6px solid rgba(22,107,143,.72)!important}
+.character-info-bar{border-top:2px solid rgba(217,109,46,.72)!important}
+.select-ability-card{background:linear-gradient(135deg,rgba(223,244,251,.58),rgba(255,255,255,.42))!important}
+.training-panel{border-left:7px solid rgba(217,109,46,.82)!important}
+.experiment-window{border-top:7px solid rgba(22,107,143,.8)!important}
+.mission-steps,.cause-controls label,.equipment-controls label,.optic-control-panel,.relation-meter,.learning-feedback{box-shadow:inset 0 1px rgba(255,255,255,.55),0 8px 22px rgba(18,64,82,.08)!important}
+.secondary-button{background:rgba(255,255,255,.58)!important;backdrop-filter:blur(10px)!important;-webkit-backdrop-filter:blur(10px)!important}
+
+/* 수리 전: 어두운 유리 + 밝은 임무 텍스트 */
+.repair-hotspot.damaged{
+  color:#f6fbfd!important;
+  background:linear-gradient(135deg,rgba(8,28,39,.82),rgba(20,43,53,.7))!important;
+  border-color:rgba(238,91,82,.9)!important;
+  box-shadow:0 18px 45px rgba(3,17,24,.38),inset 0 1px rgba(255,255,255,.16)!important;
+  backdrop-filter:blur(16px) saturate(1.15)!important;
+  -webkit-backdrop-filter:blur(16px) saturate(1.15)!important;
+}
+.repair-hotspot.damaged .hotspot-copy{color:#f6fbfd!important}
+.repair-hotspot.damaged .hotspot-copy small{color:#73d5fa!important;text-shadow:0 1px 5px rgba(0,0,0,.5)!important}
+.repair-hotspot.damaged .hotspot-copy strong{color:#fff!important;text-shadow:0 2px 8px rgba(0,0,0,.58)!important}
+.repair-hotspot.damaged .hotspot-copy em{color:#c9e4ee!important;text-shadow:0 1px 6px rgba(0,0,0,.48)!important}
+.repair-hotspot.damaged .mini-stamp{color:#8e2825!important;background:rgba(255,238,236,.94)!important;border-color:#efaaa6!important}
+.repair-hotspot.damaged.high-risk{border-color:#ff5c53!important;box-shadow:0 0 0 5px rgba(255,92,83,.18),0 22px 55px rgba(53,4,4,.42)!important}
+
+/* 수리 후: 밝은 청록 유리 + 진한 완료 텍스트 */
+.repair-hotspot.cleared{
+  color:#123d31!important;
+  background:linear-gradient(135deg,rgba(235,255,246,.78),rgba(204,241,226,.58))!important;
+  border-color:rgba(45,145,99,.82)!important;
+  box-shadow:0 18px 45px rgba(8,53,38,.2),inset 0 1px rgba(255,255,255,.74)!important;
+  backdrop-filter:blur(16px) saturate(1.2)!important;
+  -webkit-backdrop-filter:blur(16px) saturate(1.2)!important;
+}
+.repair-hotspot.cleared .hotspot-copy small{color:#176b4b!important}
+.repair-hotspot.cleared .hotspot-copy strong{color:#123d31!important;text-shadow:0 1px rgba(255,255,255,.7)!important}
+.repair-hotspot.cleared .hotspot-copy em{color:#315f51!important}
+.repair-hotspot.cleared .mini-stamp{color:#15593c!important;background:rgba(235,255,246,.86)!important;border-color:#82c7a5!important}
+
+/* 관제실은 고장 대신 출항 준비 상태이므로 파란 유리 사용 */
+.command-hotspot.damaged{border-color:rgba(75,169,206,.9)!important;background:linear-gradient(135deg,rgba(8,38,53,.83),rgba(22,73,91,.7))!important}
+.command-hotspot.damaged::before{background:#176d90!important}
+
+@media(max-width:760px){
+  :root{--glass-light:rgba(247,252,253,.72);--glass-soft:rgba(229,244,249,.62)}
+  .floating-header,.character-info-bar,.training-panel,.experiment-window{backdrop-filter:blur(14px) saturate(1.2)!important;-webkit-backdrop-filter:blur(14px) saturate(1.2)!important}
+}
+
+/* ==========================================================
+   FACILITY COMPLETE BACKDROP + STAMP IMPACT
+   ========================================================== */
+.facility-complete-layer{position:absolute;z-index:8;inset:0;display:grid;place-items:center;overflow:hidden;opacity:0;pointer-events:none;background:radial-gradient(circle at 50% 44%,rgba(65,218,163,.22),transparent 31%),linear-gradient(180deg,rgba(8,75,76,.08),rgba(19,119,87,.24));transition:opacity .45s ease}
+.facility-complete-layer::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(143,255,215,.04) 0 2px,transparent 2px 9px);mix-blend-mode:screen}
+.facility-complete-layer img{position:absolute;left:50%;top:45%;width:clamp(260px,28vw,440px);height:auto;object-fit:contain;opacity:.38;transform:translate(-50%,-50%) rotate(-8deg) scale(.92);filter:drop-shadow(0 14px 28px rgba(2,45,55,.28));transition:opacity .35s ease}
+.location-slide.facility-repaired .facility-complete-layer{opacity:1}
+.location-slide.facility-repaired .slide-overlay{background:linear-gradient(90deg,rgba(224,253,242,.24),rgba(63,176,139,.08) 58%,rgba(8,45,48,.18))!important;backdrop-filter:saturate(.8) brightness(1.04)!important}
+.location-slide.stamp-impact .facility-complete-layer{animation:completeBackdropFlash 1.4s ease both}
+.location-slide.stamp-impact .facility-complete-layer img{animation:completeStampSlam 1.55s cubic-bezier(.17,.84,.27,1.13) both}
+@keyframes completeStampSlam{0%{opacity:0;transform:translate(-50%,-50%) rotate(-22deg) scale(2.5)}42%{opacity:1;transform:translate(-50%,-50%) rotate(-7deg) scale(.78)}60%{transform:translate(-50%,-50%) rotate(-9deg) scale(1.08)}78%{transform:translate(-50%,-50%) rotate(-8deg) scale(.94)}100%{opacity:.42;transform:translate(-50%,-50%) rotate(-8deg) scale(.92)}}
+@keyframes completeBackdropFlash{0%{filter:brightness(1)}38%{filter:brightness(1.65) saturate(1.35)}100%{filter:brightness(1)}}
+
+/* 항로 위험도 100% 실패 이벤트 */
+.route-failure-dialog{width:min(1120px,96vw);max-height:94dvh;padding:0;border:0;border-radius:24px;background:transparent;color:#edf6fa;overflow:auto}
+.route-failure-dialog::backdrop{background:rgba(1,7,13,.91);backdrop-filter:blur(11px) saturate(.7)}
+.route-failure-card{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(340px,.72fr);overflow:hidden;background:linear-gradient(145deg,#10222d,#071017);border:2px solid rgba(239,77,68,.75);border-radius:24px;box-shadow:0 35px 110px rgba(0,0,0,.72),0 0 0 7px rgba(239,77,68,.08);animation:failureEventEnter .5s cubic-bezier(.2,.84,.25,1.08)}
+.route-failure-card figure{position:relative;min-height:570px;margin:0;overflow:hidden;background:#030910}.route-failure-card figure::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 60%,rgba(7,16,23,.72)),linear-gradient(0deg,rgba(0,0,0,.4),transparent 42%);pointer-events:none}.route-failure-card figure>img{width:100%;height:100%;object-fit:cover}.route-failure-card figure>span{position:absolute;z-index:2;left:20px;top:20px;padding:8px 11px;color:#fff;background:rgba(157,30,28,.9);border:1px solid #ff8b83;border-radius:999px;font-size:11px;font-weight:1000;letter-spacing:.12em}
+.route-failure-card>section{display:flex;flex-direction:column;justify-content:center;padding:32px}.failure-kicker{color:#ff8f87;font-size:11px;font-weight:1000;letter-spacing:.2em}.route-failure-card h2{margin:9px 0 14px;color:#fff;font-size:clamp(30px,3vw,44px);line-height:1.14;text-wrap:balance}.route-failure-card p{margin:0 0 18px;color:#c8d9e0;font-size:16px;line-height:1.65;text-wrap:pretty}.failure-risk-meter{position:relative;height:42px;margin:4px 0 18px;overflow:hidden;background:#250b0c;border:1px solid #9e3431;border-radius:9px}.failure-risk-meter i{display:block;width:100%;height:100%;background:linear-gradient(90deg,#a32927,#ef5149);animation:failureMeterPulse 1.1s ease-in-out infinite}.failure-risk-meter b{position:absolute;inset:0;display:grid;place-items:center;color:#fff;font-size:14px;text-shadow:0 1px 5px #460000}.route-failure-card .failure-retry-guide{padding:12px 13px;color:#ffe2b9;background:rgba(232,143,62,.09);border-left:4px solid #e88f3e;font-size:14px}.route-failure-card .primary-button{width:100%;min-height:54px;margin-top:3px}
+@keyframes failureEventEnter{from{opacity:0;transform:translateY(25px) scale(.94)}to{opacity:1;transform:none}}@keyframes failureMeterPulse{50%{filter:brightness(1.35)}}
+
+/* 미션 내용이 길어져도 잘리지 않도록 창 자체가 스크롤을 담당 */
+.training-panel{overflow-y:auto!important;overscroll-behavior:contain!important;scrollbar-gutter:stable}
+.experiment-window{overflow-y:auto!important;overflow-x:hidden!important;overscroll-behavior:contain!important;scrollbar-gutter:stable!important}
+.experiment-content{height:auto!important;min-height:calc(100% - 66px)!important;overflow:visible!important}
+.learning-game{height:auto!important;min-height:100%}
+.learning-stage-card{overflow:visible!important}
+.experiment-close{position:sticky!important;z-index:30!important;top:0!important;float:right;margin:-4px -3px 0 12px;background:rgba(220,235,240,.9)!important;backdrop-filter:blur(10px)}
+.experiment-window::-webkit-scrollbar,.training-panel::-webkit-scrollbar{width:11px}.experiment-window::-webkit-scrollbar-track,.training-panel::-webkit-scrollbar-track{background:rgba(18,55,70,.09);border-radius:99px}.experiment-window::-webkit-scrollbar-thumb,.training-panel::-webkit-scrollbar-thumb{background:rgba(22,107,143,.55);border:3px solid transparent;border-radius:99px;background-clip:padding-box}
+
+@media(max-width:760px){
+  .facility-complete-layer img{top:42%;width:min(64vw,290px)}
+  .route-failure-card{grid-template-columns:1fr}.route-failure-card figure{min-height:0;aspect-ratio:16/9}.route-failure-card>section{padding:22px}.route-failure-card h2{font-size:27px}.route-failure-card p{font-size:14px}.route-failure-dialog{max-height:calc(100dvh - 12px)}
+}
+
+/* ==========================================================
+   EARTH PHYSICS EXPLORATION · REUSABLE POST-STORY MODE
+   ========================================================== */
+.sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+.cover-actions{display:flex;flex-wrap:wrap;align-items:stretch;gap:12px}
+.earth-entry-button{min-height:54px;display:grid;align-content:center;gap:1px;padding:10px 20px;border:1px solid rgba(255,255,255,.58);border-radius:10px;background:rgba(237,248,255,.18);color:#fff;text-align:left;cursor:pointer;backdrop-filter:blur(16px) saturate(130%);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 12px 28px rgba(0,0,0,.2);transition:transform .18s ease,background .18s ease,border-color .18s ease}
+.earth-entry-button span{font-weight:900;font-size:16px}.earth-entry-button small{font-size:12px;color:#e9f7ff}.earth-entry-button:hover{transform:translateY(-2px);background:rgba(237,248,255,.27);border-color:#fff}
+.cover-mode-note{margin:15px 0 0;color:#f5f7f8;font-size:13px;letter-spacing:.02em}.cover-mode-note b{font:800 10px "Orbitron",sans-serif;color:#8fe5ff;letter-spacing:.12em}
+.earth-shortcut{border-color:rgba(121,222,255,.55)!important;background:rgba(16,101,137,.62)!important}
+
+.earth-screen{isolation:isolate;overflow:auto;color:#102b3b;background:#bde7f5 url("assets/earth_exploration_hub.webp") center/cover no-repeat}
+.earth-scene-shade{position:fixed;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(180deg,rgba(9,48,70,.12),rgba(255,255,255,.02) 38%,rgba(9,42,61,.36)),linear-gradient(90deg,rgba(243,251,255,.22),transparent 54%)}
+.glass-surface{background:linear-gradient(135deg,rgba(255,255,255,.82),rgba(230,247,255,.65));border:1px solid rgba(255,255,255,.82);box-shadow:inset 0 1px 0 rgba(255,255,255,.88),0 18px 50px rgba(22,67,89,.18);backdrop-filter:blur(22px) saturate(135%)}
+
+.earth-hub-header{position:relative;z-index:4;display:flex;align-items:center;justify-content:space-between;gap:20px;width:min(1440px,calc(100% - 48px));min-height:76px;margin:20px auto 0;padding:12px 16px 12px 22px;border-radius:20px}
+.earth-hub-brand span,.earth-eyebrow,.earth-dock-heading span,.earth-cadet-card span{color:#0a6f99;font:800 10px "Orbitron",sans-serif;letter-spacing:.14em}
+.earth-hub-brand h2{margin:2px 0 0;font-size:clamp(22px,2.1vw,32px);line-height:1.1;color:#102d3d}.earth-hub-header nav{display:flex;gap:8px}
+.earth-header-button{min-height:46px;padding:10px 15px;border:1px solid rgba(14,100,137,.22);border-radius:12px;background:rgba(255,255,255,.66);color:#16435a;font-weight:900;cursor:pointer;transition:transform .16s ease,background .16s ease}.earth-header-button:hover{transform:translateY(-2px);background:#fff}
+
+.earth-hub-layout{position:relative;z-index:3;width:min(1440px,calc(100% - 48px));margin:18px auto;display:grid;grid-template-columns:minmax(380px,680px) minmax(290px,390px);justify-content:space-between;align-items:start;gap:24px}
+.earth-welcome-card{padding:clamp(22px,3vw,40px);border-radius:28px}.earth-welcome-card h1{margin:9px 0 13px;color:#0e2a3a;font-size:clamp(32px,4vw,62px);line-height:1.04;letter-spacing:-.055em;text-wrap:balance}.earth-welcome-card h1 em{color:#087fac;font-style:normal}.earth-welcome-card>p{max-width:620px;margin:0;color:#315567;font-size:clamp(15px,1.3vw,18px);font-weight:700;line-height:1.65}
+.exploration-loop{display:grid;grid-template-columns:auto 1fr auto 1fr auto 1fr auto;align-items:center;gap:9px;margin:22px 0 15px}.exploration-loop span{display:flex;align-items:center;gap:6px;color:#143f53;font-weight:900;white-space:nowrap}.exploration-loop b{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#0c8fc1;color:#fff;font:800 11px "Orbitron",sans-serif}.exploration-loop i{height:2px;background:linear-gradient(90deg,#38a9d0,#efb449);border-radius:999px}
+.earth-replay-note{display:flex!important;align-items:center;gap:8px!important;color:#0b739a!important;font-size:14px!important}.earth-replay-note svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.earth-cadet-card{min-height:170px;display:grid;grid-template-columns:120px 1fr;align-items:center;gap:14px;padding:16px 20px 16px 8px;border-radius:24px}.earth-cadet-card img{width:120px;height:138px;object-fit:contain;align-self:end;filter:drop-shadow(0 12px 12px rgba(26,68,86,.24))}.earth-cadet-card strong{display:block;margin:5px 0 6px;color:#14394c;font-size:20px}.earth-cadet-card p{margin:0;color:#426273;font-size:14px;font-weight:700;line-height:1.55}
+
+.earth-mission-dock{position:relative;z-index:4;width:min(1440px,calc(100% - 48px));margin:0 auto 24px;padding:18px;border-radius:26px}.earth-dock-heading{display:flex;align-items:end;justify-content:space-between;gap:18px;padding:0 4px 13px}.earth-dock-heading h2{margin:3px 0 0;color:#102f40;font-size:clamp(22px,2.2vw,32px)}.earth-total-record{display:flex;align-items:center;gap:10px;padding:8px 13px;border-radius:14px;background:rgba(255,255,255,.58);border:1px solid rgba(11,110,151,.14)}.earth-total-record small{color:#537181;font-weight:800}.earth-total-record strong{color:#087da7;font:800 17px "Orbitron",sans-serif}
+.earth-mission-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.earth-mission-card{position:relative;min-height:150px;display:grid;grid-template-columns:64px 1fr;grid-template-rows:1fr auto;gap:10px 14px;padding:18px;overflow:hidden;border:1px solid rgba(8,88,122,.16);border-radius:20px;background:linear-gradient(135deg,rgba(255,255,255,.9),rgba(240,251,255,.7));color:#17394a;text-align:left;cursor:pointer;box-shadow:0 8px 22px rgba(28,80,102,.08);transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}.earth-mission-card::after{content:"";position:absolute;inset:auto -25px -40px auto;width:130px;height:130px;border-radius:50%;opacity:.1;background:currentColor;pointer-events:none}.earth-mission-card:hover{transform:translateY(-5px);box-shadow:0 18px 32px rgba(20,77,101,.17);border-color:rgba(8,126,175,.4)}.earth-mission-card:active{transform:translateY(-1px) scale(.99)}
+.earth-card-icon{display:grid;place-items:center;width:60px;height:60px;border-radius:17px;background:#e1f7ff;color:#087eac}.earth-mission-card.electro .earth-card-icon{background:#fff3d5;color:#b46a00}.earth-mission-card.optics .earth-card-icon{background:#e8e2ff;color:#6846bd}.earth-card-icon svg{width:38px;height:38px;fill:none;stroke:currentColor;stroke-width:2.8;stroke-linecap:round;stroke-linejoin:round}
+.earth-card-copy{display:block;min-width:0}.earth-card-copy small{display:block;color:#0b7298;font:800 10px "Orbitron",sans-serif;letter-spacing:.09em}.earth-mission-card.electro small{color:#9a5f08}.earth-mission-card.optics small{color:#6847ae}.earth-card-copy strong{display:block;margin:5px 0 3px;font-size:20px;line-height:1.25}.earth-card-copy em{display:block;color:#58717e;font-size:13px;font-style:normal;font-weight:700;line-height:1.45}.earth-card-status{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:10px;padding-top:10px;border-top:1px solid rgba(19,76,101,.12)}.earth-card-status b{color:#4f6c7a;font-size:12px}.earth-card-status i{color:#087da7;font-size:13px;font-style:normal;font-weight:900}
+
+/* Earth experiment shared shell */
+.experiment-overlay.earth-experiment-mode{background:rgba(11,42,57,.5);backdrop-filter:blur(10px)}
+.earth-experiment-mode .experiment-window{width:min(1040px,calc(100vw - 28px));color:#14374a;background:linear-gradient(145deg,rgba(250,254,255,.98),rgba(229,247,254,.97));border:1px solid rgba(255,255,255,.9);border-radius:26px;box-shadow:0 30px 90px rgba(8,43,60,.34)}
+.earth-experiment-mode .experiment-window h2{color:#102f40}.earth-experiment-mode .experiment-window>p{color:#496877}.earth-experiment-mode .experiment-close{color:#18475d;background:rgba(255,255,255,.84)!important;border-radius:50%;width:44px;height:44px;line-height:1}
+.earth-lab{display:grid;gap:16px;color:#15394c}.earth-lab-header{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;padding:17px 18px;border-radius:18px;background:linear-gradient(120deg,#0b87b6,#37b0cf);color:#fff;box-shadow:0 14px 30px rgba(7,111,150,.19)}.earth-lab-header.electro{background:linear-gradient(120deg,#a96109,#edaa32)}.earth-lab-header.optics{background:linear-gradient(120deg,#5b43ad,#8a6ed8)}.earth-lab-header span{font:800 10px "Orbitron",sans-serif;letter-spacing:.12em;opacity:.9}.earth-lab-header h3{margin:4px 0;font-size:clamp(23px,2.8vw,36px);line-height:1.15}.earth-lab-header p{margin:0;color:rgba(255,255,255,.9);font-weight:700;line-height:1.5}.earth-random-chip{flex:none;padding:8px 11px;border:1px solid rgba(255,255,255,.38);border-radius:999px;background:rgba(255,255,255,.16);font-size:12px;font-weight:900;white-space:nowrap}
+.earth-process-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.earth-process-bar span{display:flex;align-items:center;justify-content:center;gap:7px;min-height:44px;padding:8px;border-radius:12px;background:#e8f1f5;color:#637983;font-weight:900;font-size:13px}.earth-process-bar span.active{background:#d9f3fc;color:#087ca8;box-shadow:inset 0 0 0 2px rgba(11,136,180,.22)}.earth-process-bar span.done{background:#e2f6ea;color:#18754b}.earth-process-bar b{display:grid;place-items:center;width:23px;height:23px;border-radius:50%;background:currentColor;color:white;font:800 10px "Orbitron",sans-serif}
+.earth-observation-card{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(260px,.8fr);gap:16px}.earth-visual-board,.earth-action-board{padding:18px;border:1px solid rgba(16,91,121,.13);border-radius:18px;background:rgba(255,255,255,.78);box-shadow:0 10px 24px rgba(17,76,99,.07)}.earth-visual-board h4,.earth-action-board h4{margin:0 0 10px;color:#173f53;font-size:17px}.earth-visual-board canvas{display:block;width:100%;height:auto;max-height:300px;border-radius:14px;background:linear-gradient(180deg,#e9f8ff,#f9fdff);border:1px solid #cbe8f3}
+.earth-phenomenon-prompt{margin:0 0 13px;padding:12px 14px;border-left:4px solid #0c8fbd;border-radius:4px 12px 12px 4px;background:#eaf7fc;color:#254f62!important;font-weight:800;line-height:1.55!important}.earth-prediction-options{display:grid;gap:8px}.earth-prediction-options button{min-height:48px;padding:10px 13px;border:1px solid #c4dfe9;border-radius:12px;background:#fff;color:#284f61;text-align:left;font-weight:900;cursor:pointer;transition:.16s ease}.earth-prediction-options button:hover{border-color:#168eb9;background:#eefaff}.earth-prediction-options button.selected{border-color:#0787b7;background:#dff5fd;color:#066c94;box-shadow:inset 0 0 0 1px #0787b7}.earth-prediction-feedback{min-height:45px;margin:10px 0 0!important;padding:10px 12px;border-radius:11px;background:#f4f8fa;color:#4d6a78!important;font-size:13px;font-weight:800;line-height:1.5!important}.earth-prediction-feedback.ready{background:#e6f6ed;color:#1f714d!important}
+.earth-controls-panel{display:grid;gap:12px;margin-top:14px;padding-top:14px;border-top:1px solid #d9e9ef}.earth-controls-panel[hidden]{display:none}.earth-control-row{display:grid;grid-template-columns:minmax(120px,.65fr) 1fr 90px;align-items:center;gap:12px}.earth-control-row label{color:#254d60;font-weight:900}.earth-control-row output{padding:7px 9px;border-radius:9px;background:#e7f4f8;color:#0b739a;text-align:center;font-weight:900}.earth-control-row input[type="range"]{width:100%;accent-color:#0788b8}.earth-control-row select{min-height:44px;padding:8px 10px;border:1px solid #bcdbe6;border-radius:10px;background:#fff;color:#234b5f;font-weight:800}.earth-test-button{min-height:50px;border:0;border-radius:13px;background:linear-gradient(135deg,#087fac,#18a6cc);color:#fff;font-weight:900;cursor:pointer;box-shadow:0 10px 22px rgba(8,127,172,.21)}.earth-test-button:hover{filter:brightness(1.05);transform:translateY(-1px)}.earth-live-result{min-height:54px;margin:0!important;padding:12px 14px;border-radius:12px;background:#edf6f9;color:#31596b!important;font-weight:800;line-height:1.55!important}.earth-live-result.success{background:#e0f7e9;color:#176e49!important}
+.dynamo-visual{position:relative;min-height:250px;display:grid;place-items:center;overflow:hidden;border-radius:14px;background:linear-gradient(#dff5ff 0 66%,#f1e1bd 66%)}.dynamo-wheel{width:142px;height:142px;border:8px solid #2c596c;border-radius:50%;position:relative;transition:transform .8s ease}.dynamo-wheel::before,.dynamo-wheel::after{content:"";position:absolute;left:50%;top:0;width:3px;height:100%;background:#8eabb6;transform:translateX(-50%)}.dynamo-wheel::after{transform:translateX(-50%) rotate(90deg)}.dynamo-wheel.spin{animation:earthWheelSpin .7s linear infinite}.dynamo-bulb{position:absolute;right:15%;top:24%;width:68px;height:68px;border:5px solid #9d7d31;border-radius:50%;background:#d8dee0;box-shadow:none;transition:.25s}.dynamo-bulb.on{background:#fff0a1;box-shadow:0 0 12px #ffcf41,0 0 45px rgba(255,191,24,.84)}.dynamo-output{position:absolute;left:16px;bottom:14px;padding:8px 11px;border-radius:10px;background:rgba(255,255,255,.8);color:#315567;font-weight:900}@keyframes earthWheelSpin{to{transform:rotate(360deg)}}
+.optics-choice-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.optics-choice-grid button{min-height:48px;border:1px solid #d4c9f3;border-radius:11px;background:#fff;color:#544380;font-weight:900;cursor:pointer}.optics-choice-grid button.selected{background:#eee9ff;border-color:#765dc2;box-shadow:inset 0 0 0 1px #765dc2}
+
+/* Earth discovery completion */
+.exploration-complete-dialog{color:#14384a}.exploration-complete-dialog::backdrop{background:rgba(8,40,56,.58);backdrop-filter:blur(9px)}.exploration-complete-card{position:relative;width:min(600px,calc(100vw - 28px));overflow:hidden;padding:30px;border:1px solid rgba(255,255,255,.88);border-radius:28px;background:linear-gradient(145deg,rgba(252,255,255,.98),rgba(225,247,255,.97));box-shadow:0 34px 100px rgba(5,41,58,.38);text-align:center}.exploration-complete-card>span{color:#087ea9;font:800 11px "Orbitron",sans-serif;letter-spacing:.14em}.exploration-complete-icon{display:grid;place-items:center;width:76px;height:76px;margin:14px auto 10px;border-radius:24px;background:linear-gradient(135deg,#0c91be,#5dc7de);color:#fff;font-size:42px;font-weight:900;box-shadow:0 14px 30px rgba(8,126,169,.23);animation:earthDiscoveryPop .55s cubic-bezier(.2,.8,.2,1)}.exploration-complete-card h2{margin:7px 0;color:#12394c;font-size:clamp(25px,4vw,38px)}.exploration-prediction-result{margin:0 auto 14px;color:#547180;font-weight:800}.exploration-discovery-paper{padding:16px 18px;border:1px solid rgba(14,131,174,.2);border-radius:17px;background:rgba(255,255,255,.72);text-align:left}.exploration-discovery-paper small{display:block;color:#087ca7;font-weight:900}.exploration-discovery-paper strong{display:block;margin-top:4px;color:#234c5e;font-size:17px;line-height:1.55}.exploration-complete-cadet{display:grid;grid-template-columns:82px 1fr;align-items:center;gap:12px;margin:15px 0;padding:10px 15px;border-radius:16px;background:#eaf5f8;text-align:left}.exploration-complete-cadet img{width:78px;height:82px;object-fit:contain}.exploration-complete-cadet p{margin:0;color:#365d6d;font-weight:800;line-height:1.5}.exploration-complete-actions{display:grid;grid-template-columns:1fr 1.35fr;gap:10px}.exploration-complete-actions button{min-height:48px;border-radius:12px}.exploration-complete-orbit i{position:absolute;width:110px;height:110px;border:1px solid rgba(12,145,190,.14);border-radius:50%;pointer-events:none}.exploration-complete-orbit i:nth-child(1){left:-40px;top:-50px}.exploration-complete-orbit i:nth-child(2){right:-25px;top:90px;width:65px;height:65px}.exploration-complete-orbit i:nth-child(3){right:30px;bottom:-75px;width:150px;height:150px}@keyframes earthDiscoveryPop{0%{opacity:0;transform:scale(.65) rotate(-10deg)}70%{transform:scale(1.08) rotate(2deg)}100%{opacity:1;transform:scale(1)}}
+
+@media(max-width:1050px){.earth-hub-layout{grid-template-columns:1fr 320px}.earth-mission-card{grid-template-columns:52px 1fr;padding:14px;gap:8px 11px}.earth-card-icon{width:50px;height:50px}.earth-card-icon svg{width:31px;height:31px}.earth-card-copy strong{font-size:17px}}
+@media(max-width:820px){.earth-screen{height:100%!important;min-height:100vh;background-position:55% center;overflow-y:auto}.earth-hub-header,.earth-hub-layout,.earth-mission-dock{width:min(100% - 24px,720px)}.earth-hub-layout{grid-template-columns:1fr}.earth-cadet-card{justify-self:end;width:min(100%,380px)}.earth-mission-grid{grid-template-columns:1fr}.earth-mission-card{min-height:126px;grid-template-columns:58px 1fr}.earth-observation-card{grid-template-columns:1fr}}
+@media(max-width:560px){.cover-actions{display:grid}.cover-actions>button{width:100%;justify-content:center;text-align:center}.cover-mode-note{font-size:11px;line-height:1.6}.earth-hub-header{margin-top:10px;align-items:flex-start;padding:11px 12px 11px 15px;border-radius:16px}.earth-hub-brand h2{font-size:20px}.earth-hub-brand span{font-size:8px}.earth-hub-header nav{display:grid;grid-template-columns:1fr 1fr}.earth-header-button{min-width:74px;padding:8px;font-size:12px}.earth-hub-layout{margin:10px auto;gap:10px}.earth-welcome-card{padding:20px;border-radius:20px}.earth-welcome-card h1{font-size:34px}.exploration-loop{grid-template-columns:repeat(4,1fr);gap:5px}.exploration-loop i{display:none}.exploration-loop span{display:grid;justify-items:center;font-size:11px}.earth-cadet-card{grid-template-columns:86px 1fr;min-height:125px;padding:10px 14px 10px 4px;border-radius:18px}.earth-cadet-card img{width:85px;height:105px}.earth-cadet-card strong{font-size:17px}.earth-cadet-card p{font-size:12px}.earth-mission-dock{padding:12px;border-radius:20px}.earth-dock-heading{align-items:flex-start}.earth-total-record{display:grid;gap:1px;padding:7px 9px;text-align:right}.earth-card-copy em{font-size:12px}.earth-process-bar{grid-template-columns:1fr 1fr}.earth-control-row{grid-template-columns:1fr auto}.earth-control-row input,.earth-control-row select{grid-column:1/-1}.exploration-complete-card{padding:23px 17px}.exploration-complete-actions{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.earth-mission-card,.earth-entry-button,.earth-header-button,.earth-test-button{transition:none!important}.dynamo-wheel.spin,.exploration-complete-icon{animation:none!important}}
+.earth-entry-button:focus-visible,.earth-header-button:focus-visible,.earth-mission-card:focus-visible,.earth-prediction-options button:focus-visible,.earth-test-button:focus-visible,.optics-choice-grid button:focus-visible{outline:3px solid #ffbf3f;outline-offset:3px}
+.earth-test-button:disabled{opacity:.68;cursor:wait;transform:none;filter:saturate(.75)}
+
+/* ==========================================================
+   FINAL POLISH · 캐릭터 선명도 / 브리핑 / 관제실 / 도착 영상
+   ========================================================== */
+
+/* 수리 완료 틴트는 시설에만 적용하고, 선택 대원은 항상 전경에서 선명하게 유지 */
+.location-slide>.scene-character{
+  z-index:10!important;
+  opacity:1!important;
+  filter:none!important;
+  mix-blend-mode:normal!important;
+}
+.location-slide>.scene-character img{
+  opacity:1!important;
+  filter:drop-shadow(0 22px 22px rgba(4,24,34,.34))!important;
+}
+.facility-complete-layer{z-index:8!important}
+.scene-hotspot{z-index:12!important}
+
+/* 정보가 겹치는 순간에는 하단 HUD를 정중하게 비워 핵심 작업에만 시선 집중 */
+.world-screen.command-view .character-status-bar,
+.world-screen.mission-briefing-open .character-status-bar{
+  opacity:0!important;
+  visibility:hidden!important;
+  pointer-events:none!important;
+  transform:translateY(24px)!important;
+}
+.character-status-bar{
+  transition:opacity .22s ease,transform .26s ease,visibility .22s ease!important;
+}
+
+/* 임무 브리핑: 캐릭터는 왼쪽, 해야 할 행동은 오른쪽에 분리 */
+.training-panel{
+  left:auto!important;
+  right:clamp(24px,5vw,84px)!important;
+  top:50%!important;
+  bottom:auto!important;
+  width:min(530px,calc(100vw - 48px))!important;
+  max-height:calc(100dvh - 48px)!important;
+  padding:28px 28px 24px!important;
+  transform:translateY(-50%)!important;
+  overflow-y:auto!important;
+  color:#173544!important;
+  background:linear-gradient(145deg,rgba(250,254,255,.91),rgba(224,242,247,.82))!important;
+  border:1px solid rgba(255,255,255,.92)!important;
+  border-top:1px solid #fff!important;
+  border-left:6px solid #d96d2e!important;
+  border-radius:24px!important;
+  box-shadow:0 28px 72px rgba(4,32,45,.32),inset 0 1px rgba(255,255,255,.8)!important;
+  backdrop-filter:blur(22px) saturate(1.2)!important;
+  -webkit-backdrop-filter:blur(22px) saturate(1.2)!important;
+}
+.training-panel>span{
+  display:block;
+  padding-right:48px;
+  color:#0b759e!important;
+  font:900 10px "Orbitron",system-ui,sans-serif!important;
+  letter-spacing:.13em!important;
+}
+.training-panel h3{
+  margin:8px 54px 12px 0!important;
+  color:#142f3d!important;
+  font-size:clamp(28px,3vw,40px)!important;
+  line-height:1.08!important;
+}
+.training-panel .mission-goal-label{
+  margin:0 0 8px!important;
+  padding:6px 10px!important;
+  color:#9b481e!important;
+  background:rgba(255,239,228,.82)!important;
+  border:1px solid rgba(217,109,46,.2)!important;
+  border-radius:999px!important;
+  font-size:12px!important;
+}
+.training-panel>p{
+  margin:0 0 16px!important;
+  color:#405e6c!important;
+  font-size:15px!important;
+  line-height:1.58!important;
+}
+.training-panel .mission-steps{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:8px!important;
+  margin:0 0 16px!important;
+  padding:0!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  list-style:none!important;
+  counter-reset:mission-step!important;
+}
+.training-panel .mission-steps li{
+  min-width:0;
+  min-height:108px;
+  padding:13px 12px 11px!important;
+  color:#4a6572!important;
+  background:rgba(255,255,255,.62)!important;
+  border:1px solid rgba(128,181,201,.36)!important;
+  border-radius:14px!important;
+  font-size:12px!important;
+  font-weight:750!important;
+  line-height:1.42!important;
+  box-shadow:0 7px 18px rgba(21,77,97,.07)!important;
+  counter-increment:mission-step;
+}
+.training-panel .mission-steps li::before{
+  content:"0" counter(mission-step);
+  display:block;
+  margin-bottom:8px;
+  color:#d96d2e;
+  font:900 10px "Orbitron",system-ui,sans-serif;
+  letter-spacing:.08em;
+}
+.training-panel .mission-steps li b{
+  display:block;
+  margin-bottom:3px;
+  color:#087ba5!important;
+  font-size:14px!important;
+  line-height:1.25!important;
+}
+.training-panel .primary-button{
+  width:100%!important;
+  min-height:54px!important;
+  margin:0!important;
+  font-size:16px!important;
+}
+
+/* 관제실은 스토리보드 전체가 화면 안에 들어오도록 전용 레이아웃 사용 */
+.world-screen.command-view .earth-route-preview{
+  left:clamp(24px,4vw,72px)!important;
+  right:auto!important;
+  top:15%!important;
+  bottom:4%!important;
+  width:min(720px,calc(100vw - 470px))!important;
+  max-height:none!important;
+  display:flex!important;
+  flex-direction:column!important;
+}
+.world-screen.command-view .earth-route-preview figure{
+  flex:1 1 auto!important;
+  min-height:210px!important;
+  max-height:46vh!important;
+  aspect-ratio:auto!important;
+}
+
+/* 지구 귀환: 8.5초 영화 → 선택 대원 전용 응원 아트 */
+.arrival-visual>video,
+.arrival-visual>img{
+  display:block;
+  width:100%;
+  height:100%;
+  min-height:100%;
+  object-fit:cover;
+}
+.arrival-visual>[hidden]{display:none!important}
+.arrival-visual>video{background:#0d2f42}
+.arrival-visual.encouragement-mode>img{
+  animation:arrivalArtworkReveal .7s cubic-bezier(.2,.82,.24,1) both;
+}
+.arrival-video-play{
+  position:absolute;
+  z-index:5;
+  left:50%;
+  top:50%;
+  min-width:180px;
+  min-height:52px;
+  padding:12px 20px;
+  color:#fff;
+  background:rgba(8,80,111,.9);
+  border:1px solid rgba(255,255,255,.72);
+  border-radius:999px;
+  box-shadow:0 14px 32px rgba(3,29,43,.32);
+  font-weight:900;
+  transform:translate(-50%,-50%);
+  cursor:pointer;
+  backdrop-filter:blur(10px);
+}
+.arrival-video-play::before{content:"▶";margin-right:8px}
+.arrival-visual.encouragement-mode+ .arrival-story-panel .arrival-encouragement{
+  grid-template-columns:1fr!important;
+  padding:16px!important;
+}
+.arrival-visual.encouragement-mode+ .arrival-story-panel .arrival-encouragement>img{display:none}
+.arrival-visual.encouragement-mode+ .arrival-story-panel .arrival-encouragement strong{font-size:15px}
+.arrival-visual.encouragement-mode+ .arrival-story-panel .arrival-encouragement p{font-size:16px;line-height:1.65}
+@keyframes arrivalArtworkReveal{
+  from{opacity:0;transform:scale(1.035)}
+  to{opacity:1;transform:scale(1)}
+}
+
+@media(max-width:900px){
+  .training-panel{
+    left:50%!important;
+    right:auto!important;
+    top:50%!important;
+    bottom:auto!important;
+    width:min(620px,calc(100vw - 28px))!important;
+    max-height:calc(100dvh - 28px)!important;
+    transform:translate(-50%,-50%)!important;
+  }
+  .world-screen.command-view .earth-route-preview{
+    left:18px!important;
+    top:17%!important;
+    bottom:3%!important;
+    width:calc(100vw - 420px)!important;
+    min-width:320px!important;
+  }
+  .arrival-visual>video,.arrival-visual>img{min-height:0;aspect-ratio:16/9}
+}
+@media(max-width:760px){
+  .training-panel{padding:23px 18px 18px!important}
+  .training-panel h3{font-size:27px!important}
+  .training-panel .mission-steps{grid-template-columns:1fr!important}
+  .training-panel .mission-steps li{min-height:0;padding:10px 12px!important}
+  .training-panel .mission-steps li::before{display:inline;margin:0 8px 0 0}
+  .training-panel .mission-steps li b{display:inline;margin:0 5px 0 0}
+  .world-screen.command-view .earth-route-preview{
+    left:12px!important;
+    right:12px!important;
+    top:15%!important;
+    bottom:auto!important;
+    width:auto!important;
+    min-width:0!important;
+  }
+  .world-screen.command-view .earth-route-preview figure{min-height:130px!important;max-height:28vh!important}
+}
+@media(max-height:720px) and (min-width:761px){
+  .training-panel{padding:20px 22px 18px!important}
+  .training-panel h3{font-size:29px!important}
+  .training-panel>p{font-size:14px!important;line-height:1.45!important}
+  .training-panel .mission-steps li{min-height:92px;padding:10px!important}
+  .arrival-sequence-card{min-height:0}
+  .arrival-visual{min-height:460px}
+}
+@media(prefers-reduced-motion:reduce){
+  .arrival-visual.encouragement-mode>img{animation:none}
+}
+
+/* ==========================================================
+   WORLD-CLASS PASS · 선명한 타이포 / 순차 진행 / 스쿼드 연출
+   ========================================================== */
+
+html,body,button,input,select,textarea{
+  font-family:system-ui,-apple-system,"Segoe UI","Malgun Gothic","Noto Sans KR",sans-serif!important;
+}
+body{font-weight:600;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4,strong,b{font-weight:850}
+.kicker,.small-label,.concept-kicker,.cover-mode-note b,.clear-event-code,
+.earth-hub-brand span,.earth-eyebrow,.earth-dock-heading span,.earth-cadet-card span{
+  font-family:ui-monospace,"Cascadia Code","Segoe UI",monospace!important;
+}
+
+/* 01 · 표지: 배경 크롭에 의존하지 않고 다섯 대원을 독립 배치 */
+.cover-screen{
+  isolation:isolate;
+  background:
+    linear-gradient(90deg,rgba(232,246,251,.96) 0 39%,rgba(224,241,247,.36) 58%,rgba(10,38,51,.18)),
+    url("assets/select_base.webp") center/cover no-repeat!important;
+}
+.cover-shade{
+  z-index:0;
+  background:linear-gradient(180deg,rgba(9,35,46,.04),rgba(7,30,42,.28))!important;
+}
+.cover-art-panel{position:absolute;z-index:1;right:2.5vw;top:4vh;width:min(55vw,1040px);height:92vh;pointer-events:none;background:url("assets/cover.webp") center/contain no-repeat;filter:drop-shadow(0 28px 35px rgba(3,25,36,.3))}
+.cover-copy{
+  z-index:3!important;
+  left:4.5vw!important;
+  width:min(520px,42vw)!important;
+  max-width:none!important;
+  padding:clamp(26px,3vw,44px)!important;
+  color:#132f3e!important;
+  background:linear-gradient(145deg,rgba(250,254,255,.94),rgba(225,242,248,.88))!important;
+  border:1px solid rgba(255,255,255,.96)!important;
+  border-left:7px solid #d7652a!important;
+  border-radius:24px!important;
+  box-shadow:0 30px 80px rgba(5,34,47,.28),inset 0 1px #fff!important;
+  text-shadow:none!important;
+  backdrop-filter:blur(20px) saturate(1.18)!important;
+}
+.cover-copy h1{margin:10px 0 16px!important;color:#132f3e!important;font-size:clamp(46px,5.5vw,78px)!important;line-height:.93!important;letter-spacing:-.065em!important}
+.cover-title span{display:block}
+.cover-description{max-width:430px;margin:0 0 22px!important;color:#3f5e6d!important;font-size:clamp(16px,1.45vw,20px)!important;line-height:1.6!important}
+.cover-main-start{min-width:220px;min-height:58px;font-size:17px!important}
+.cover-mode-note{color:#3f5e6d!important;font-size:12px!important}.cover-mode-note b{color:#087ba6!important}
+.cover-actions>[hidden]{display:none!important}
+.earth-shortcut[hidden],.earth-entry-button[hidden]{display:none!important}
+
+/* 03 · 선택 화면 하단: 설명과 능력을 좌우로 나눠 내부 스크롤 최소화 */
+.select-screen .character-info-bar{
+  min-height:148px!important;
+  max-height:190px!important;
+  padding:16px 22px!important;
+  overflow:visible!important;
+  color:#173542!important;
+  background:linear-gradient(130deg,rgba(249,253,254,.9),rgba(224,240,246,.8))!important;
+}
+.select-screen .info-left{display:grid;grid-template-columns:minmax(190px,.34fr) minmax(360px,1fr);grid-template-rows:auto auto 1fr;gap:3px 18px;min-width:0}
+.select-screen .info-left>.small-label,.select-screen .info-left>h3,.select-screen .info-left>p{grid-column:1}
+.select-screen .info-left>p{color:#47616d!important;font-size:13px!important;line-height:1.4!important}
+.select-screen .select-ability-card{
+  grid-column:2!important;
+  grid-row:1/4!important;
+  display:grid!important;
+  grid-template-columns:140px minmax(0,1fr)!important;
+  align-content:center!important;
+  min-height:92px!important;
+  margin:0!important;
+  padding:13px 15px!important;
+  background:rgba(255,255,255,.58)!important;
+  border:1px solid rgba(102,166,191,.3)!important;
+  border-radius:16px!important;
+}
+.select-screen .select-ability-card p{color:#355664!important;font-size:13px!important;line-height:1.5!important}
+
+/* 04 · 순차 해금은 색뿐 아니라 잠금 문구·비활성 상태로도 전달 */
+.location-stepper button{position:relative;overflow:hidden;transition:opacity .2s ease,transform .2s ease,filter .2s ease}
+.location-tag,.location-stepper,.world-top-ui .tiny-button,.world-top-ui>span,.character-status-bar{
+  color:#153442!important;
+  background:linear-gradient(135deg,rgba(249,253,254,.9),rgba(223,240,246,.8))!important;
+  border-color:rgba(255,255,255,.9)!important;
+  text-shadow:none!important;
+}
+.location-tag strong,.location-stepper b,.world-top-ui .tiny-button,.world-top-ui>span{font-weight:850!important}
+.world-top-ui .tiny-button{min-height:46px!important;border:1px solid rgba(39,102,127,.24)!important;box-shadow:0 8px 20px rgba(7,45,60,.12)!important}
+.world-top-ui .tiny-button:hover{color:#075f84!important;background:#fff!important}
+.character-status-bar .status-main p{color:#385765!important;line-height:1.5!important}
+.location-stepper button.locked{opacity:.52!important;filter:grayscale(.78) saturate(.3);cursor:not-allowed!important}
+.location-stepper button.locked::after{
+  content:"LOCK";
+  position:absolute;
+  right:6px;
+  top:5px;
+  padding:2px 4px;
+  color:#5e6b70;
+  background:rgba(255,255,255,.78);
+  border:1px solid rgba(45,73,84,.2);
+  border-radius:4px;
+  font:800 8px ui-monospace,monospace;
+  letter-spacing:.08em;
+}
+.nav-arrow.new-area-ready{opacity:1!important;box-shadow:0 0 0 3px rgba(255,191,63,.3),0 14px 34px rgba(5,38,53,.3)!important;animation:nextAreaReady 1.6s ease-in-out infinite}
+@keyframes nextAreaReady{50%{transform:translateY(-50%) scale(1.08)}}
+
+/* 05 · 파동 3단계의 조작 방식 구분 */
+.wave-task-control{grid-column:2;display:grid!important}
+.wave-task-control[hidden],.wave-channel-picker[hidden],.cause-controls[hidden]{display:none!important}
+.wave-task-control label{display:grid;gap:8px;padding:14px;border:1px solid rgba(20,119,157,.22);border-radius:14px;background:rgba(255,255,255,.62);color:#174d65;font-weight:900}
+.wave-task-control small{color:#5d7580}
+.wave-task-control input{width:100%;accent-color:#d96d2e}
+.wave-channel-picker{grid-column:2;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.wave-channel-picker button{min-height:58px;padding:9px;border:1px solid #a9d1df;border-radius:13px;background:rgba(255,255,255,.68);color:#2c596c;font-weight:900;cursor:pointer}
+.wave-channel-picker button.selected{color:#fff;background:#0b82ac;border-color:#086f95;box-shadow:0 9px 20px rgba(8,111,149,.22)}
+.equipment-controls select:disabled{opacity:.58;cursor:not-allowed;background:rgba(229,238,242,.72)}
+.action-grid button[hidden]{display:none!important}
+
+/* 06 · 성공 화면: 제공된 대원 원화를 활용한 웹 네이티브 스쿼드 컷 */
+.clear-event-dialog{width:min(1040px,96vw)!important;max-height:95dvh!important}
+.clear-event-box{
+  display:grid!important;
+  grid-template-columns:minmax(480px,1.35fr) minmax(300px,.72fr)!important;
+  grid-template-areas:
+    "code code"
+    "art title"
+    "art result"
+    "art discovery"
+    "art progress"
+    "art character"
+    "art action"!important;
+  gap:10px 22px!important;
+  width:100%!important;
+  max-height:94dvh!important;
+  padding:22px!important;
+  overflow:auto!important;
+  border-radius:26px!important;
+  text-align:left!important;
+}
+.clear-event-code{grid-area:code;text-align:center}
+.clear-event-icon{display:none!important}
+.clear-event-box>h2{grid-area:title;align-self:end;margin:4px 0 0!important;font-size:clamp(28px,3vw,40px)!important;line-height:1.08!important}
+.clear-event-result{grid-area:result;margin:0!important}
+.clear-event-discovery{grid-area:discovery;margin:0!important;border-radius:12px}
+.clear-event-progress{grid-area:progress;margin:0!important}
+.clear-event-character{grid-area:character;margin:0!important;border-radius:12px}
+.clear-event-box>.primary-button{grid-area:action;min-height:52px}
+.clear-event-art{grid-area:art;position:relative;align-self:stretch;min-height:520px;overflow:hidden;border:1px solid rgba(255,255,255,.25);border-radius:20px;background-position:center!important;background-size:cover!important;box-shadow:inset 0 0 70px rgba(2,12,17,.52),0 20px 42px rgba(0,0,0,.26)}
+.clear-event-art.wave{background-image:linear-gradient(rgba(10,39,51,.08),rgba(4,17,23,.52)),url("assets/lab_1.webp")}
+.clear-event-art.electro{background-image:linear-gradient(rgba(54,33,7,.05),rgba(16,13,7,.48)),url("assets/lab_2.webp")}
+.clear-event-art.optics{background-image:linear-gradient(rgba(10,35,49,.04),rgba(4,15,22,.45)),url("assets/lab_3.webp")}
+.clear-art-device{position:absolute;z-index:2;left:50%;top:45%;width:42%;transform:translate(-50%,-50%);filter:drop-shadow(0 15px 18px rgba(0,0,0,.52))}
+.clear-art-device svg{display:none;width:100%;height:auto;overflow:visible;fill:rgba(10,28,36,.92);stroke:#8fe4ff;stroke-width:7;stroke-linecap:round;stroke-linejoin:round}
+.clear-event-art.wave .clear-device-wave,.clear-event-art.electro .clear-device-electro,.clear-event-art.optics .clear-device-optics{display:block}
+.clear-event-art.wave .clear-art-device{top:37%;transform:translate(-50%,-50%) rotate(14deg);animation:deviceCaught .8s cubic-bezier(.2,.8,.2,1) both}
+.clear-event-art.electro .clear-art-device{width:46%;filter:drop-shadow(0 0 22px rgba(255,199,74,.68))}.clear-event-art.electro .clear-art-device svg{stroke:#ffd469}
+.clear-event-art.optics .clear-art-device svg{stroke:#8be8ff}.clear-event-art.optics .clear-art-device{width:48%;top:39%}
+.clear-art-squad span{position:absolute;z-index:3;display:grid;place-items:center;width:74px;height:74px;border:3px solid rgba(255,255,255,.82);border-radius:24px;color:#fff;background:#178a54;box-shadow:0 13px 24px rgba(0,0,0,.42),inset 0 1px rgba(255,255,255,.42);transform-origin:50% 100%;animation:squadPop .65s cubic-bezier(.22,.88,.25,1.16) both}
+.clear-art-squad span::before{content:"";width:24px;height:16px;margin-bottom:-8px;border:4px solid currentColor;border-bottom:0;border-radius:16px 16px 0 0;opacity:.9}.clear-art-squad span b{font-size:11px;letter-spacing:-.03em}
+.clear-art-squad [data-clear-member="keroro"]{color:#d8ff9a;background:#348d3b}.clear-art-squad [data-clear-member="kururu"]{color:#fff28a;background:#997813}.clear-art-squad [data-clear-member="giroro"]{color:#ffb4aa;background:#9d302a}.clear-art-squad [data-clear-member="tamama"]{color:#fff3a3;background:#344b79}.clear-art-squad [data-clear-member="dororo"]{color:#d5efff;background:#3179a8}
+.clear-art-squad [data-clear-member="keroro"]{left:4%;bottom:6%}
+.clear-art-squad [data-clear-member="kururu"]{left:23%;bottom:3%;animation-delay:.06s}
+.clear-art-squad [data-clear-member="giroro"]{left:42%;bottom:6%;animation-delay:.12s}
+.clear-art-squad [data-clear-member="tamama"]{left:62%;bottom:3%;animation-delay:.18s}
+.clear-art-squad [data-clear-member="dororo"]{left:81%;bottom:6%;animation-delay:.24s}
+.clear-event-art.wave [data-clear-member="giroro"],.clear-event-art.electro [data-clear-member="kururu"],.clear-event-art.optics [data-clear-member="dororo"]{z-index:5;width:102px;height:102px;bottom:2%;transform:rotate(-8deg);box-shadow:0 16px 30px rgba(0,0,0,.48),0 0 0 8px rgba(255,255,255,.12)}
+.clear-art-motion i{position:absolute;z-index:6;width:28px;height:7px;border-radius:99px;background:#fff4a8;box-shadow:0 0 16px rgba(255,230,102,.8)}
+.clear-art-motion i:nth-child(1){left:12%;top:28%;transform:rotate(28deg)}.clear-art-motion i:nth-child(2){right:10%;top:24%;transform:rotate(-28deg)}.clear-art-motion i:nth-child(3){left:42%;top:10%;transform:rotate(90deg)}.clear-art-motion i:nth-child(4){right:33%;top:15%;transform:rotate(58deg)}
+@keyframes squadPop{from{opacity:0;translate:0 60px;scale:.7}to{opacity:1;translate:0 0;scale:1}}
+@keyframes deviceCaught{from{opacity:0;translate:0 -90px;rotate:22deg}to{opacity:1;translate:0 0;rotate:0deg}}
+
+/* 07 · 지구 탐사 허브: 데스크톱에서는 스크롤 없이 핵심 전체 노출 */
+@media(min-width:821px){
+  .earth-screen.active{display:grid!important;grid-template-rows:auto auto minmax(0,1fr);align-content:start;overflow:hidden!important;padding-bottom:14px}
+  .earth-hub-header{width:min(1500px,calc(100% - 32px))!important;min-height:68px!important;margin:14px auto 0!important;padding:9px 14px 9px 20px!important;border-radius:18px!important}
+  .earth-hub-layout{width:min(1500px,calc(100% - 32px))!important;margin:10px auto!important;grid-template-columns:minmax(0,1.4fr) minmax(300px,.6fr)!important;gap:12px!important}
+  .earth-welcome-card{display:grid;grid-template-columns:minmax(330px,1.15fr) minmax(300px,.85fr);grid-template-rows:auto auto 1fr;gap:4px 24px;padding:18px 24px!important;border-radius:20px!important}
+  .earth-welcome-card .earth-eyebrow{grid-column:1/-1}.earth-welcome-card h1{grid-column:1;grid-row:2/4;margin:3px 0!important;font-size:clamp(30px,3.1vw,48px)!important;line-height:1.02!important}.earth-welcome-card>p{grid-column:2;margin:2px 0!important;font-size:14px!important;line-height:1.48!important}
+  .exploration-loop{grid-column:2;margin:8px 0 4px!important;gap:5px!important}.exploration-loop span{font-size:12px}.exploration-loop b{width:24px;height:24px}
+  .earth-replay-note{grid-column:2!important;font-size:12px!important}
+  .earth-cadet-card{min-height:168px!important;padding:10px 16px 10px 4px!important;border-radius:20px!important}
+  .earth-mission-dock{width:min(1500px,calc(100% - 32px))!important;min-height:0!important;margin:0 auto!important;padding:14px!important;border-radius:20px!important;overflow:hidden}
+  .earth-dock-heading{padding:0 4px 9px!important}.earth-dock-heading h2{font-size:24px!important}
+  .earth-mission-card{min-height:132px!important;padding:14px!important;border-radius:16px!important;grid-template-columns:54px 1fr!important;gap:7px 11px!important}
+  .earth-card-icon{width:50px!important;height:50px!important;border-radius:14px!important}.earth-card-icon svg{width:31px!important;height:31px!important}.earth-card-copy strong{font-size:17px!important}.earth-card-copy em{font-size:12px!important}.earth-card-status{padding-top:7px!important}
+}
+
+@media(max-width:900px){
+  .cover-art-panel{right:1%;width:56vw;opacity:.86}
+  .cover-copy{left:2vw!important;width:min(520px,44vw)!important}
+  .select-screen .info-left{grid-template-columns:1fr!important}.select-screen .select-ability-card{grid-column:1!important;grid-row:auto!important}
+  .select-screen .character-info-bar{max-height:230px!important;overflow:auto!important}
+  .clear-event-box{grid-template-columns:1fr!important;grid-template-areas:"code" "art" "title" "result" "discovery" "progress" "character" "action"!important}
+  .clear-event-art{min-height:380px}.clear-event-box>h2{text-align:center}
+}
+@media(max-width:620px){
+  .cover-screen{overflow:auto!important}.cover-art-panel{left:4%;right:4%;top:1%;width:auto;height:45vh}.cover-copy{left:4%!important;right:4%!important;top:auto!important;bottom:3%!important;width:auto!important;padding:22px!important;transform:none!important}.cover-copy h1{font-size:44px!important}.cover-description{font-size:14px!important}
+  .clear-event-art{min-height:310px}.clear-event-box{padding:15px!important}.clear-art-squad span{width:54px;height:54px;border-radius:17px}.clear-art-squad span::before{width:18px;height:12px}.clear-art-squad span b{font-size:9px}.clear-event-art.wave [data-clear-member="giroro"],.clear-event-art.electro [data-clear-member="kururu"],.clear-event-art.optics [data-clear-member="dororo"]{width:70px;height:70px}
+}
+@media(prefers-reduced-motion:reduce){
+  .nav-arrow.new-area-ready,.clear-art-squad span,.clear-event-art.wave .clear-art-device{animation:none!important}
+}
