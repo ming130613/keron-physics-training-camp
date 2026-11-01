@@ -4,7 +4,7 @@ const path = require('node:path');
 const vm = require('node:vm');
 const root = path.resolve(__dirname, '..');
 const read = file => fs.readFileSync(path.join(root, file), 'utf8');
-for (const file of ['runtime.js', 'script.js']) new vm.Script(read(file), {filename:file});
+for (const file of ['runtime.js', 'script.js', 'loading.js']) new vm.Script(read(file), {filename:file});
 const html = read('index.html');
 for (const match of html.matchAll(/(?:src|href)="([^"#]+)"/g)) {
   if (/^(https?:|data:)/.test(match[1]) || match[1].startsWith('assets/')) continue;
@@ -30,4 +30,5 @@ assert.equal(context.documentImage.src, 'again.webp', 'Fallback must not loop');
 const names = [...read('script.js').matchAll(/^function (\w+)\(/gm)].map(m=>m[1]);
 assert.equal(names.length, new Set(names).size, 'Duplicate top-level function');
 console.log('Passed: syntax, local entry links, script order, blocked storage, image fallback, duplicate functions.');
+require('./check-loading.cjs');
 
