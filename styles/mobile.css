@@ -1,0 +1,84 @@
+/* Phone portrait layout. Keep this after the desktop cascade. */
+@media (max-width: 640px) and (orientation: portrait) {
+  html, body { height: auto; min-height: 100%; overflow-x: clip; overflow-y: auto; }
+  body { -webkit-text-size-adjust: 100%; }
+  #app { height: auto; min-height: 100svh; }
+  .screen { height: auto; min-height: 100svh; }
+  .screen, .screen * { box-sizing: border-box; }
+  button { touch-action: manipulation; }
+  button, input, select { min-height: 44px; }
+  input, select { font-size: 16px; }
+  p, h1, h2, h3, h4, strong { overflow-wrap: anywhere; }
+  [hidden] { display: none !important; }
+
+  /* Stack artwork and copy so short phones can scroll naturally. */
+  .cover-screen.active { display: flex !important; flex-direction: column; padding: max(16px, env(safe-area-inset-top)) 16px max(24px, env(safe-area-inset-bottom)); gap: 16px; }
+  .cover-art-panel { position: relative !important; inset: auto !important; width: 100% !important; height: clamp(180px, 32svh, 300px) !important; flex: 0 0 auto; opacity: 1; }
+  .cover-copy { position: relative !important; inset: auto !important; width: 100% !important; max-width: none !important; transform: none !important; padding: 22px !important; }
+  .cover-copy h1 { font-size: clamp(36px, 11vw, 48px) !important; line-height: 1.08 !important; }
+  .cover-copy .primary-button { width: 100%; }
+
+  /* Two-column cards replace the five tightly packed standing characters. */
+  .select-screen.active { display: flex !important; flex-direction: column; padding: max(12px, env(safe-area-inset-top)) 12px max(20px, env(safe-area-inset-bottom)); gap: 16px; }
+  .select-screen .floating-header { position: relative !important; inset: auto !important; width: 100% !important; padding: 14px !important; gap: 10px; }
+  .floating-header h2 { font-size: 20px !important; line-height: 1.4; }
+  .select-screen .character-stage { position: relative !important; inset: auto !important; display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: stretch; gap: 10px; width: 100% !important; height: auto !important; transform: none !important; padding: 0 !important; }
+  .select-screen .character-choice { position: relative !important; inset: auto !important; transform: none !important; width: 100% !important; height: auto !important; min-width: 0; display: flex !important; flex-direction: column; align-items: center; padding: 12px 6px !important; border-radius: 18px; border: 2px solid rgba(255,255,255,.4); background: rgba(13,38,57,.8); }
+  .select-screen .character-choice.selected { border-color: #f1ca71; background: rgba(34,70,83,.94); }
+  .select-screen .character-choice img { width: auto !important; height: 120px !important; max-width: 100%; object-fit: contain; transform: none !important; }
+  .select-screen .character-choice b, .select-screen .character-choice small { position: static !important; transform: none !important; margin-top: 6px; color: #fff; }
+  .select-screen .character-info-bar { position: relative !important; inset: auto !important; width: 100% !important; max-height: none !important; overflow: visible !important; display: grid !important; gap: 14px; padding: 18px !important; }
+  .select-screen .info-left { display: block !important; }
+  .select-screen .select-ability-card { margin-top: 12px; }
+  #confirmCharacter { width: 100%; }
+
+  /* Reserve separate vertical bands for navigation, crew, mission and status. */
+  .world-screen { height: max(780px, 100svh) !important; min-height: 780px; }
+  .world-top-ui { top: max(10px, env(safe-area-inset-top)) !important; left: 12px !important; right: 12px !important; width: auto !important; display: flex !important; flex-wrap: wrap; gap: 6px !important; justify-content: flex-start; padding: 10px !important; }
+  #worldLocationName { display: none; }
+  .world-top-ui .tiny-button { padding: 8px 10px; }
+  .world-top-ui .mission-chip { font-size: 12px; }
+  .location-tag { top: 140px !important; left: 16px !important; right: 16px !important; font-size: 14px; }
+  .location-stepper { top: 90px !important; bottom: auto !important; left: 12px !important; right: 12px !important; width: auto !important; transform: none !important; display: grid !important; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 5px; }
+  .location-stepper button { min-width: 0 !important; padding: 7px 3px !important; }
+  .scene-character { top: 185px !important; bottom: auto !important; left: 50% !important; right: auto !important; width: 180px !important; height: 230px !important; transform: translateX(-50%) !important; }
+  .scene-character img { width: 100% !important; height: 100% !important; object-fit: contain; }
+  .scene-hotspot.repair-hotspot { top: 435px !important; bottom: auto !important; left: 16px !important; right: 16px !important; width: auto !important; min-width: 0 !important; transform: none !important; padding: 16px !important; }
+  .hotspot-copy { min-width: 0; }
+  .hotspot-copy strong { font-size: 20px !important; }
+  .scene-hotspot .mini-stamp { white-space: normal; }
+  .character-status-bar { bottom: max(16px, env(safe-area-inset-bottom)) !important; left: 16px !important; right: 16px !important; padding: 14px !important; }
+  .nav-arrow { top: 290px !important; width: 44px !important; height: 54px !important; }
+  .training-panel { position: fixed !important; inset: auto 10px max(10px, env(safe-area-inset-bottom)) !important; width: auto !important; max-height: 88dvh !important; overflow-y: auto !important; z-index: 100; padding: 28px 18px 18px !important; }
+  .training-panel h3 { font-size: 25px !important; padding-right: 25px; }
+  .training-panel .mission-steps { display: grid !important; grid-template-columns: 1fr !important; }
+  .earth-route-preview { top: 180px !important; left: 16px !important; right: 16px !important; width: auto !important; max-height: 340px; overflow: auto; }
+  .lab4-slide .scene-character { display: none !important; }
+  .lab4-slide .command-hotspot { top: 555px !important; }
+
+  /* Dialogs scroll vertically; canvas keeps its original coordinate system. */
+  dialog { max-width: calc(100vw - 20px) !important; max-height: 92dvh !important; overflow-y: auto !important; }
+  .experiment-overlay { padding: max(8px, env(safe-area-inset-top)) 8px max(8px, env(safe-area-inset-bottom)) !important; overflow: auto !important; align-items: flex-start !important; }
+  .experiment-window { width: 100% !important; min-width: 0 !important; max-height: 96dvh !important; padding: 24px 14px !important; overflow-y: auto !important; }
+  .experiment-window h2 { font-size: 24px !important; padding-right: 30px; }
+  .experiment-content, .learning-game, .learning-stage-card { min-width: 0; width: 100%; }
+  .learning-stage-card { padding: 12px !important; }
+  .learning-game-head { display: grid !important; grid-template-columns: 1fr !important; }
+  .learning-game-head .mission-mascot { display: none; }
+  .learning-game-head h3 { font-size: 22px !important; }
+  .learning-stage-title { flex-wrap: wrap; gap: 8px; }
+  .learning-canvas, .game-canvas, .earth-observation-card canvas { display: block; width: 100% !important; height: auto !important; max-width: 100%; }
+  .dual-learning-bars, .earth-observation-card { grid-template-columns: 1fr !important; }
+  .wave-control-row, .wave-control-grid, .learning-controls, .control-callout, .earth-control-row { display: grid !important; grid-template-columns: 1fr !important; gap: 10px; }
+  input[type="range"] { width: 100%; min-width: 0; touch-action: pan-y; }
+  .learning-stage-card .primary-button { width: 100%; white-space: normal; }
+  .material-buttons, .channel-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+  .material-buttons button, .channel-buttons button { flex: 1 1 70px; }
+  .diary-intro-card { width: calc(100% - 24px) !important; }
+  .arrival-card, .arrival-box, .clear-event-box { width: 100% !important; min-width: 0 !important; }
+  .arrival-film-stage video, .arrival-film-stage img { max-width: 100%; object-fit: contain; }
+  .clear-event-art { min-height: 260px !important; }
+  .earth-hub-header { flex-wrap: wrap; gap: 12px; }
+  .earth-hub-header nav { width: 100%; }
+}
+
