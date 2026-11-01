@@ -1,0 +1,9 @@
+{
+  "name": "keron-physics-training-camp",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Static Korean physics learning game",
+  "scripts": {
+    "check": "node scripts/check.cjs"
+  }
+}
