@@ -39,7 +39,7 @@
     preload('assets/select_base.webp')
   ]);
   ready.then(() => {
-    const remaining = reducedMotion ? 0 : Math.max(0, 4000 - (performance.now() - started));
+    const remaining = reducedMotion ? 0 : Math.max(0, 2000 - (performance.now() - started));
     setTimeout(finish, remaining);
   });
 })();

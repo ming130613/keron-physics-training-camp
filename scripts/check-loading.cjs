@@ -26,7 +26,7 @@ async function verify(mode) {
   assert.equal(app.inert,false,mode+' must unlock the app');
   assert.equal(removed,true);assert.equal(boot,false);
   assert.ok(now<=7500);
-  if(mode==='reduced') assert.equal(now,0); else assert.ok(now>=4000);
+  if(mode==='reduced') assert.equal(now,0); else assert.ok(now>=2000);
 }
 (async()=>{for(const mode of ['success','error','hung','reduced']) await verify(mode);console.log('Passed: loader readiness, failed images, timeout escape, reduced motion.');})().catch(error=>{console.error(error);process.exitCode=1;});
 
