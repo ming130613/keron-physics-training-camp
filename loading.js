@@ -20,7 +20,7 @@
     setTimeout(() => {
       document.documentElement.classList.remove('boot-loading');
       loader.remove();
-    }, reducedMotion ? 0 : 300);
+    }, reducedMotion ? 0 : 500);
   }
 
   function preload(src) {
@@ -32,14 +32,14 @@
   }
 
   // Network failures and slow third-party fonts must never trap the player.
-  safetyTimer = setTimeout(finish, 5000);
+  safetyTimer = setTimeout(finish, 7000);
   const ready = Promise.all([
     preload('assets/icons/icon-192.png?v=keroro-3'),
     preload('assets/cover.webp'),
     preload('assets/select_base.webp')
   ]);
   ready.then(() => {
-    const remaining = reducedMotion ? 0 : Math.max(0, 900 - (performance.now() - started));
+    const remaining = reducedMotion ? 0 : Math.max(0, 4000 - (performance.now() - started));
     setTimeout(finish, remaining);
   });
 })();
